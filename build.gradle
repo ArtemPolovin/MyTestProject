@@ -27,3 +27,11 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext.versions = [
+        material: "1.1.0"
+]
+
+ext.material = [
+        material: "com.google.android.material:material:$versions.material"
+]
