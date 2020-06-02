@@ -36,7 +36,11 @@ ext.versions = [
         support4        : "1.0.0",
         junit           : "4.12",
         junitTest       : "1.1.1",
-        espressoCore    : "3.2.0"
+        espressoCore    : "3.2.0",
+        retrofit        : "2.8.1",
+        rxjava3         : "3.0.0",
+        liveData        : "2.2.0",
+        picasso         : "2.71828"
 ]
 
 ext.appcompat = [
@@ -71,3 +75,24 @@ ext.material = [
         material: "com.google.android.material:material:$versions.material"
 ]
 
+ext.retrofit2 = [
+        retrofit     : "com.squareup.retrofit2:retrofit:$versions.retrofit",
+        converterGson: "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+]
+
+ext.rxjava3 = [
+        rxandroid     : "io.reactivex.rxjava3:rxandroid:$versions.rxjava3",
+        rxjava        : "io.reactivex.rxjava3:rxjava:$versions.rxjava3",
+        rxkotlin      : "io.reactivex.rxjava3:rxkotlin:$versions.rxjava3",
+        rxjavaRetrofit: "com.github.akarnokd:rxjava3-retrofit-adapter:$versions.rxjava3"
+]
+
+ext.liveData = [
+        viewmodel          : "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.liveData",
+        livedataKtx        : "androidx.lifecycle:lifecycle-livedata-ktx:$versions.liveData",
+        lifecycleExtentions: "androidx.lifecycle:lifecycle-extensions:$versions.liveData"
+]
+
+ext.picasso = [
+        picasso: "com.squareup.picasso:picasso:$versions.picasso"
+]

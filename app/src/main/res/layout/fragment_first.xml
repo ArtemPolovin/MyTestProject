@@ -1,11 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_1_background"
     android:background="@drawable/gradient_list"
-    tools:context=".FragmentFirst">
+    tools:context=".tomorrowWeather.TomorrowWeatherFragment">
 
+
+    <TextView
+        android:id="@+id/textLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Moscow"
+        android:textSize="36sp"
+        android:textColor="@color/text_color"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
+
+    <TextView
+        android:id="@+id/textTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="85"
+        android:textSize="60sp"
+        android:textColor="@color/text_color"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@+id/textLocation"
+        android:layout_marginTop="80dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="o"
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        android:layout_toEndOf="@+id/textTemperature"
+        android:layout_alignTop="@+id/textTemperature" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="C"
+        android:textColor="@color/text_color"
+        android:textSize="46sp"
+        android:layout_toEndOf="@+id/textTemperature"
+        android:layout_alignBottom="@+id/textTemperature"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"/>
+
+      <ImageView
+          android:id="@+id/imageWeatherIcon"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:background="@android:color/transparent"
+          android:layout_alignTop="@+id/textTemperature"
+          android:layout_marginTop="80dp" />
 
 </RelativeLayout>
