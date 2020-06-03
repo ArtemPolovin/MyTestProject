@@ -1,6 +1,6 @@
 package com.example.mytestproject.data.network
 
-import com.example.mytestproject.data.network.response.ResponseTomorrowWeatherData
+import com.example.mytestproject.data.network.response.WeatherDataApi
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import io.reactivex.rxjava3.core.Single
 import retrofit2.Retrofit
@@ -16,7 +16,7 @@ interface ApiService {
         @Query("city") city: String,
         @Query("days") days: Int,
         @Query("units") degreeType: String
-    ):Single<ResponseTomorrowWeatherData>
+    ):Single<WeatherDataApi>
 
 
     companion object {
