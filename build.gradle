@@ -40,7 +40,10 @@ ext.versions = [
         retrofit        : "2.8.1",
         rxjava3         : "3.0.0",
         liveData        : "2.2.0",
-        picasso         : "2.71828"
+        picasso         : "2.71828",
+        navFragment     : "2.2.2",
+        activityKtx     : "1.1.0"
+
 ]
 
 ext.appcompat = [
@@ -95,4 +98,12 @@ ext.liveData = [
 
 ext.picasso = [
         picasso: "com.squareup.picasso:picasso:$versions.picasso"
+]
+
+ext.navigationFragment = [
+      navFragment:  "androidx.navigation:navigation-fragment-ktx:$versions.navFragment"
+]
+
+ext.activity = [
+      activityKtx : "androidx.activity:activity-ktx:$versions.activityKtx"
 ]

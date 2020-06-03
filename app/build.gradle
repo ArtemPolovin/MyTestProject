@@ -36,9 +36,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.activity:activity-ktx:1.1.0"
-
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
 
     //appcompat
     implementation appcompat.appcompat
@@ -82,4 +79,9 @@ dependencies {
     //Picasso
     implementation picasso.picasso
 
+    //NavigationFragment
+    implementation navigationFragment.navFragment
+
+    //Activity-ktx
+    implementation activity.activityKtx
 }
