@@ -4,8 +4,8 @@ import com.example.mytestproject.data.network.ApiService
 import com.example.mytestproject.data.network.response.WeatherDataApi
 import io.reactivex.rxjava3.core.Single
 
-class TomorrowWeatherRepositoryImpl:  TomorrowWeatherRepository {
-    override fun getTomorrowWeatherData(
+class WeatherRepositoryImpl:  WeatherRepository {
+    override fun getWeatherData(
         key: String,
         city: String,
         days: Int,

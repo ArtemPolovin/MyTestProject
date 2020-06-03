@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_1_background"
     android:background="@drawable/gradient_list"
-    tools:context=".tomorrowWeather.TomorrowWeatherFragment">
+    tools:context=".weatherData.WeatherDataFragment">
 
 
     <TextView

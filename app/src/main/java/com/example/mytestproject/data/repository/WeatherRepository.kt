@@ -3,8 +3,8 @@ package com.example.mytestproject.data.repository
 import com.example.mytestproject.data.network.response.WeatherDataApi
 import io.reactivex.rxjava3.core.Single
 
-interface TomorrowWeatherRepository {
-    fun getTomorrowWeatherData(
+interface WeatherRepository {
+    fun getWeatherData(
         key: String,
         city: String,
         days: Int,

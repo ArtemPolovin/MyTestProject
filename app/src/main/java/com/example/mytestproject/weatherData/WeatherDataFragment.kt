@@ -1,4 +1,4 @@
-package com.example.mytestproject.tomorrowWeather
+package com.example.mytestproject.weatherData
 
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
@@ -12,9 +12,9 @@ import com.example.mytestproject.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_first.*
 
-class TomorrowWeatherFragment : Fragment() {
+class WeatherDataFragment : Fragment() {
 
-    private val tomorrowWeatherViewModel: TomorrowWeatherViewModel by viewModels()
+    private val weatherDataViewModel: WeatherDataViewModel by viewModels()
     private val key = "40a7956799be42f49bc8b6ac4bb8e432"
 
     override fun onCreateView(
@@ -32,13 +32,13 @@ class TomorrowWeatherFragment : Fragment() {
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
 
-        setupTomorrowWeatherData()
+        setupWeatherData()
 
     }
 
-    private fun setupTomorrowWeatherData() {
-        tomorrowWeatherViewModel.getTomorrowWeatherData(key, "Moscow", 1, "M")
-        tomorrowWeatherViewModel.tomorrowWeatherDataApi.observe(viewLifecycleOwner, Observer {
+    private fun setupWeatherData() {
+        weatherDataViewModel.getWeatherData(key, "Moscow", 1, "M")
+        weatherDataViewModel.weatherDataApi.observe(viewLifecycleOwner, Observer {
             textTemperature.text = it.data[0].temp.toString()
             textLocation.text = it.city_name
             getIcon(it.data[0].weather.icon)

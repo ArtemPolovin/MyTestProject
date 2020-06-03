@@ -3,17 +3,12 @@ package com.example.mytestproject
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import com.example.mytestproject.tomorrowWeather.TomorrowWeatherFragment
-import com.example.mytestproject.tomorrowWeather.TomorrowWeatherViewModel
+import com.example.mytestproject.weatherData.WeatherDataFragment
 import com.google.android.material.navigation.NavigationView
-import io.reactivex.rxjava3.core.Observable
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_first.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -36,7 +31,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_first_fragment -> fragment =
-                TomorrowWeatherFragment()
+                WeatherDataFragment()
             R.id.nav_second_fragment -> fragment = FragmentSecond()
             R.id.nav_third_fragment -> fragment = FragmentThird()
         }
