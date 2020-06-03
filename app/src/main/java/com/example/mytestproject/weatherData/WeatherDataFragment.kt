@@ -36,7 +36,7 @@ class WeatherDataFragment : Fragment() {
     }
 
     private fun setupWeatherData() {
-        weatherDataViewModel.getWeatherData("Modesto", 1, "M")
+        weatherDataViewModel.getWeatherData("Moscow", 1, "M")
         weatherDataViewModel.weatherDataApi.observe(viewLifecycleOwner, Observer {
             textTemperature.text = it.data[0].temp.toString()
             textLocation.text = it.city_name
@@ -47,7 +47,6 @@ class WeatherDataFragment : Fragment() {
     private fun getIcon(iconId: String) {
         Picasso.get()
             .load("https://www.weatherbit.io/static/img/icons/$iconId.png")
-            .placeholder(R.drawable.ic_cloud_download)
             .resize(300,300)
             .error(R.drawable.ic_error)
             .into(imageWeatherIcon)
