@@ -20,8 +20,8 @@ class WeatherDataViewModel : ViewModel() {
         MutableLiveData<WeatherDataApi>()
     val weatherDataApi: LiveData<WeatherDataApi> get() = _weatherDataApi
 
-    fun getWeatherData(key: String, city: String, days: Int, degreeType: String) {
-        disposable = weatherRepository.getWeatherData(key,city, days,degreeType)
+    fun getWeatherData(city: String, days: Int, degreeType: String) {
+        disposable = weatherRepository.getWeatherData(city, days,degreeType)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

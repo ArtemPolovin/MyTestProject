@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.fragment_first.*
 class WeatherDataFragment : Fragment() {
 
     private val weatherDataViewModel: WeatherDataViewModel by viewModels()
-    private val key = "40a7956799be42f49bc8b6ac4bb8e432"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,7 +36,7 @@ class WeatherDataFragment : Fragment() {
     }
 
     private fun setupWeatherData() {
-        weatherDataViewModel.getWeatherData(key, "Moscow", 1, "M")
+        weatherDataViewModel.getWeatherData("Modesto", 1, "M")
         weatherDataViewModel.weatherDataApi.observe(viewLifecycleOwner, Observer {
             textTemperature.text = it.data[0].temp.toString()
             textLocation.text = it.city_name

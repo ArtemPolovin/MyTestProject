@@ -5,7 +5,6 @@ import io.reactivex.rxjava3.core.Single
 
 interface WeatherRepository {
     fun getWeatherData(
-        key: String,
         city: String,
         days: Int,
         degreeType: String
