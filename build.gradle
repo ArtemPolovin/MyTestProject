@@ -90,7 +90,7 @@ ext.rxjava3 = [
         rxjavaRetrofit: "com.github.akarnokd:rxjava3-retrofit-adapter:$versions.rxjava3"
 ]
 
-ext.liveData = [
+ext.lifecycle = [
         viewmodel          : "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.liveData",
         livedataKtx        : "androidx.lifecycle:lifecycle-livedata-ktx:$versions.liveData",
         lifecycleExtentions: "androidx.lifecycle:lifecycle-extensions:$versions.liveData"
