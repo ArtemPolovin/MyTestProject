@@ -1,6 +1,6 @@
 package com.example.mytestproject.data.network
 
-import com.example.mytestproject.data.network.response.WeatherDataApi
+import com.example.mytestproject.data.repository.responseWeatherData.WeatherDataApi
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
 import io.reactivex.rxjava3.core.Single
 import okhttp3.Interceptor

@@ -1,4 +1,4 @@
-package com.example.mytestproject.data.network.response
+package com.example.mytestproject.data.repository.responseWeatherData
 
 data class Weather(
     val description: String,
