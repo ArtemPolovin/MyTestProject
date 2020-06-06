@@ -1,7 +1,8 @@
-package com.example.mytestproject.weatherData
+package com.example.mytestproject.ui.weatherData
 
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -32,11 +33,9 @@ class WeatherDataFragment : Fragment() {
         animationDrawable.start()
 
         setupWeatherData()
-
     }
 
     private fun setupWeatherData() {
-        weatherDataViewModel.getWeatherData("Moscow", 1, "M")
         weatherDataViewModel.weatherDataApi.observe(viewLifecycleOwner, Observer {
             textTemperature.text = it.data[0].temp.toString()
             textLocation.text = it.city_name

@@ -1,10 +1,10 @@
-package com.example.mytestproject.weatherData
+package com.example.mytestproject.ui.weatherData
 
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.mytestproject.data.repository.responseWeatherData.WeatherDataApi
 import com.example.mytestproject.data.repository.WeatherRepositoryImpl
 import com.example.mytestproject.ui.models.weatherDataModel.WeatherData
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -21,14 +21,15 @@ class WeatherDataViewModel : ViewModel() {
         MutableLiveData<WeatherData>()
     val weatherDataApi: LiveData<WeatherData> get() = _weatherDataApi
 
-    fun getWeatherData(city: String, days: Int, degreeType: String) {
-        disposable = weatherRepository.getWeatherData(city, days,degreeType)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {_weatherDataApi.value = it },
-                { Log.i("ERROR","error = ${it.localizedMessage}")}
-            )
+    init {
+        Log.i("...........","pass")
+            disposable = weatherRepository.getWeatherData("Moscow", 1, "M")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { _weatherDataApi.value = it },
+                    { Log.i("ERROR", "error = ${it.localizedMessage}") }
+                )
     }
 
     override fun onCleared() {

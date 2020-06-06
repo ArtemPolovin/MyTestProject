@@ -7,7 +7,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import com.example.mytestproject.R
-import com.example.mytestproject.weatherData.WeatherDataFragment
+import com.example.mytestproject.ui.weatherData.WeatherDataFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
