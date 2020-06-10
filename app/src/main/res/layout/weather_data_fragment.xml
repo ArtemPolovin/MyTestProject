@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="@{Double.toString(weatherData.data.get(0).temp)}"
+            android:text="@{Double.toString(weatherData.temp)}"
             android:textColor="@color/text_color"
             android:textSize="60sp"
             app:layout_constraintEnd_toEndOf="@+id/textLocation"
@@ -78,7 +78,7 @@
             app:layout_constraintEnd_toEndOf="@+id/textTemperature"
             app:layout_constraintStart_toStartOf="@+id/textTemperature"
             app:layout_constraintTop_toTopOf="@+id/textTemperature"
-            app:loadIcon="@{weatherData.data.get(0).weather.icon}"/>
+            app:loadIcon="@{weatherData.icon}"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
