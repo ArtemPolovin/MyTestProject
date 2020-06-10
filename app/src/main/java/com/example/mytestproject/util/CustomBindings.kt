@@ -6,11 +6,11 @@ import com.example.mytestproject.R
 import com.squareup.picasso.Picasso
 
 
-@BindingAdapter("loadIcon")
-fun bindingImage(weatherIcon: ImageView, iconID: String?) {
+@BindingAdapter("loadImage")
+fun bindingImage(image: ImageView, imageUrl: String?) {
     Picasso.get()
-        .load("https://www.weatherbit.io/static/img/icons/$iconID.png")
+        .load(imageUrl)
         .resize(300, 300)
         .error(R.drawable.ic_error)
-        .into(weatherIcon)
+        .into(image)
 }

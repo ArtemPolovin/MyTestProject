@@ -78,7 +78,7 @@
             app:layout_constraintEnd_toEndOf="@+id/textTemperature"
             app:layout_constraintStart_toStartOf="@+id/textTemperature"
             app:layout_constraintTop_toTopOf="@+id/textTemperature"
-            app:loadIcon="@{weatherData.icon}"/>
+            app:loadImage="@{weatherData.icon}"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
