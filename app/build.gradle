@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -25,6 +26,14 @@ android {
     compileOptions {
         sourceCompatibility = 1.8
         targetCompatibility = 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    dataBinding {
+        enabled = true
     }
 
 }
@@ -57,4 +66,27 @@ dependencies {
     //NavigationView
     implementation material.material
 
+    //Retrofit2
+    implementation retrofit2.retrofit
+    implementation retrofit2.converterGson
+
+    //RxJava3
+    implementation rxjava3.rxandroid
+    implementation rxjava3.rxjava
+    implementation rxjava3.rxkotlin
+    implementation rxjava3.rxjavaRetrofit
+
+    //LiveData
+    implementation lifecycle.viewmodel
+    implementation lifecycle.livedataKtx
+    implementation lifecycle.lifecycleExtentions
+
+    //Picasso
+    implementation picasso.picasso
+
+    //NavigationFragment
+    implementation navigationFragment.navFragment
+
+    //Activity-ktx
+    implementation activity.activityKtx
 }
