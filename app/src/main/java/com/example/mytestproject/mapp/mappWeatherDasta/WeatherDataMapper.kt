@@ -8,7 +8,7 @@ class WeatherDataMapper {
     fun mapWeather(weatherDataApi: WeatherDataApi): WeatherData {
         return WeatherData(
             weatherDataApi.city_name,
-            weatherDataApi.data[0].temp,
+            "${weatherDataApi.data[0].temp}",
              "https://www.weatherbit.io/static/img/icons/${
              weatherDataApi.data[0].weather.icon}.png"
         )
