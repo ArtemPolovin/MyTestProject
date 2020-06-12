@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.mytestproject.R
 import com.example.mytestproject.databinding.WeatherDataFragmentBinding
+import com.example.mytestproject.ui.viewState.WeatherViewState
 import kotlinx.android.synthetic.main.weather_data_fragment.*
 
 class WeatherDataFragment : Fragment() {
@@ -25,7 +26,8 @@ class WeatherDataFragment : Fragment() {
     ): View? {
 
         weatherDataBinding = DataBindingUtil.inflate(
-            layoutInflater, R.layout.weather_data_fragment, container, false)
+            layoutInflater, R.layout.weather_data_fragment, container, false
+        )
 
         return weatherDataBinding.root
     }
@@ -39,12 +41,28 @@ class WeatherDataFragment : Fragment() {
         animationDrawable.start()
 
         setupWeatherData()
+
+        btnRetry.setOnClickListener { setupWeatherData() }
+
     }
 
     private fun setupWeatherData() {
-        weatherDataViewModel.weatherDataApi.observe(viewLifecycleOwner, Observer {
-            weatherDataBinding.weatherData = it
+        weatherDataViewModel.viewState.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                WeatherViewState.Loading -> {
+                    progressBar.visibility = View.VISIBLE
+                }
+                WeatherViewState.Error -> {
+                    progressBar.visibility = View.GONE
+                    textError.text = "Sorry, you got some error"
+                    textError.visibility = View.VISIBLE
+                    btnRetry.visibility = View.VISIBLE
+                }
+                is WeatherViewState.WeatherLoaded -> {
+                    progressBar.visibility = View.GONE
+                    weatherDataBinding.weatherData = it.weatherData
+                }
+            }
         })
     }
-
 }
