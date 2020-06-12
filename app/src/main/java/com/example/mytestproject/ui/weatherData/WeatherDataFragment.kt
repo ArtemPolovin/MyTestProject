@@ -2,6 +2,7 @@ package com.example.mytestproject.ui.weatherData
 
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -42,7 +43,10 @@ class WeatherDataFragment : Fragment() {
 
         setupWeatherData()
 
-        btnRetry.setOnClickListener { setupWeatherData() }
+        btnRetry.setOnClickListener {
+            weatherDataViewModel.getWeather()
+            setupWeatherData()
+        }
 
     }
 
@@ -60,9 +64,12 @@ class WeatherDataFragment : Fragment() {
                 }
                 is WeatherViewState.WeatherLoaded -> {
                     progressBar.visibility = View.GONE
+                    textError.visibility = View.GONE
+                    btnRetry.visibility = View.GONE
                     weatherDataBinding.weatherData = it.weatherData
                 }
             }
         })
+
     }
 }

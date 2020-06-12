@@ -23,8 +23,12 @@ class WeatherDataViewModel : ViewModel() {
         MutableLiveData<WeatherData>()
     val weatherDataApi: LiveData<WeatherData> get() = _weatherDataApi*/
 
-    init {
 
+    init {
+        getWeather()
+    }
+
+    fun getWeather() {
         viewState.value = WeatherViewState.Loading
 
         disposable = weatherRepository.getWeatherData("Moscow", 1, "M")
@@ -41,6 +45,8 @@ class WeatherDataViewModel : ViewModel() {
                 }
             )
     }
+
+
 
     override fun onCleared() {
         super.onCleared()
