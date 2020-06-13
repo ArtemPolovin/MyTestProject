@@ -24,9 +24,7 @@ class WeatherDataViewModel : ViewModel() {
     val weatherDataApi: LiveData<WeatherData> get() = _weatherDataApi*/
 
 
-    init {
-        getWeather()
-    }
+    init { getWeather() }
 
     fun getWeather() {
         viewState.value = WeatherViewState.Loading

@@ -54,22 +54,23 @@ class WeatherDataFragment : Fragment() {
         weatherDataViewModel.viewState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 WeatherViewState.Loading -> {
+                    group_temp_abbreviation.visibility = View.GONE
                     progressBar.visibility = View.VISIBLE
                 }
                 WeatherViewState.Error -> {
+                    group_temp_abbreviation.visibility = View.GONE
                     progressBar.visibility = View.GONE
                     textError.text = "Sorry, you got some error"
-                    textError.visibility = View.VISIBLE
-                    btnRetry.visibility = View.VISIBLE
+                    group_error_views.visibility = View.VISIBLE
                 }
                 is WeatherViewState.WeatherLoaded -> {
+                    group_temp_abbreviation.visibility = View.VISIBLE
                     progressBar.visibility = View.GONE
-                    textError.visibility = View.GONE
-                    btnRetry.visibility = View.GONE
+                    group_error_views.visibility = View.GONE
                     weatherDataBinding.weatherData = it.weatherData
                 }
             }
         })
-
+        
     }
 }
