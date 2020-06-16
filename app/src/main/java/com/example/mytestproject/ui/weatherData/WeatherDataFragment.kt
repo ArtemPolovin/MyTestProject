@@ -61,7 +61,6 @@ class WeatherDataFragment : Fragment() {
                 WeatherViewState.Error -> {
                     group_temp_abbreviation.visibility = View.GONE
                     progressBar.visibility = View.GONE
-                    textError.text = "Sorry, you got some error"
                     group_error_views.visibility = View.VISIBLE
                 }
                 is WeatherViewState.WeatherLoaded -> {
