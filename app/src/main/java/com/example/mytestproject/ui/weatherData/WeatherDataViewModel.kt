@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mytestproject.data.repository.WeatherRepositoryImpl
-import com.example.mytestproject.ui.models.weatherDataModel.WeatherData
 import com.example.mytestproject.ui.viewState.WeatherViewState
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
@@ -17,7 +16,8 @@ class WeatherDataViewModel : ViewModel() {
 
     private var disposable: Disposable? = null
 
-    var viewState  = MutableLiveData<WeatherViewState> ()
+    private val _viewState = MutableLiveData<WeatherViewState>()
+    val viewState: LiveData<WeatherViewState> get() = _viewState
 
     /*private val _weatherDataApi: MutableLiveData<WeatherData> =
         MutableLiveData<WeatherData>()
@@ -27,18 +27,18 @@ class WeatherDataViewModel : ViewModel() {
     init { getWeather() }
 
     fun getWeather() {
-        viewState.value = WeatherViewState.Loading
+        _viewState.value = WeatherViewState.Loading
 
         disposable = weatherRepository.getWeatherData("Moscow", 1, "M")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    viewState.value = WeatherViewState.WeatherLoaded(it)
+                    _viewState.value = WeatherViewState.WeatherLoaded(it)
                     //_weatherDataApi.value = it
                 },
                 {
-                    viewState.value = WeatherViewState.Error
+                    _viewState.value = WeatherViewState.Error
                     Log.i("ERROR", "error = ${it.localizedMessage}")
                 }
             )
