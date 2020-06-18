@@ -44,7 +44,7 @@ class WeatherDataFragment : Fragment() {
         setupWeatherData()
 
         btnRetry.setOnClickListener {
-            weatherDataViewModel.getWeather()
+            weatherDataViewModel.onRetry()
         }
 
     }
