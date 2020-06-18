@@ -19,11 +19,6 @@ class WeatherDataViewModel : ViewModel() {
     private val _viewState = MutableLiveData<WeatherViewState>()
     val viewState: LiveData<WeatherViewState> get() = _viewState
 
-    /*private val _weatherDataApi: MutableLiveData<WeatherData> =
-        MutableLiveData<WeatherData>()
-    val weatherDataApi: LiveData<WeatherData> get() = _weatherDataApi*/
-
-
     init { getWeather() }
 
     fun getWeather() {
