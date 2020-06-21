@@ -1,4 +1,4 @@
-package com.example.mytestproject.data.repository
+package com.example.mytestproject.data.repository.weatherRepository
 
 import com.example.mytestproject.data.repository.responseWeatherData.WeatherDataApi
 import com.example.mytestproject.ui.models.weatherDataModel.WeatherData

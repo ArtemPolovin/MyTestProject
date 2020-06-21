@@ -89,4 +89,19 @@ dependencies {
 
     //Activity-ktx
     implementation activity.activityKtx
+
+    //Dagger2
+/*    implementation dagger.daggerProducers
+    implementation dagger.daggerSupport
+    implementation dagger.dagger*/
+   /* kapt dagger.daggerCompiler
+    kapt dagger.daggerProcessor*/
+
+    def daggerVersion = '2.11'
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion"
+    implementation 'com.google.dagger:dagger-producers:2.11'
+
 }

@@ -42,7 +42,8 @@ ext.versions = [
         liveData        : "2.2.0",
         picasso         : "2.71828",
         navFragment     : "2.2.2",
-        activityKtx     : "1.1.0"
+        activityKtx     : "1.1.0",
+       // dugger2         : "2.11"
 
 ]
 
@@ -101,9 +102,19 @@ ext.picasso = [
 ]
 
 ext.navigationFragment = [
-      navFragment:  "androidx.navigation:navigation-fragment-ktx:$versions.navFragment"
+        navFragment: "androidx.navigation:navigation-fragment-ktx:$versions.navFragment"
 ]
 
 ext.activity = [
-      activityKtx : "androidx.activity:activity-ktx:$versions.activityKtx"
+        activityKtx: "androidx.activity:activity-ktx:$versions.activityKtx"
 ]
+
+/*
+ext.dagger = [
+        daggerCompiler : "com.google.dagger:dagger-compiler:$versions.dagger2",
+        daggerProcessor: "com.google.dagger:dagger-android-processor:$versions.dagger2",
+       // dagger: "com.google.dagger:dagger:$versions.dagger2",
+     //   daggerSupport: "com.google.dagger:dagger-android-support:$versions.dagger2",
+      //  daggerProducers: "com.google.dagger:dagger-producers:$versions.dagger2"
+]
+*/
