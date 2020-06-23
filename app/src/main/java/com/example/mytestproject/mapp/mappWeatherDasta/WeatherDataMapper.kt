@@ -2,8 +2,9 @@ package com.example.mytestproject.mapp.mappWeatherDasta
 
 import com.example.mytestproject.data.repository.responseWeatherData.WeatherDataApi
 import com.example.mytestproject.ui.models.weatherDataModel.WeatherData
+import javax.inject.Inject
 
-class WeatherDataMapper {
+class WeatherDataMapper @Inject constructor(){
 
     fun mapWeather(weatherDataApi: WeatherDataApi): WeatherData {
         return WeatherData(

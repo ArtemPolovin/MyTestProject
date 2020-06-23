@@ -2,22 +2,26 @@ package com.example.mytestproject.ui.weatherData
 
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.example.mytestproject.App
 import com.example.mytestproject.R
 import com.example.mytestproject.databinding.WeatherDataFragmentBinding
 import com.example.mytestproject.ui.viewState.WeatherViewState
 import kotlinx.android.synthetic.main.weather_data_fragment.*
+import javax.inject.Inject
 
 class WeatherDataFragment : Fragment() {
 
-    private val weatherDataViewModel: WeatherDataViewModel by viewModels()
+    @Inject
+    lateinit var weatherDataViewModelFactory: WeatherViewModelFactory
+
+    private lateinit var weatherDataViewModel: WeatherDataViewModel
 
     private lateinit var weatherDataBinding: WeatherDataFragmentBinding
 
@@ -40,6 +44,13 @@ class WeatherDataFragment : Fragment() {
         animationDrawable.setEnterFadeDuration(4000)
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
+
+        (activity?.applicationContext as App).appComponent.injectWeatherDataFragment(this)
+
+        weatherDataViewModel =
+            ViewModelProvider(this, weatherDataViewModelFactory).get(
+                WeatherDataViewModel::class.java
+            )
 
         setupWeatherData()
 
@@ -70,6 +81,6 @@ class WeatherDataFragment : Fragment() {
                 }
             }
         })
-        
+
     }
 }
