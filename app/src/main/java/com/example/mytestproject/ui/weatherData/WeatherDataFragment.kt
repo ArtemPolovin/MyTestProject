@@ -2,6 +2,7 @@ package com.example.mytestproject.ui.weatherData
 
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.mytestproject.R
 import com.example.mytestproject.databinding.WeatherDataFragmentBinding
+import com.example.mytestproject.ui.viewState.WeatherViewState
 import kotlinx.android.synthetic.main.weather_data_fragment.*
 
 class WeatherDataFragment : Fragment() {
@@ -25,7 +27,8 @@ class WeatherDataFragment : Fragment() {
     ): View? {
 
         weatherDataBinding = DataBindingUtil.inflate(
-            layoutInflater, R.layout.weather_data_fragment, container, false)
+            layoutInflater, R.layout.weather_data_fragment, container, false
+        )
 
         return weatherDataBinding.root
     }
@@ -39,12 +42,34 @@ class WeatherDataFragment : Fragment() {
         animationDrawable.start()
 
         setupWeatherData()
+
+        btnRetry.setOnClickListener {
+            weatherDataViewModel.onRetry()
+        }
+
     }
 
     private fun setupWeatherData() {
-        weatherDataViewModel.weatherDataApi.observe(viewLifecycleOwner, Observer {
-            weatherDataBinding.weatherData = it
+        weatherDataViewModel.viewState.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                WeatherViewState.Loading -> {
+                    group_temp_abbreviation.visibility = View.GONE
+                    progressBar.visibility = View.VISIBLE
+                    group_error_views.visibility = View.GONE
+                }
+                WeatherViewState.Error -> {
+                    group_temp_abbreviation.visibility = View.GONE
+                    progressBar.visibility = View.GONE
+                    group_error_views.visibility = View.VISIBLE
+                }
+                is WeatherViewState.WeatherLoaded -> {
+                    group_temp_abbreviation.visibility = View.VISIBLE
+                    progressBar.visibility = View.GONE
+                    group_error_views.visibility = View.GONE
+                    weatherDataBinding.weatherData = it.weatherData
+                }
+            }
         })
+        
     }
-
 }
