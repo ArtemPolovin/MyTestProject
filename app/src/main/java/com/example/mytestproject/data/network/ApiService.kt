@@ -15,14 +15,13 @@ interface ApiService {
 
     @GET("/v2.0/forecast/daily")
     fun getWeatherData(
-     //   @Query("key") key: String,
         @Query("city") city: String,
         @Query("days") days: Int,
         @Query("units") degreeType: String
     ):Single<WeatherDataApi>
 
 
-    companion object {
+   /* companion object {
         operator fun invoke(): ApiService {
             val key = "40a7956799be42f49bc8b6ac4bb8e432"
             val requestInterceptor = Interceptor{chain->
@@ -50,5 +49,5 @@ interface ApiService {
                 .build()
                 .create(ApiService::class.java)
         }
-    }
+    }*/
 }

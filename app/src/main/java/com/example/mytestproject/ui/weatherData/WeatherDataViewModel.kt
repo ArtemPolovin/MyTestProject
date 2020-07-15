@@ -5,15 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mytestproject.data.repository.WeatherRepository
-import com.example.mytestproject.data.repository.WeatherRepositoryImpl
 import com.example.mytestproject.ui.viewState.WeatherViewState
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-class WeatherDataViewModel (
-    private val weatherRepository: WeatherRepository
-): ViewModel() {
+class WeatherDataViewModel: ViewModel() {
 
     private var disposable: Disposable? = null
 
@@ -27,7 +24,7 @@ class WeatherDataViewModel (
     private fun getWeather() {
         _viewState.value = WeatherViewState.Loading
 
-        disposable = weatherRepository.getWeatherData("Moscow", 1, "M")
+        disposable = WeatherRepository.getWeatherData("Moscow", 1, "M")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
