@@ -21,7 +21,7 @@ interface ApiService {
     ):Single<WeatherDataApi>
 
 
-   /* companion object {
+    companion object {
         operator fun invoke(): ApiService {
             val key = "40a7956799be42f49bc8b6ac4bb8e432"
             val requestInterceptor = Interceptor{chain->
@@ -49,5 +49,5 @@ interface ApiService {
                 .build()
                 .create(ApiService::class.java)
         }
-    }*/
+    }
 }
