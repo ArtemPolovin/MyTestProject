@@ -15,7 +15,6 @@ interface ApiService {
 
     @GET("/v2.0/forecast/daily")
     fun getWeatherData(
-     //   @Query("key") key: String,
         @Query("city") city: String,
         @Query("days") days: Int,
         @Query("units") degreeType: String
