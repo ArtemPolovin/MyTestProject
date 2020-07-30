@@ -1,0 +1,25 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-kapt'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //Dagger2
+    kapt dagger.daggerCompiler
+    kapt dagger.daggerProcessor
+    implementation dagger.dagger
+    implementation dagger.daggerSupport
+    implementation dagger.daggerProducers
+
+    //RxJava3
+    implementation rxjava3.rxandroid
+    implementation rxjava3.rxjava
+    implementation rxjava3.rxkotlin
+    implementation rxjava3.rxjavaRetrofit
+}

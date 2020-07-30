@@ -1,8 +1,8 @@
 package com.example.mytestproject
 
 import android.app.Application
-import com.example.mytestproject.data.repository.weatherDataRepository.DaggerWeatherDataComponent
-import com.example.mytestproject.data.repository.weatherDataRepository.WeatherDataComponent
+import com.example.mytestproject.di.DaggerWeatherDataComponent
+import com.example.mytestproject.di.WeatherDataComponent
 
 class App : Application() {
 

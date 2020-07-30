@@ -9,7 +9,7 @@
 
         <variable
             name="weatherData"
-            type="com.example.mytestproject.ui.models.weatherDataModel.WeatherData" />
+            type="com.example.domain.models.WeatherData" />
 
     </data>
 
