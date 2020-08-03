@@ -1,15 +1,21 @@
-package com.example.mytestproject.di
+package com.example.data.di
 
 import com.example.data.apiservice.WeatherDataApiService
+import com.example.data.implementationRepo.WeatherDataRepositoryImpl
 import com.example.data.mappers.WeatherDataMapper
 import com.example.domain.repositories.WeatherDataRepository
-import com.example.data.implementationRepo.WeatherDataRepositoryImpl
+import com.example.domain.useCase.weatherData.FetchWeatherDataUseCase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class WeatherDataRepositoryModule {
+class WeatherDataModule {
+
+    @Provides
+    @Singleton
+    fun provideFetchWeatherDataUseCase(weatherDataRepository: WeatherDataRepository) =
+        FetchWeatherDataUseCase(weatherDataRepository)
 
     @Provides
     @Singleton

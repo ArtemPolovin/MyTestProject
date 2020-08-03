@@ -10,16 +10,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    //Dagger2
-    kapt dagger.daggerCompiler
-    kapt dagger.daggerProcessor
-    implementation dagger.dagger
-    implementation dagger.daggerSupport
-    implementation dagger.daggerProducers
-
-    //RxJava3
-    implementation rxjava3.rxandroid
+    //RxJava3d
     implementation rxjava3.rxjava
-    implementation rxjava3.rxkotlin
-    implementation rxjava3.rxjavaRetrofit
+
 }
