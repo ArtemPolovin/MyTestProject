@@ -7,7 +7,7 @@ import com.example.domain.repositories.WeatherDataRepository
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
-class WeatherDataRepositoryImpl @Inject constructor(
+class WeatherDataRepositoryImpl (
     private val weatherDataApiService : WeatherDataApiService,
     private val mapper : WeatherDataMapper
 ) : WeatherDataRepository {

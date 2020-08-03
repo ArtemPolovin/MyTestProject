@@ -26,7 +26,7 @@ class WeatherDataViewModel(
     private fun getWeather() {
         _viewState.value = WeatherViewState.Loading
 
-        disposable = fetchWeatherDataUseCase.fetchWeatherData("Moscow", 1, "M")
+        disposable = fetchWeatherDataUseCase.invoke("Moscow", 1, "M")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

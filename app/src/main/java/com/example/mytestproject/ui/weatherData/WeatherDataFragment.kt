@@ -20,7 +20,7 @@ class WeatherDataFragment : Fragment() {
 
     @Inject
     lateinit var weatherDataFactory: WeatherDataFactory
-    lateinit var weatherDataViewModel: WeatherDataViewModel
+    private lateinit var weatherDataViewModel: WeatherDataViewModel
 
     private lateinit var weatherDataBinding: WeatherDataFragmentBinding
 

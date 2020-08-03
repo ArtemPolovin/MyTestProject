@@ -4,7 +4,7 @@ import com.example.data.modelsApi.weatherDataApiModel.WeatherDataApiModel
 import com.example.domain.models.WeatherData
 import javax.inject.Inject
 
-class WeatherDataMapper @Inject constructor(){
+class WeatherDataMapper {
 
     fun mapWeather(weatherDataApiModel: WeatherDataApiModel): WeatherData {
         return WeatherData(

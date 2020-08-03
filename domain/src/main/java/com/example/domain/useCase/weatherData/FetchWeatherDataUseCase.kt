@@ -5,9 +5,9 @@ import com.example.domain.repositories.WeatherDataRepository
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
-class FetchWeatherDataUseCase @Inject constructor(private val weatherDataRepository: WeatherDataRepository) {
+class FetchWeatherDataUseCase (private val weatherDataRepository: WeatherDataRepository) {
 
-    fun fetchWeatherData(city: String,days: Int,degreeType: String): Single<WeatherData> {
+    fun invoke(city: String, days: Int, degreeType: String): Single<WeatherData> {
         return weatherDataRepository.getWeatherData(city,days,degreeType)
     }
 }
