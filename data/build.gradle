@@ -1,20 +1,20 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    buildToolsVersion "30.0.0"
 
     defaultConfig {
-        applicationId "com.example.mytestproject"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
@@ -23,18 +23,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
-    dataBinding {
-        enabled = true
-    }
 
 }
 
@@ -42,19 +30,12 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation project(path: ':domain')
-    implementation project(path: ':data')
 
     //appcompat
     implementation appcompat.appcompat
 
     //core-ktx
     implementation core.coreKtx
-
-    //constraintLayout
-    implementation constraintlayout.constraintlayout
-
-    //legacy-support-v4
-    implementation legacy.support4
 
     //junit
     testImplementation junit.junit
@@ -65,8 +46,9 @@ dependencies {
     //espresso
     androidTestImplementation espresso.espressoCore
 
-    //NavigationView
-    implementation material.material
+    //Retrofit2
+    implementation retrofit2.retrofit
+    implementation retrofit2.converterGson
 
     //RxJava3
     implementation rxjava3.rxandroid
@@ -74,25 +56,10 @@ dependencies {
     implementation rxjava3.rxkotlin
     implementation rxjava3.rxjavaRetrofit
 
-    //LiveData
-    implementation lifecycle.viewmodel
-    implementation lifecycle.livedataKtx
-    implementation lifecycle.lifecycleExtentions
-
-    //Picasso
-    implementation picasso.picasso
-
-    //NavigationFragment
-    implementation navigationFragment.navFragment
-
-    //Activity-ktx
-    implementation activity.activityKtx
-
     //Dagger2
     kapt dagger.daggerCompiler
     kapt dagger.daggerProcessor
     implementation dagger.dagger
     implementation dagger.daggerSupport
     implementation dagger.daggerProducers
-
 }

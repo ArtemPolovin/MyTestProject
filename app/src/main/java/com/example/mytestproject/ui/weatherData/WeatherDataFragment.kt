@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.mytestproject.App
 import com.example.mytestproject.R
 import com.example.mytestproject.databinding.WeatherDataFragmentBinding
-import com.example.mytestproject.ui.viewState.WeatherViewState
+import com.example.mytestproject.viewState.WeatherViewState
 import kotlinx.android.synthetic.main.weather_data_fragment.*
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ class WeatherDataFragment : Fragment() {
 
     @Inject
     lateinit var weatherDataFactory: WeatherDataFactory
-    lateinit var weatherDataViewModel: WeatherDataViewModel
+    private lateinit var weatherDataViewModel: WeatherDataViewModel
 
     private lateinit var weatherDataBinding: WeatherDataFragmentBinding
 
