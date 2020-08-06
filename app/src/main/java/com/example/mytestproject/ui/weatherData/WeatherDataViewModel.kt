@@ -35,7 +35,7 @@ class WeatherDataViewModel(
                 },
                 {
                     _viewState.value = WeatherViewState.Error
-                    Log.i("ERROR", "error = ${it.localizedMessage}")
+                    Log.i("ERROR", "error = ${it.printStackTrace()}")
                 }
             )
     }

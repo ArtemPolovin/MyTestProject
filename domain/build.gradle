@@ -10,6 +10,9 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
+    //junit
+    testImplementation junit.junit
+
     //RxJava3d
     implementation rxjava3.rxjava
 

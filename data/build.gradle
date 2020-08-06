@@ -62,4 +62,9 @@ dependencies {
     implementation dagger.dagger
     implementation dagger.daggerSupport
     implementation dagger.daggerProducers
+
+    //Room
+    implementation room.roomRuntime
+    kapt room.roomCompiler
+    implementation room.roomRxjava
 }
