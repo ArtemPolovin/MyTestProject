@@ -27,7 +27,8 @@ class WeatherDataRepositoryImpl(
           .subscribeOn(Schedulers.io())
           .doOnSuccess { weatherDataDao.insertWeatherData(weatherDataEntityMapper.fromApiToEntity(it)) }
           .map { mapper.mapWeather(it) }
-          .onErrorResumeNext { weatherDataEntityMapper.fromEntityToWeatherData(weatherDataDao.getWeatherDataFromDb(city,currentDate)) }
+          .onErrorResumeNext {Single.just(
+           weatherDataEntityMapper.fromEntityToWeatherData(weatherDataDao.getWeatherDataFromDb(city,currentDate))) }
     }
 
 

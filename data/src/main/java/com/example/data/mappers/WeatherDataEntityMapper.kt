@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import com.example.data.db.entities.WeatherDataEntity
 import com.example.data.modelsApi.weatherDataApiModel.WeatherDataApiModel
 import com.example.domain.models.WeatherData
-import io.reactivex.rxjava3.core.Single
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -22,11 +21,11 @@ class WeatherDataEntityMapper {
         )
     }
 
-    fun fromEntityToWeatherData(weatherDataEntity: WeatherDataEntity): Single<WeatherData> {
-        return Single.just(WeatherData(
+    fun fromEntityToWeatherData(weatherDataEntity: WeatherDataEntity): WeatherData {
+        return WeatherData(
             weatherDataEntity.cityName,
             weatherDataEntity.temperature,
             weatherDataEntity.icon
-        ))
+        )
     }
 }
