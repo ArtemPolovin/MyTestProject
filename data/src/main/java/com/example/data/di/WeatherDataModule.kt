@@ -1,7 +1,12 @@
 package com.example.data.di
 
+import android.content.Context
+import androidx.room.Room
 import com.example.data.apiservice.WeatherDataApiService
+import com.example.data.db.Database
+import com.example.data.db.dao.WeatherDataDao
 import com.example.data.implementationRepo.WeatherDataRepositoryImpl
+import com.example.data.mappers.WeatherDataEntityMapper
 import com.example.data.mappers.WeatherDataMapper
 import com.example.domain.repositories.WeatherDataRepository
 import com.example.domain.useCase.weatherData.FetchWeatherDataUseCase
@@ -10,7 +15,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class WeatherDataModule {
+class WeatherDataModule(private val context: Context) {
 
     @Provides
     @Singleton
@@ -21,12 +26,11 @@ class WeatherDataModule {
     @Singleton
     fun providerWeatherDataRepository(
         mapper: WeatherDataMapper,
-        weatherDataApiService: WeatherDataApiService
+        weatherDataApiService: WeatherDataApiService,
+        weatherDataDao: WeatherDataDao,
+        weatherDataEntityMapper: WeatherDataEntityMapper
     ): WeatherDataRepository =
-        WeatherDataRepositoryImpl(
-            weatherDataApiService,
-            mapper
-        )
+        WeatherDataRepositoryImpl(weatherDataApiService, mapper,weatherDataDao,weatherDataEntityMapper)
 
     @Provides
     @Singleton
@@ -34,4 +38,21 @@ class WeatherDataModule {
 
     @Provides
     fun providerMapper() = WeatherDataMapper()
+
+    @Provides
+    @Singleton
+    fun provideDatabase(): Database {
+        return Room.databaseBuilder(context.applicationContext, Database::class.java, "WeatherDB")
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWeatherDataDao(database: Database): WeatherDataDao {
+        return database.weatherDataDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWeatherDataEntityMapper() = WeatherDataEntityMapper()
 }

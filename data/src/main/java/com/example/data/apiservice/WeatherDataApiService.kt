@@ -1,11 +1,11 @@
 package com.example.data.apiservice
 
 import com.example.data.modelsApi.weatherDataApiModel.WeatherDataApiModel
-import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -18,7 +18,7 @@ interface WeatherDataApiService {
         @Query("city") city: String,
         @Query("days") days: Int,
         @Query("units") degreeType: String
-    ):Single<WeatherDataApiModel>
+    ): Single<WeatherDataApiModel>
 
 
     companion object {
@@ -45,7 +45,7 @@ interface WeatherDataApiService {
                 .client(okHttpClient)
                 .baseUrl("https://api.weatherbit.io")
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
                 .create(WeatherDataApiService::class.java)
         }
