@@ -3,6 +3,7 @@ package com.example.data.mappers
 import android.annotation.SuppressLint
 import com.example.data.db.entities.WeatherDataEntity
 import com.example.data.modelsApi.weatherDataApiModel.WeatherDataApiModel
+import com.example.data.utils.ICON_URL
 import com.example.domain.models.WeatherData
 import java.text.SimpleDateFormat
 import java.util.*
@@ -16,7 +17,7 @@ class WeatherDataEntityMapper {
             weatherDataApi.city_name,
             currentDate,
             weatherDataApi.data[0].temp.toString(),
-            "https://www.weatherbit.io/static/img/icons/${
+            "$ICON_URL${
             weatherDataApi.data[0].weather.icon}.png"
         )
     }
