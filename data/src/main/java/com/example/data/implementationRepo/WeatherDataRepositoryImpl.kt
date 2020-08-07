@@ -7,8 +7,8 @@ import com.example.data.mappers.WeatherDataEntityMapper
 import com.example.data.mappers.WeatherDataMapper
 import com.example.domain.models.WeatherData
 import com.example.domain.repositories.WeatherDataRepository
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,8 +27,10 @@ class WeatherDataRepositoryImpl(
           .subscribeOn(Schedulers.io())
           .doOnSuccess { weatherDataDao.insertWeatherData(weatherDataEntityMapper.fromApiToEntity(it)) }
           .map { mapper.mapWeather(it) }
-          .onErrorResumeNext {Single.just(
-           weatherDataEntityMapper.fromEntityToWeatherData(weatherDataDao.getWeatherDataFromDb(city,currentDate))) }
+          .onErrorResumeNext {
+             weatherDataDao.getWeatherDataFromDb(city,currentDate)
+                 .map {weatherDataEntityMapper.fromEntityToWeatherData(it)}
+          }
     }
 
 

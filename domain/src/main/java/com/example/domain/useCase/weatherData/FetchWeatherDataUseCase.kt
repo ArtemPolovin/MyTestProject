@@ -2,7 +2,7 @@ package com.example.domain.useCase.weatherData
 
 import com.example.domain.models.WeatherData
 import com.example.domain.repositories.WeatherDataRepository
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 
 class FetchWeatherDataUseCase (private val weatherDataRepository: WeatherDataRepository) {
 

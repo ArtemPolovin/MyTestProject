@@ -1,7 +1,7 @@
 package com.example.domain.repositories
 
 import com.example.domain.models.WeatherData
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 
 interface WeatherDataRepository {
 

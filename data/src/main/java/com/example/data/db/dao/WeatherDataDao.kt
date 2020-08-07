@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.data.db.entities.WeatherDataEntity
+import io.reactivex.Single
 
 
 @Dao
@@ -14,5 +15,5 @@ interface WeatherDataDao {
     fun insertWeatherData(weatherDataEntity: WeatherDataEntity)
 
     @Query("SELECT * FROM weather_data WHERE city_name = :cityName AND date = :currentDate")
-    fun getWeatherDataFromDb(cityName: String, currentDate: String): WeatherDataEntity
+    fun getWeatherDataFromDb(cityName: String, currentDate: String): Single<WeatherDataEntity>
 }
