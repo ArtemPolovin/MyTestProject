@@ -1,4 +1,4 @@
-package com.example.mytestproject.ui.weatherData
+package com.example.mytestproject.ui.weatherData.todayWeather
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -7,13 +7,15 @@ import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
-class WeatherDataFactory @Inject constructor(
+class TodayWeatherDataFactory @Inject constructor(
     private val fetchWeatherDataUseCase: FetchWeatherDataUseCase
 ): ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(WeatherDataViewModel::class.java)) {
-            return WeatherDataViewModel(fetchWeatherDataUseCase) as T
+        if (modelClass.isAssignableFrom(TodayWeatherDataViewModel::class.java)) {
+            return TodayWeatherDataViewModel(
+                fetchWeatherDataUseCase
+            ) as T
         }
         throw IllegalArgumentException("ViewModel was not found")
     }

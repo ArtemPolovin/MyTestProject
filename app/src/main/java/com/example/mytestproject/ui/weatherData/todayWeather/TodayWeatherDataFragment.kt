@@ -1,4 +1,4 @@
-package com.example.mytestproject.ui.weatherData
+package com.example.mytestproject.ui.weatherData.todayWeather
 
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
@@ -11,18 +11,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.mytestproject.App
 import com.example.mytestproject.R
-import com.example.mytestproject.databinding.WeatherDataFragmentBinding
+import com.example.mytestproject.databinding.TodayWeatherDataFragmentBinding
 import com.example.mytestproject.viewState.WeatherViewState
-import kotlinx.android.synthetic.main.weather_data_fragment.*
+import kotlinx.android.synthetic.main.today_weather_data_fragment.*
 import javax.inject.Inject
 
-class WeatherDataFragment : Fragment() {
+class TodayWeatherDataFragment : Fragment() {
 
     @Inject
-    lateinit var weatherDataFactory: WeatherDataFactory
-    private lateinit var weatherDataViewModel: WeatherDataViewModel
+    lateinit var todayWeatherDataFactory: TodayWeatherDataFactory
+    private lateinit var todayWeatherDataViewModel: TodayWeatherDataViewModel
 
-    private lateinit var weatherDataBinding: WeatherDataFragmentBinding
+    private lateinit var weatherDataBinding: TodayWeatherDataFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +30,7 @@ class WeatherDataFragment : Fragment() {
     ): View? {
 
         weatherDataBinding = DataBindingUtil.inflate(
-            layoutInflater, R.layout.weather_data_fragment, container, false
+            layoutInflater, R.layout.today_weather_data_fragment, container, false
         )
 
         return weatherDataBinding.root
@@ -39,26 +39,26 @@ class WeatherDataFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val animationDrawable = fragment_1_background.background as AnimationDrawable
+        val animationDrawable = weather_data_fragment.background as AnimationDrawable
         animationDrawable.setEnterFadeDuration(4000)
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
 
         (activity?.applicationContext as App).weatherDataComponent.injectWeatherDataFragment(this)
 
-        weatherDataViewModel =
-            ViewModelProvider(this, weatherDataFactory).get(WeatherDataViewModel::class.java)
+        todayWeatherDataViewModel =
+            ViewModelProvider(this, todayWeatherDataFactory).get(TodayWeatherDataViewModel::class.java)
 
         setupWeatherData()
 
         btnRetry.setOnClickListener {
-            weatherDataViewModel.onRetry()
+            todayWeatherDataViewModel.onRetry()
         }
 
     }
 
     private fun setupWeatherData() {
-        weatherDataViewModel.viewState.observe(viewLifecycleOwner, Observer {
+        todayWeatherDataViewModel.viewState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 WeatherViewState.Loading -> {
                     group_temp_abbreviation.visibility = View.GONE

@@ -14,11 +14,11 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/fragment_1_background"
+        android:id="@+id/weather_data_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient_list"
-        tools:context=".ui.weatherData.WeatherDataFragment">
+        tools:context=".ui.weatherData.todayWeather.TodayWeatherDataFragment">
 
         <TextView
             android:id="@+id/textLocation"

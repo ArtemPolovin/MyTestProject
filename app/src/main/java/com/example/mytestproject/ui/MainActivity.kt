@@ -1,56 +1,56 @@
 package com.example.mytestproject.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.view.GravityCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.mytestproject.R
-import com.example.mytestproject.ui.weatherData.WeatherDataFragment
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity() {
 
-    private lateinit var fragment: Fragment
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navView: NavigationView
+    private lateinit var navController: NavController
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        nav_view.setNavigationItemSelectedListener(this)
         setSupportActionBar(toolbar)
-        val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
+
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navView = findViewById(R.id.nav_view)
+        navController = findNavController(R.id.nav_host_fragment)
+
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.nav_first_fragment,
+                R.id.nav_second_fragment,
+                R.id.nav_third_fragment,
+                R.id.nav_today_weather,
+                R.id.nav_three_days_weather,
+                R.id.nav_ten_days_fragment
+            ), drawerLayout
         )
-        drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
+        bottom_navigation.setupWithNavController(navController)
+
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_first_fragment -> fragment =
-                WeatherDataFragment()
-            R.id.nav_second_fragment -> fragment =
-                FragmentSecond()
-            R.id.nav_third_fragment -> fragment =
-                FragmentThird()
-        }
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, fragment)
-            .commit()
-        item.isChecked = true
-        title = item.title
-        drawer_layout.closeDrawers()
-        return true
-    }
-
-    override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
-        } else super.onBackPressed()
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.mytestproject.ui.weatherData
+package com.example.mytestproject.ui.weatherData.todayWeather
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -10,7 +10,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class WeatherDataViewModel(
+class TodayWeatherDataViewModel(
     private val fetchWeatherDataUseCase: FetchWeatherDataUseCase
 ) : ViewModel() {
 
