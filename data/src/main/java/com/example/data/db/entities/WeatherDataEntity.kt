@@ -9,7 +9,8 @@ class WeatherDataEntity(
     val cityName: String,
     val date: String,
     val temperature: String,
-    val icon: String
+    val icon: String,
+    val description: String
 
 
 )

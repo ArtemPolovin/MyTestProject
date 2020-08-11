@@ -18,14 +18,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient_list"
-        tools:context=".ui.weatherData.todayWeather.TodayWeatherDataFragment">
+        tools:context=".ui.weatherData.todayWeather.WeatherDataFragment">
 
         <TextView
             android:id="@+id/textLocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="90dp"
             android:text="@{weatherData.city_name}"
             android:textColor="@color/text_color"
             android:textSize="36sp"
@@ -96,7 +96,8 @@
             android:id="@+id/textError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sorry, you got some error"
+            android:text="@string/text_error"
+            android:textColor="@color/text_error_color"
             android:textSize="20sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"

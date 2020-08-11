@@ -100,4 +100,7 @@ dependencies {
     kapt room.roomCompiler
     implementation room.roomRxjava
 
+    //RecyclerView
+    implementation recyclerView.recyclerView
+
 }

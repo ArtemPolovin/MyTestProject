@@ -4,10 +4,10 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/nav_first_fragment"
+            android:id="@+id/nav_today_weather"
             android:icon="@drawable/ic_one"
             android:menuCategory="secondary"
-            android:title="Today" />
+            android:title="Current Weather" />
 
         <item
             android:id="@+id/nav_second_fragment"

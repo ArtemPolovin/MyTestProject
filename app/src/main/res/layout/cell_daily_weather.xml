@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="weatherData"
+            type="com.example.domain.models.WeatherData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/daily_weather_cell_background"
+        android:padding="8dp"
+        android:layout_margin="8dp">
+
+
+        <TextView
+            android:id="@+id/tex_daily_weather_date_cell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{weatherData.date}"
+            android:textSize="20sp"
+            android:textColor="@color/primary_white_text_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/tex_weather_temp_cell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@{weatherData.temp}"
+            android:textColor="@color/primary_white_text_color"
+            android:textSize="46sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/text_daily_temp_determination_cell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="o"
+            android:textSize="20sp"
+            android:textColor="@color/primary_white_text_color"
+            app:layout_constraintStart_toEndOf="@+id/tex_weather_temp_cell"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_daily_temp_type_cell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C"
+            android:textColor="@color/primary_white_text_color"
+            android:textSize="40sp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tex_weather_temp_cell"
+            app:layout_constraintStart_toEndOf="@+id/tex_weather_temp_cell" />
+
+        <TextView
+            android:id="@+id/tex_daily_weather_condition_cell"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{weatherData.description}"
+            android:textSize="30sp"
+            android:textColor="@color/primary_white_text_color"
+            app:layout_constraintTop_toBottomOf="@+id/tex_weather_temp_cell"
+            app:layout_constraintStart_toStartOf="@id/tex_weather_temp_cell"/>
+
+        <ImageView
+            android:id="@+id/image_daily_weather_cell"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toEndOf="@+id/text_daily_temp_type_cell"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="20dp"
+            app:loadImage="@{weatherData.icon}"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

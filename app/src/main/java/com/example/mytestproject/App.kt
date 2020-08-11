@@ -1,6 +1,7 @@
 package com.example.mytestproject
 
 import android.app.Application
+import com.example.data.db.Database
 import com.example.data.di.WeatherDataModule
 import com.example.mytestproject.di.DaggerWeatherDataComponent
 import com.example.mytestproject.di.WeatherDataComponent
