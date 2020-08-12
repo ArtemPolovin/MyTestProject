@@ -4,8 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.data.db.entities.WeatherDataEntity
-import com.example.domain.models.WeatherData
+import com.example.data.db.tables.WeatherDataTable
 import io.reactivex.Single
 
 
@@ -13,17 +12,17 @@ import io.reactivex.Single
 interface WeatherDataDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertWeatherData(weatherDataEntity: WeatherDataEntity)
+    fun insertWeatherData(weatherDataTable: WeatherDataTable)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertListOfWeatherData(weatherDataList: List<WeatherDataEntity>)
+    fun insertListOfWeatherData(weatherDataList: List<WeatherDataTable>)
 
     @Query("SELECT * FROM weather_data WHERE city_name = :cityName AND date = :currentDate")
-    fun getWeatherDataFromDb(cityName: String, currentDate: String): Single<WeatherDataEntity>
+    fun getWeatherDataFromDb(cityName: String, currentDate: String): Single<WeatherDataTable>
 
     @Query("SELECT * FROM weather_data WHERE city_name = :cityName AND date in (:dateList)")
-    fun getListOfWeatherData(cityName: String, dateList: List<String>): Single<List<WeatherDataEntity>>
+    fun getListOfWeatherData(cityName: String, dateList: List<String>): Single<List<WeatherDataTable>>
 
     @Query("DELETE FROM weather_data")
-    fun deleteAllFromDb()
+    fun deleteAllFromWeatherDataTable()
 }

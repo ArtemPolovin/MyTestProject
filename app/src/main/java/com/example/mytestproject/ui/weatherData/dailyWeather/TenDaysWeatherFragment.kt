@@ -38,7 +38,7 @@ class TenDaysWeatherFragment : Fragment() {
         dailyWeatherViewModel =
             ViewModelProvider(this, dailyWeatherFactory).get(DailyWeatherViewModel::class.java)
 
-        dailyWeatherViewModel.getWeatherData(10)
+        dailyWeatherViewModel.getWeatherData(11) // one more day because the first current day is not included in the list
 
         context.let {
             rv_ten_days_weather.layoutManager = LinearLayoutManager(

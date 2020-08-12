@@ -4,5 +4,6 @@ data class Data(
     val city_name: String,
     val temp: Double,
     val weather: Weather,
-    val datetime: String
+    val datetime: String,
+    val timezone: String
 )

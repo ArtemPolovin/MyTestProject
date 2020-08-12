@@ -2,11 +2,14 @@ package com.example.data.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.migration.Migration
 import com.example.data.apiservice.WeatherDataApiService
 import com.example.data.db.Database
+import com.example.data.db.dao.TimezoneDao
 import com.example.data.db.dao.WeatherDataDao
 import com.example.data.implementationRepo.CurrentWeatherRepositoryImpl
 import com.example.data.implementationRepo.DailyWeatherRepositoryImpl
+import com.example.data.mappers.TimezoneEntityMapper
 import com.example.data.mappers.WeatherDataEntityMapper
 import com.example.data.mappers.WeatherDataMapper
 import com.example.domain.repositories.CurrentWeatherRepository
@@ -36,13 +39,17 @@ class WeatherDataModule(private val context: Context) {
         mapper: WeatherDataMapper,
         weatherDataApiService: WeatherDataApiService,
         weatherDataDao: WeatherDataDao,
-        weatherDataEntityMapper: WeatherDataEntityMapper
+        weatherDataEntityMapper: WeatherDataEntityMapper,
+        timezoneDao: TimezoneDao,
+        timezoneEntityMapper: TimezoneEntityMapper
     ): CurrentWeatherRepository =
         CurrentWeatherRepositoryImpl(
             weatherDataApiService,
             mapper,
             weatherDataDao,
-            weatherDataEntityMapper
+            weatherDataEntityMapper,
+            timezoneDao,
+            timezoneEntityMapper
         )
 
     @Provides
@@ -51,12 +58,14 @@ class WeatherDataModule(private val context: Context) {
         mapper: WeatherDataMapper,
         weatherDataApiService: WeatherDataApiService,
         weatherDataDao: WeatherDataDao,
-        weatherDataEntityMapper: WeatherDataEntityMapper
+        weatherDataEntityMapper: WeatherDataEntityMapper,
+        timezoneDao: TimezoneDao
     ): DailyWeatherRepository = DailyWeatherRepositoryImpl(
         weatherDataApiService,
         mapper,
         weatherDataDao,
-        weatherDataEntityMapper
+        weatherDataEntityMapper,
+        timezoneDao
     )
 
 
@@ -71,6 +80,7 @@ class WeatherDataModule(private val context: Context) {
     @Singleton
     fun provideDatabase(): Database {
         return Room.databaseBuilder(context.applicationContext, Database::class.java, "WeatherDB")
+           // .addMigrations(MIGRATION_2_3)
             .build()
     }
 
@@ -82,5 +92,16 @@ class WeatherDataModule(private val context: Context) {
 
     @Provides
     @Singleton
+    fun provideTimezoneDao(database: Database): TimezoneDao {
+        return database.timezoneDao()
+    }
+
+    @Provides
+    @Singleton
     fun provideWeatherDataEntityMapper() = WeatherDataEntityMapper()
+
+    @Provides
+    @Singleton
+    fun provideTimezoneEntityMapper() = TimezoneEntityMapper()
+
 }

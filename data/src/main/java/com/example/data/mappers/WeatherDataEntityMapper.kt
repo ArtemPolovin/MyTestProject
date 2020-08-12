@@ -1,44 +1,41 @@
 package com.example.data.mappers
 
-import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.example.data.db.entities.WeatherDataEntity
+import com.example.data.db.tables.WeatherDataTable
 import com.example.data.modelsApi.currentWeather.CurrentWeatherApiModel
 import com.example.data.modelsApi.multiDaysWeather.DailyWeatherApi
 import com.example.data.utils.ICON_URL
+import com.example.data.utils.getCurrentDateByTimezone
 import com.example.data.utils.parsingDate
 import com.example.domain.models.WeatherData
-import java.text.SimpleDateFormat
-import java.util.*
+import kotlin.math.roundToInt
 
 class WeatherDataEntityMapper {
-    @SuppressLint("SimpleDateFormat")
-    fun fromApiToEntity(currentWeatherApi: CurrentWeatherApiModel): WeatherDataEntity {
-        val currentDate = SimpleDateFormat("yyyy-MM-dd").format(Date())
+    fun fromApiToEntity(currentWeatherApi: CurrentWeatherApiModel): WeatherDataTable {
 
-        return WeatherDataEntity(
-            currentWeatherApi.data[0].city_name,
-            currentDate,
-            currentWeatherApi.data[0].temp.toString(),
-            "$ICON_URL${
+        return WeatherDataTable(
+            cityName = currentWeatherApi.data[0].city_name,
+            date = getCurrentDateByTimezone(currentWeatherApi.data[0].timezone),
+            temperature = currentWeatherApi.data[0].temp.roundToInt().toString(),
+            icon = "$ICON_URL${
             currentWeatherApi.data[0].weather.icon}.png",
-            currentWeatherApi.data[0].weather.description
+            description = currentWeatherApi.data[0].weather.description
         )
     }
 
-    fun fromApiToEntityList(dailyWeatherApi: DailyWeatherApi): List<WeatherDataEntity> {
-        val list = mutableListOf<WeatherDataEntity>()
+    fun fromApiToEntityList(dailyWeatherApi: DailyWeatherApi): List<WeatherDataTable> {
+        val list = mutableListOf<WeatherDataTable>()
 
-        for (element in dailyWeatherApi.data) {
+        for (i in 1 until  dailyWeatherApi.data.size) { //The loop starts from the second element of the list because the first element (current day) is not included
             list.add(
-                WeatherDataEntity(
-                    dailyWeatherApi.city_name,
-                    element.datetime,
-                    element.max_temp.toInt().toString(),
-                    "$ICON_URL${element.weather.icon}.png",
-                    element.weather.description
+                WeatherDataTable(
+                    cityName = dailyWeatherApi.city_name,
+                    date = dailyWeatherApi.data[i].datetime,
+                    temperature = dailyWeatherApi.data[i].max_temp.roundToInt().toString(),
+                    icon = "$ICON_URL${dailyWeatherApi.data[i].weather.icon}.png",
+                    description = dailyWeatherApi.data[i].weather.description
                 )
             )
         }
@@ -47,29 +44,29 @@ class WeatherDataEntityMapper {
 
     @ExperimentalStdlibApi
     @RequiresApi(Build.VERSION_CODES.O)
-    fun fromEntityToWeatherData(weatherDataEntity: WeatherDataEntity): WeatherData {
+    fun fromEntityToWeatherData(weatherDataTable: WeatherDataTable): WeatherData {
         return WeatherData(
-            weatherDataEntity.cityName,
-            weatherDataEntity.temperature,
-            weatherDataEntity.icon,
-            parsingDate(weatherDataEntity.date),
-            weatherDataEntity.description
+            city_name = weatherDataTable.cityName,
+            temp = weatherDataTable.temperature,
+            icon = weatherDataTable.icon,
+            date = parsingDate(weatherDataTable.date),
+            description = weatherDataTable.description
         )
     }
 
     @ExperimentalStdlibApi
     @RequiresApi(Build.VERSION_CODES.O)
-    fun fromEntityListToWeatherDataList(entityList: List<WeatherDataEntity>): List<WeatherData> {
+    fun fromEntityListToWeatherDataList(tableList: List<WeatherDataTable>): List<WeatherData> {
         val list = mutableListOf<WeatherData>()
 
-        for (element in entityList) {
+        for (element in tableList) {
             list.add(
                 WeatherData(
-                    element.cityName,
-                    element.temperature,
-                    element.icon,
-                    parsingDate(element.date),
-                    element.description
+                    city_name = element.cityName,
+                    temp = element.temperature,
+                    icon = element.icon,
+                    date = parsingDate(element.date),
+                    description = element.description
                 )
             )
         }

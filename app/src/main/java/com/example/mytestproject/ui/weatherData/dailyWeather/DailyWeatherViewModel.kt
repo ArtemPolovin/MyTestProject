@@ -20,7 +20,7 @@ class DailyWeatherViewModel(private val dailyWeatherUseCase: FetchDailyWeatherUs
     private fun fetchDailyWeather(days: Int) {
         _viewState.value = WeatherViewState.Loading
 
-       disposable =  dailyWeatherUseCase("Moscow", days, "M")
+       disposable =  dailyWeatherUseCase("Modesto", days, "I")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
