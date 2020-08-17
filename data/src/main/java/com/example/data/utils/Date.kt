@@ -10,7 +10,7 @@ import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalStdlibApi
-fun parsingDate(date: String): String {
+fun parsingDate(date: String): String {  //The method converts date. For example from "8.16.2020" to "Sunday, 16"
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val dateTime = LocalDate.parse(date, formatter)
     return dateTime.format(DateTimeFormatter.ofPattern("EEEE, d"))
@@ -25,7 +25,7 @@ fun getCurrentDateByTimezone(timezone: String) : String{
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
- fun getDateList(days: Int,timezone: String): List<String> {
+ fun getDateList(days: Int,timezone: String): List<String> { //The method gets current date by timezone and creates list of next dates depending on the number of received days
     val currentDate = getCurrentDateByTimezone(timezone)
     val list = mutableListOf<String>()
     var localDate = LocalDate.parse(currentDate)

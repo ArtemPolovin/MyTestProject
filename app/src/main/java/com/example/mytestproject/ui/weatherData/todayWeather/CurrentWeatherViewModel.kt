@@ -1,18 +1,23 @@
 package com.example.mytestproject.ui.weatherData.todayWeather
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domain.useCase.weatherData.FetchCurrentWeatherUseCase
+import com.example.mytestproject.util.loadCityModel
 import com.example.mytestproject.viewState.WeatherViewState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class WeatherDataViewModel(
-    private val fetchCurrentWeatherUseCase: FetchCurrentWeatherUseCase
-) : ViewModel() {
+class CurrentWeatherViewModel(
+    private val fetchCurrentWeatherUseCase: FetchCurrentWeatherUseCase,
+    context: Context
+) : ViewModel(){
+
+    private var cityId = loadCityModel(context).city_id // loading data from SharedPreferences
 
     private var disposable: Disposable? = null
 
@@ -20,13 +25,13 @@ class WeatherDataViewModel(
     val viewState: LiveData<WeatherViewState> get() = _viewState
 
     init {
-        getWeather()
+        getWeather(cityId)
     }
 
-    private fun getWeather() {
+    private fun getWeather(cityId: Int) { // the method gets current weather data from Api
         _viewState.value = WeatherViewState.Loading
 
-        disposable = fetchCurrentWeatherUseCase("Modesto",  "I")
+        disposable = fetchCurrentWeatherUseCase(cityId,  "I")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -41,7 +46,7 @@ class WeatherDataViewModel(
     }
 
     fun onRetry() {
-        getWeather()
+        getWeather(cityId)
     }
 
     override fun onCleared() {

@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mytestproject.App
 import com.example.mytestproject.R
+import com.example.mytestproject.util.FOUR_DAYS
+import com.example.mytestproject.util.loadCityModel
 import com.example.mytestproject.util.showDailyWeatherRequestResult
 import kotlinx.android.synthetic.main.fragment_three_days_weather.*
 import javax.inject.Inject
@@ -29,17 +31,16 @@ class ThreeDaysWeatherFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_three_days_weather, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         (activity?.applicationContext as App).weatherDataComponent.inject(this)
 
-        getTitle("Moscow")
+        getTitle(loadCityModel(view.context).city_name)
 
         dailyWeatherViewModel =
             ViewModelProvider(this, dailyWeatherFactory).get(DailyWeatherViewModel::class.java)
 
-        dailyWeatherViewModel.getWeatherData(4) // one more day because the first current day is not included in the list
+        dailyWeatherViewModel.getWeatherData(FOUR_DAYS) // one more day because the first current day is not included in the list
 
         context.let {
             rv_three_days_weather.layoutManager =
@@ -47,10 +48,9 @@ class ThreeDaysWeatherFragment : Fragment() {
         }
 
         setupDailyWeatherData()
-
     }
 
-    private fun setupDailyWeatherData() {
+    private fun setupDailyWeatherData() { //the method shows information on UI, depending on what data comes from api
 
         dailyWeatherViewModel.viewState.observe(viewLifecycleOwner, Observer {viewState->
             showDailyWeatherRequestResult(

@@ -1,6 +1,7 @@
 package com.example.data.implementationRepo
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.example.data.apiservice.WeatherDataApiService
 import com.example.data.db.dao.TimezoneDao
@@ -25,9 +26,9 @@ class CurrentWeatherRepositoryImpl(
 
     @ExperimentalStdlibApi
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun getWeatherData(city: String, degreeType: String): Single<WeatherData> {
-
-        return weatherDataApiService.getCurrentWeatherData(city, degreeType)
+    override fun getWeatherData(cityId: Int, degreeType: String): Single<WeatherData> { // The method takes current weather data from api, then saves the data to SQLite table.
+                                                                                        // If there is an error in the request, the method takes data from SQLite table and return it
+        return weatherDataApiService.getCurrentWeatherData(cityId, degreeType)
             .subscribeOn(Schedulers.io())
             .doOnSuccess {
                 weatherDataDao.insertWeatherData(weatherDataEntityMapper.fromApiToEntity(it))
@@ -36,8 +37,8 @@ class CurrentWeatherRepositoryImpl(
             .map { mapper.mapWeather(it) }
             .onErrorResumeNext {
                 weatherDataDao.getWeatherDataFromDb(
-                    city,
-                    getCurrentDateByTimezone(timezoneDao.getTimezoneByCityName(city))
+                    cityId,
+                    getCurrentDateByTimezone(timezoneDao.getTimezoneByCityId(cityId))
                 )
                     .map { weatherDataEntityMapper.fromEntityToWeatherData(it) }
             }

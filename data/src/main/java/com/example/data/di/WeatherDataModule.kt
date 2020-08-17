@@ -1,6 +1,7 @@
 package com.example.data.di
 
 import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import androidx.room.migration.Migration
 import com.example.data.apiservice.WeatherDataApiService
@@ -22,6 +23,10 @@ import javax.inject.Singleton
 
 @Module
 class WeatherDataModule(private val context: Context) {
+
+    @Provides
+    @Singleton
+    fun provideContext(): Context = context
 
     @Provides
     @Singleton
@@ -80,7 +85,7 @@ class WeatherDataModule(private val context: Context) {
     @Singleton
     fun provideDatabase(): Database {
         return Room.databaseBuilder(context.applicationContext, Database::class.java, "WeatherDB")
-           // .addMigrations(MIGRATION_2_3)
+            //.fallbackToDestructiveMigration()
             .build()
     }
 
@@ -98,10 +103,14 @@ class WeatherDataModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun provideWeatherDataEntityMapper() = WeatherDataEntityMapper()
+    fun provideWeatherDataEntityMapper() = WeatherDataEntityMapper(context)
 
     @Provides
     @Singleton
-    fun provideTimezoneEntityMapper() = TimezoneEntityMapper()
+    fun provideTimezoneEntityMapper() = TimezoneEntityMapper(context)
+
+    @Provides
+    @Singleton
+    fun provideActivity() = AppCompatActivity()
 
 }

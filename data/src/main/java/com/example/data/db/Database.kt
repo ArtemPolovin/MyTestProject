@@ -11,7 +11,7 @@ import com.example.data.db.tables.WeatherDataTable
 
 @Database(
     entities = [WeatherDataTable::class, TimezoneTable::class],
-    version = 3,
+    version = 5,
     exportSchema = false
 )
 abstract class Database : RoomDatabase() {

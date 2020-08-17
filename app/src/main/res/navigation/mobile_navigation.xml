@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_today_weather"
-        android:name="com.example.mytestproject.ui.weatherData.todayWeather.WeatherDataFragment"
+        android:name="com.example.mytestproject.ui.weatherData.todayWeather.CurrentWeatherFragment"
         android:label="Today" >
         <action
             android:id="@+id/action_nav_today_weather_to_nav_second_fragment2"
@@ -33,6 +33,13 @@
         <action
             android:id="@+id/action_nav_today_weather_to_tenDaysWeatherFragment"
             app:destination="@id/nav_ten_days_fragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_nav_today_weather_to_searchCityFragment"
+            app:destination="@id/search_city"
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_right"
             app:popEnterAnim="@anim/enter_from_right"
@@ -71,6 +78,13 @@
             app:exitAnim="@anim/exit_to_right"
             app:popEnterAnim="@anim/enter_from_right"
             app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_nav_second_fragment_to_search_city"
+            app:destination="@id/search_city"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/nav_third_fragment"
@@ -101,6 +115,13 @@
         <action
             android:id="@+id/action_nav_third_fragment_to_tenDaysWeatherFragment"
             app:destination="@id/nav_ten_days_fragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_nav_third_fragment_to_search_city"
+            app:destination="@id/search_city"
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_right"
             app:popEnterAnim="@anim/enter_from_right"
@@ -138,6 +159,13 @@
             app:exitAnim="@anim/exit_to_right"
             app:popEnterAnim="@anim/enter_from_right"
             app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_nav_three_days_weather_to_search_city"
+            app:destination="@id/search_city"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
     <fragment
         android:id="@+id/nav_ten_days_fragment"
@@ -167,6 +195,26 @@
         <action
             android:id="@+id/action_tenDaysWeatherFragment_to_three_days_weather"
             app:destination="@id/nav_three_days_weather"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+        <action
+            android:id="@+id/action_nav_ten_days_fragment_to_search_city"
+            app:destination="@id/search_city"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/search_city"
+        android:name="com.example.mytestproject.ui.searchCity.SearchCityFragment"
+        android:label="Search city"
+        tools:layout="@layout/fragment_search_city">
+        <action
+            android:id="@+id/action_searchCityFragment_to_nav_today_weather"
+            app:destination="@id/nav_today_weather"
             app:enterAnim="@anim/enter_from_right"
             app:exitAnim="@anim/exit_to_right"
             app:popEnterAnim="@anim/enter_from_right"

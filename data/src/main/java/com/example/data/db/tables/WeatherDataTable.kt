@@ -1,12 +1,15 @@
 package com.example.data.db.tables
 
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
+import com.example.domain.models.CityModel
 
-@Entity(tableName = "weather_data", primaryKeys = ["city_name","date"])
+@Entity(tableName = "weather_data", primaryKeys = ["city_id","date"])
 class WeatherDataTable(
-    @ColumnInfo(name = "city_name")
-    val cityName: String,
+
+    @Embedded
+    val cityModel: CityModel,
     val date: String,
     val temperature: String,
     val icon: String,
