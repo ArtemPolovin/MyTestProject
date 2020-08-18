@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.O)
-@ExperimentalStdlibApi
 fun parsingDate(date: String): String {
     val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val dateTime = LocalDate.parse(date, formatter)

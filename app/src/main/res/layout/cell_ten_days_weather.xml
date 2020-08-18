@@ -20,7 +20,7 @@
 
 
         <TextView
-            android:id="@+id/tex_daily_weather_date_cell"
+            android:id="@+id/tex_date_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{weatherData.date}"
@@ -42,7 +42,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/text_daily_temp_determination_cell"
+            android:id="@+id/text_temp_determination_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="o"
@@ -52,7 +52,7 @@
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/text_daily_temp_type_cell"
+            android:id="@+id/text_temp_type_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="C"
@@ -63,7 +63,7 @@
             app:layout_constraintStart_toEndOf="@+id/tex_weather_temp_cell" />
 
         <TextView
-            android:id="@+id/tex_daily_weather_condition_cell"
+            android:id="@+id/text_weather_condition_cell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{weatherData.description}"
@@ -73,11 +73,11 @@
             app:layout_constraintStart_toStartOf="@id/tex_weather_temp_cell"/>
 
         <ImageView
-            android:id="@+id/image_daily_weather_cell"
+            android:id="@+id/image_cell"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:background="@android:color/transparent"
-            app:layout_constraintStart_toEndOf="@+id/text_daily_temp_type_cell"
+            app:layout_constraintStart_toEndOf="@+id/text_temp_type_cell"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="20dp"
             app:loadImage="@{weatherData.icon}"/>

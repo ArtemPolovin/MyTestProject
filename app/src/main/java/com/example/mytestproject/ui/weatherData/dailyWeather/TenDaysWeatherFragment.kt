@@ -55,8 +55,8 @@ class TenDaysWeatherFragment : Fragment() {
         dailyWeatherViewModel.viewState.observe(viewLifecycleOwner, Observer {viewState ->
             showDailyWeatherRequestResult(
                 viewState,
-                progressbar_ten_days_Weather,
-                txt_ten_days_weather_error,
+                progressbar,
+                txt_error,
                 rv_ten_days_weather,
                 TenDaysWeatherAdapter()
             )
