@@ -7,13 +7,13 @@ import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
-class WeatherDataFactory @Inject constructor(
+class CurrentWeatherFactory @Inject constructor(
     private val fetchCurrentWeatherUseCase: FetchCurrentWeatherUseCase
 ): ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(WeatherDataViewModel::class.java)) {
-            return WeatherDataViewModel(
+        if (modelClass.isAssignableFrom(CurrentWeatherViewModel::class.java)) {
+            return CurrentWeatherViewModel(
                 fetchCurrentWeatherUseCase
             ) as T
         }

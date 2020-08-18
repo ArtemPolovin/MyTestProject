@@ -10,7 +10,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class WeatherDataViewModel(
+class CurrentWeatherViewModel(
     private val fetchCurrentWeatherUseCase: FetchCurrentWeatherUseCase
 ) : ViewModel() {
 
@@ -26,7 +26,7 @@ class WeatherDataViewModel(
     private fun getWeather() {
         _viewState.value = WeatherViewState.Loading
 
-        disposable = fetchCurrentWeatherUseCase("Modesto",  "I")
+        disposable = fetchCurrentWeatherUseCase("Moscow",  "M")
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

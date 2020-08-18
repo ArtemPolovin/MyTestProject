@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient_list"
-        tools:context=".ui.weatherData.todayWeather.WeatherDataFragment">
+        tools:context=".ui.weatherData.todayWeather.CurrentWeatherFragment">
 
         <TextView
             android:id="@+id/textLocation"

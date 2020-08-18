@@ -12,18 +12,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.mytestproject.App
 import com.example.mytestproject.R
-import com.example.mytestproject.databinding.TodayWeatherDataFragmentBinding
+import com.example.mytestproject.databinding.WeatherDataFragmentBinding
 import com.example.mytestproject.viewState.WeatherViewState
-import kotlinx.android.synthetic.main.today_weather_data_fragment.*
+import kotlinx.android.synthetic.main.weather_data_fragment.*
 import javax.inject.Inject
 
-class WeatherDataFragment : Fragment() {
+class CurrentWeatherFragment : Fragment() {
 
     @Inject
-    lateinit var weatherDataFactory: WeatherDataFactory
-    private lateinit var weatherDataViewModel: WeatherDataViewModel
+    lateinit var currentWeatherFactory: CurrentWeatherFactory
+    private lateinit var currentWeatherViewModel: CurrentWeatherViewModel
 
-    private lateinit var weatherDataBinding: TodayWeatherDataFragmentBinding
+    private lateinit var weatherDataBinding: WeatherDataFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +31,7 @@ class WeatherDataFragment : Fragment() {
     ): View? {
 
         weatherDataBinding = DataBindingUtil.inflate(
-            layoutInflater, R.layout.today_weather_data_fragment, container, false
+            layoutInflater, R.layout.weather_data_fragment, container, false
         )
 
         return weatherDataBinding.root
@@ -49,20 +49,20 @@ class WeatherDataFragment : Fragment() {
 
         (activity?.applicationContext as App).weatherDataComponent.inject(this)
 
-        weatherDataViewModel =
-            ViewModelProvider(this, weatherDataFactory).get(WeatherDataViewModel::class.java)
+        currentWeatherViewModel =
+            ViewModelProvider(this, currentWeatherFactory).get(CurrentWeatherViewModel::class.java)
 
 
         setupWeatherData()
 
         btnRetry.setOnClickListener {
-            weatherDataViewModel.onRetry()
+            currentWeatherViewModel.onRetry()
         }
 
     }
 
     private fun setupWeatherData() {
-        weatherDataViewModel.viewState.observe(viewLifecycleOwner, Observer {
+        currentWeatherViewModel.viewState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 WeatherViewState.Loading -> {
                     group_temp_abbreviation.visibility = View.GONE

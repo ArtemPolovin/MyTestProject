@@ -55,9 +55,10 @@ class ThreeDaysWeatherFragment : Fragment() {
         dailyWeatherViewModel.viewState.observe(viewLifecycleOwner, Observer {viewState->
             showDailyWeatherRequestResult(
                 viewState,
-                progressbar_three_days_Weather,
-                txt_three_days_weather_error,
-                rv_three_days_weather
+                progressbar,
+                txt_error,
+                rv_three_days_weather,
+                ThreeDaysWeatherAdapter()
             )
         })
 
