@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "timezone")
-class TimezoneTable(
+class TimezoneEntity(
 
     @PrimaryKey(autoGenerate = false)
     val cityName: String,

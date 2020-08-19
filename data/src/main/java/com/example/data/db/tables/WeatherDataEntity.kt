@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 
 @Entity(tableName = "weather_data", primaryKeys = ["city_name","date"])
-class WeatherDataTable(
+class WeatherDataEntity(
     @ColumnInfo(name = "city_name")
     val cityName: String,
     val date: String,

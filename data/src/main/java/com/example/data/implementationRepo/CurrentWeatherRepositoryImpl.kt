@@ -1,7 +1,5 @@
 package com.example.data.implementationRepo
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.example.data.apiservice.WeatherDataApiService
 import com.example.data.db.dao.TimezoneDao
 import com.example.data.db.dao.WeatherDataDao
@@ -23,8 +21,7 @@ class CurrentWeatherRepositoryImpl(
     private val timezoneEntityMapper: TimezoneEntityMapper
 ) : CurrentWeatherRepository {
 
-    @ExperimentalStdlibApi
-    @RequiresApi(Build.VERSION_CODES.O)
+
     override fun getWeatherData(city: String, degreeType: String): Single<WeatherData> {
 
         return weatherDataApiService.getCurrentWeatherData(city, degreeType)

@@ -1,9 +1,6 @@
 package com.example.data.mappers
 
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
-import com.example.data.db.tables.WeatherDataTable
+import com.example.data.db.tables.WeatherDataEntity
 import com.example.data.modelsApi.currentWeather.CurrentWeatherApiModel
 import com.example.data.modelsApi.multiDaysWeather.DailyWeatherApi
 import com.example.data.utils.ICON_URL
@@ -13,9 +10,9 @@ import com.example.domain.models.WeatherData
 import kotlin.math.roundToInt
 
 class WeatherDataEntityMapper {
-    fun fromApiToEntity(currentWeatherApi: CurrentWeatherApiModel): WeatherDataTable {
+    fun fromApiToEntity(currentWeatherApi: CurrentWeatherApiModel): WeatherDataEntity {
 
-        return WeatherDataTable(
+        return WeatherDataEntity(
             cityName = currentWeatherApi.data[0].city_name,
             date = getCurrentDateByTimezone(currentWeatherApi.data[0].timezone),
             temperature = currentWeatherApi.data[0].temp.roundToInt().toString(),
@@ -25,12 +22,12 @@ class WeatherDataEntityMapper {
         )
     }
 
-    fun fromApiToEntityList(dailyWeatherApi: DailyWeatherApi): List<WeatherDataTable> {
-        val list = mutableListOf<WeatherDataTable>()
+    fun fromApiToEntityList(dailyWeatherApi: DailyWeatherApi): List<WeatherDataEntity> {
+        val list = mutableListOf<WeatherDataEntity>()
 
         for (i in 1 until  dailyWeatherApi.data.size) { //The loop starts from the second element of the list because the first element (current day) is not included
             list.add(
-                WeatherDataTable(
+                WeatherDataEntity(
                     cityName = dailyWeatherApi.city_name,
                     date = dailyWeatherApi.data[i].datetime,
                     temperature = dailyWeatherApi.data[i].max_temp.roundToInt().toString(),
@@ -42,24 +39,20 @@ class WeatherDataEntityMapper {
         return list
     }
 
-    @ExperimentalStdlibApi
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun fromEntityToWeatherData(weatherDataTable: WeatherDataTable): WeatherData {
+    fun fromEntityToWeatherData(weatherDataEntity: WeatherDataEntity): WeatherData {
         return WeatherData(
-            city_name = weatherDataTable.cityName,
-            temp = weatherDataTable.temperature,
-            icon = weatherDataTable.icon,
-            date = parsingDate(weatherDataTable.date),
-            description = weatherDataTable.description
+            city_name = weatherDataEntity.cityName,
+            temp = weatherDataEntity.temperature,
+            icon = weatherDataEntity.icon,
+            date = parsingDate(weatherDataEntity.date),
+            description = weatherDataEntity.description
         )
     }
 
-    @ExperimentalStdlibApi
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun fromEntityListToWeatherDataList(tableList: List<WeatherDataTable>): List<WeatherData> {
+    fun fromEntityListToWeatherDataList(entityList: List<WeatherDataEntity>): List<WeatherData> {
         val list = mutableListOf<WeatherData>()
 
-        for (element in tableList) {
+        for (element in entityList) {
             list.add(
                 WeatherData(
                     city_name = element.cityName,

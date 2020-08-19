@@ -1,7 +1,5 @@
 package com.example.data.mappers
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.example.data.modelsApi.currentWeather.CurrentWeatherApiModel
 import com.example.data.modelsApi.multiDaysWeather.DailyWeatherApi
 import com.example.data.utils.ICON_URL
@@ -22,9 +20,6 @@ class WeatherDataMapper {
         )
     }
 
-
-    @ExperimentalStdlibApi
-    @RequiresApi(Build.VERSION_CODES.O)
     fun mapToListOfWeather(dailyWeatherApi: DailyWeatherApi): List<WeatherData> {
         val list = mutableListOf<WeatherData>()
 

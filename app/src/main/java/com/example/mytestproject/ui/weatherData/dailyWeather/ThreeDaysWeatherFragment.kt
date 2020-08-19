@@ -34,7 +34,7 @@ class ThreeDaysWeatherFragment : Fragment() {
 
         (activity?.applicationContext as App).weatherDataComponent.inject(this)
 
-        getTitle("Moscow")
+        setTitle("Moscow")
 
         dailyWeatherViewModel =
             ViewModelProvider(this, dailyWeatherFactory).get(DailyWeatherViewModel::class.java)
@@ -64,10 +64,10 @@ class ThreeDaysWeatherFragment : Fragment() {
 
     }
 
-    private fun getTitle(cityName: String) {
+    private fun setTitle(cityName: String) {
         (activity as? AppCompatActivity)?.supportActionBar?.title =
             cityName.capitalize()
-        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = "3 days"
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = getString(R.string.three_days_text)
     }
 
 }

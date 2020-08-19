@@ -1,7 +1,5 @@
 package com.example.data.implementationRepo
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.example.data.apiservice.WeatherDataApiService
 import com.example.data.db.dao.TimezoneDao
 import com.example.data.db.dao.WeatherDataDao
@@ -20,9 +18,6 @@ class DailyWeatherRepositoryImpl(
     private val timezoneDao: TimezoneDao
 ) : DailyWeatherRepository {
 
-
-    @ExperimentalStdlibApi
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun getDailyWeather(
         city: String,
         days: Int,

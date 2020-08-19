@@ -1,18 +1,20 @@
+@file:Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+
 package com.example.data.utils
 
 import android.annotation.SuppressLint
-import android.os.Build
-import androidx.annotation.RequiresApi
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
-@RequiresApi(Build.VERSION_CODES.O)
+
+@SuppressLint("SimpleDateFormat")
 fun parsingDate(date: String): String {
-    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+  /*  val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val dateTime = LocalDate.parse(date, formatter)
-    return dateTime.format(DateTimeFormatter.ofPattern("EEEE, d"))
+    return dateTime.format(DateTimeFormatter.ofPattern("EEEE, d"))*/
+    val requestFormat = SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH)
+    val d = requestFormat.parse(date)
+    return SimpleDateFormat("EEEE, d").format(d)
 }
 
 @SuppressLint("SimpleDateFormat")
@@ -23,15 +25,21 @@ fun getCurrentDateByTimezone(timezone: String) : String{
     return requiredFormat.format(Date())
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
+@SuppressLint("SimpleDateFormat")
  fun getDateList(days: Int,timezone: String): List<String> {
     val currentDate = getCurrentDateByTimezone(timezone)
     val list = mutableListOf<String>()
-    var localDate = LocalDate.parse(currentDate)
 
-    for (i in 1 until days) {                // The loop is one pass less because the date of the current day is not included
-        localDate = localDate.plusDays(1)
-        list.add(localDate.toString())
+    val requestFormat = SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH)
+    val d = requestFormat.parse(currentDate)
+    val calendar = GregorianCalendar()
+    calendar.time = d
+
+    for (i in 1 until days) {  // The loop is one pass less because the date of the current day is not included
+        calendar.add(Calendar.DATE,1)
+        val result = requestFormat.format(calendar.time)
+        list.add(result)
     }
+
     return list
 }

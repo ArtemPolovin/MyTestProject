@@ -40,7 +40,7 @@ class CurrentWeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
+        setTitle()
 
         val animationDrawable = weather_data_fragment.background as AnimationDrawable
         animationDrawable.setEnterFadeDuration(4000)
@@ -83,5 +83,9 @@ class CurrentWeatherFragment : Fragment() {
             }
         })
 
+    }
+
+    private fun setTitle() {
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
     }
 }
