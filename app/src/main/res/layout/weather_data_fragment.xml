@@ -124,7 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:constraint_referenced_ids="btn_retry, @+id/text_error" />
+            app:constraint_referenced_ids="btn_retry,text_error" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/group_temp_abbreviation"

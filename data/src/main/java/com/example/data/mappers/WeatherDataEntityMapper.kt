@@ -52,17 +52,15 @@ class WeatherDataEntityMapper {
     fun fromEntityListToWeatherDataList(entityList: List<WeatherDataEntity>): List<WeatherData> {
         val list = mutableListOf<WeatherData>()
 
-        for (element in entityList) {
-            list.add(
-                WeatherData(
-                    city_name = element.cityName,
-                    temp = element.temperature,
-                    icon = element.icon,
-                    date = parsingDate(element.date),
-                    description = element.description
-                )
+        list.addAll(entityList.map {
+            WeatherData(
+                city_name = it.cityName,
+                temp = it.temperature,
+                icon = it.icon,
+                date = parsingDate(it.date),
+                description = it.description
             )
-        }
+        })
         return list
     }
 }

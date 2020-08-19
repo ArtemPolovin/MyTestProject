@@ -24,12 +24,10 @@ import javax.inject.Singleton
 class WeatherDataModule(private val context: Context) {
 
     @Provides
-    @Singleton
     fun provideFetchWeatherDataUseCase(currentWeatherRepository: CurrentWeatherRepository) =
         FetchCurrentWeatherUseCase(currentWeatherRepository)
 
     @Provides
-    @Singleton
     fun provideFetchDailyWeatherUseCase(dailyWeatherRepository: DailyWeatherRepository) =
         FetchDailyWeatherUseCase(dailyWeatherRepository)
 
@@ -97,11 +95,9 @@ class WeatherDataModule(private val context: Context) {
     }
 
     @Provides
-    @Singleton
     fun provideWeatherDataEntityMapper() = WeatherDataEntityMapper()
 
     @Provides
-    @Singleton
     fun provideTimezoneEntityMapper() = TimezoneEntityMapper()
 
 }
