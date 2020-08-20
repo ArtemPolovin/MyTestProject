@@ -41,10 +41,8 @@ class ThreeDaysWeatherFragment : Fragment() {
 
         dailyWeatherViewModel.getWeatherData(4) // one more day because the first current day is not included in the list
 
-        context?.let {
             rv_three_days_weather.layoutManager =
-                LinearLayoutManager(it, LinearLayoutManager.VERTICAL, false)
-        }
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         setupDailyWeatherData()
 

@@ -17,7 +17,8 @@ class WeatherDataEntityMapper {
             date = getCurrentDateByTimezone(currentWeatherApi.data[0].timezone),
             temperature = currentWeatherApi.data[0].temp.roundToInt().toString(),
             icon = "$ICON_URL${
-            currentWeatherApi.data[0].weather.icon}.png",
+                currentWeatherApi.data[0].weather.icon
+            }.png",
             description = currentWeatherApi.data[0].weather.description
         )
     }
@@ -25,7 +26,7 @@ class WeatherDataEntityMapper {
     fun fromApiToEntityList(dailyWeatherApi: DailyWeatherApi): List<WeatherDataEntity> {
         val list = mutableListOf<WeatherDataEntity>()
 
-        for (i in 1 until  dailyWeatherApi.data.size) { //The loop starts from the second element of the list because the first element (current day) is not included
+        for (i in 1 until dailyWeatherApi.data.size) { //The loop starts from the second element of the list because the first element (current day) is not included
             list.add(
                 WeatherDataEntity(
                     cityName = dailyWeatherApi.city_name,
@@ -50,9 +51,8 @@ class WeatherDataEntityMapper {
     }
 
     fun fromEntityListToWeatherDataList(entityList: List<WeatherDataEntity>): List<WeatherData> {
-        val list = mutableListOf<WeatherData>()
 
-        list.addAll(entityList.map {
+        return entityList.map {
             WeatherData(
                 city_name = it.cityName,
                 temp = it.temperature,
@@ -60,7 +60,6 @@ class WeatherDataEntityMapper {
                 date = parsingDate(it.date),
                 description = it.description
             )
-        })
-        return list
+        }
     }
 }

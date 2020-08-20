@@ -40,12 +40,8 @@ class TenDaysWeatherFragment : Fragment() {
 
         dailyWeatherViewModel.getWeatherData(11) // one more day because the first current day is not included in the list
 
-        context.let {
-            rv_ten_days_weather.layoutManager = LinearLayoutManager(
-                it,
-                LinearLayoutManager.VERTICAL, false
-            )
-        }
+            rv_ten_days_weather.layoutManager = LinearLayoutManager(requireContext(),
+                LinearLayoutManager.VERTICAL, false)
 
         setupDailyWeatherData()
     }
