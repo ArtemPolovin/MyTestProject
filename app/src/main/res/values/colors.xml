@@ -6,4 +6,8 @@
     <color name="header_blue">#DC1C34B3</color>
     <color name="header_text">#000000</color>
     <color name="text_color">#FFFFFF</color>
+    <color name="daily_weather_background">#2B69ED</color>
+    <color name="cell_beckground">#35F8F5F5</color>
+    <color name="primary_white_text_color">#FFFFFF</color>
+    <color name="text_error_color">#800B02</color>
 </resources>

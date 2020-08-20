@@ -1,4 +1,4 @@
-package com.example.data.db.entities
+package com.example.data.db.tables
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -9,7 +9,8 @@ class WeatherDataEntity(
     val cityName: String,
     val date: String,
     val temperature: String,
-    val icon: String
+    val icon: String,
+    val description: String
 
 
 )

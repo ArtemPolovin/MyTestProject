@@ -38,7 +38,6 @@ ext.versions = [
         junitTest       : "1.1.1",
         espressoCore    : "3.2.0",
         retrofit        : "2.8.1",
-        //  rxjava3         : "3.0.0",
         liveData        : "2.2.0",
         picasso         : "2.71828",
         navFragment     : "2.2.2",
@@ -46,7 +45,8 @@ ext.versions = [
         dagger          : "2.28.1",
         room            : "2.2.5",
         rxjava2         : "2.2.12",
-        rxjava2Android  : "2.1.1"
+        rxjava2Android  : "2.1.1",
+        recyclerView    : "1.1.0"
 
 ]
 
@@ -87,13 +87,6 @@ ext.retrofit2 = [
         converterGson: "com.squareup.retrofit2:converter-gson:$versions.retrofit"
 ]
 
-/*ext.rxjava3 = [
-        rxandroid     : "io.reactivex.rxjava3:rxandroid:$versions.rxjava3",
-        rxjava        : "io.reactivex.rxjava3:rxjava:$versions.rxjava3",
-        rxkotlin      : "io.reactivex.rxjava3:rxkotlin:$versions.rxjava3",
-        rxjavaRetrofit: "com.github.akarnokd:rxjava3-retrofit-adapter:$versions.rxjava3"
-]*/
-
 ext.lifecycle = [
         viewmodel          : "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.liveData",
         livedataKtx        : "androidx.lifecycle:lifecycle-livedata-ktx:$versions.liveData",
@@ -105,7 +98,9 @@ ext.picasso = [
 ]
 
 ext.navigationFragment = [
-        navFragment: "androidx.navigation:navigation-fragment-ktx:$versions.navFragment"
+        navFragment: "androidx.navigation:navigation-fragment-ktx:$versions.navFragment",
+        navigationUi   : "androidx.navigation:navigation-ui:$versions.navFragment",
+        navigationUiKtx: "androidx.navigation:navigation-ui-ktx:$versions.navFragment"
 ]
 
 ext.activity = [
@@ -132,4 +127,8 @@ ext.rxjava2 =[
 
 ext.rxjava2Android = [
         rxandroid: "io.reactivex.rxjava2:rxandroid:$versions.rxjava2Android"
+]
+
+ext.recyclerView = [
+        recyclerView: "androidx.recyclerview:recyclerview:$versions.recyclerView"
 ]

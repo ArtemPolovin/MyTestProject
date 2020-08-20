@@ -8,8 +8,12 @@ sealed class WeatherViewState {
 
     object Error : WeatherViewState()
 
-    data class WeatherLoaded(
+    data class CurrentWeatherLoaded(
         val weatherData: WeatherData
+    ) : WeatherViewState()
+
+    data class DailyWeatherLoaded(
+        val dailyWeatherList: List<WeatherData>
     ) : WeatherViewState()
 
     }

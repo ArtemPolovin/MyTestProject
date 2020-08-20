@@ -1,6 +1,7 @@
 package com.example.data.apiservice
 
-import com.example.data.modelsApi.weatherDataApiModel.WeatherDataApiModel
+import com.example.data.modelsApi.currentWeather.CurrentWeatherApiModel
+import com.example.data.modelsApi.multiDaysWeather.DailyWeatherApi
 import io.reactivex.Single
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -13,18 +14,23 @@ import retrofit2.http.Query
 
 interface WeatherDataApiService {
 
+    @GET("/v2.0/current")
+    fun getCurrentWeatherData(
+        @Query("city") city: String,
+        @Query("units") degreeType: String
+    ): Single<CurrentWeatherApiModel>
+
     @GET("/v2.0/forecast/daily")
-    fun getWeatherData(
+    fun getDailyWeatherData(
         @Query("city") city: String,
         @Query("days") days: Int,
         @Query("units") degreeType: String
-    ): Single<WeatherDataApiModel>
-
+    ):Single<DailyWeatherApi>
 
     companion object {
         operator fun invoke(): WeatherDataApiService {
             val key = "40a7956799be42f49bc8b6ac4bb8e432"
-            val requestInterceptor = Interceptor{chain->
+            val requestInterceptor = Interceptor { chain ->
                 val url = chain.request()
                     .url() // HttpUrl
                     .newBuilder() // HttpUrl.Builder

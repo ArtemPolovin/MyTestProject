@@ -1,10 +1,11 @@
-package com.example.mytestproject.ui.weatherData
+package com.example.mytestproject.ui.weatherData.todayWeather
 
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,11 +17,11 @@ import com.example.mytestproject.viewState.WeatherViewState
 import kotlinx.android.synthetic.main.weather_data_fragment.*
 import javax.inject.Inject
 
-class WeatherDataFragment : Fragment() {
+class CurrentWeatherFragment : Fragment() {
 
     @Inject
-    lateinit var weatherDataFactory: WeatherDataFactory
-    private lateinit var weatherDataViewModel: WeatherDataViewModel
+    lateinit var currentWeatherFactory: CurrentWeatherFactory
+    private lateinit var currentWeatherViewModel: CurrentWeatherViewModel
 
     private lateinit var weatherDataBinding: WeatherDataFragmentBinding
 
@@ -39,26 +40,29 @@ class WeatherDataFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val animationDrawable = fragment_1_background.background as AnimationDrawable
+        setTitle()
+
+        val animationDrawable = weather_data_fragment.background as AnimationDrawable
         animationDrawable.setEnterFadeDuration(4000)
         animationDrawable.setExitFadeDuration(4000)
         animationDrawable.start()
 
-        (activity?.applicationContext as App).weatherDataComponent.injectWeatherDataFragment(this)
+        (activity?.applicationContext as App).weatherDataComponent.inject(this)
 
-        weatherDataViewModel =
-            ViewModelProvider(this, weatherDataFactory).get(WeatherDataViewModel::class.java)
+        currentWeatherViewModel =
+            ViewModelProvider(this, currentWeatherFactory).get(CurrentWeatherViewModel::class.java)
+
 
         setupWeatherData()
 
-        btnRetry.setOnClickListener {
-            weatherDataViewModel.onRetry()
+        btn_retry.setOnClickListener {
+            currentWeatherViewModel.onRetry()
         }
 
     }
 
     private fun setupWeatherData() {
-        weatherDataViewModel.viewState.observe(viewLifecycleOwner, Observer {
+        currentWeatherViewModel.viewState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 WeatherViewState.Loading -> {
                     group_temp_abbreviation.visibility = View.GONE
@@ -70,7 +74,7 @@ class WeatherDataFragment : Fragment() {
                     progressBar.visibility = View.GONE
                     group_error_views.visibility = View.VISIBLE
                 }
-                is WeatherViewState.WeatherLoaded -> {
+                is WeatherViewState.CurrentWeatherLoaded -> {
                     group_temp_abbreviation.visibility = View.VISIBLE
                     progressBar.visibility = View.GONE
                     group_error_views.visibility = View.GONE
@@ -79,5 +83,9 @@ class WeatherDataFragment : Fragment() {
             }
         })
 
+    }
+
+    private fun setTitle() {
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
     }
 }

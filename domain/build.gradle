@@ -13,9 +13,6 @@ dependencies {
     //junit
     testImplementation junit.junit
 
- /*   //RxJava3d
-    implementation rxjava3.rxjava*/
-
     //RxJava2
     implementation rxjava2.rxjava2
 

@@ -51,12 +51,6 @@ dependencies {
     implementation retrofit2.converterGson
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
 
-/*    //RxJava3
-    implementation rxjava3.rxandroid
-    implementation rxjava3.rxjava
-    implementation rxjava3.rxkotlin
-    implementation rxjava3.rxjavaRetrofit*/
-
     //RxJava2
     implementation rxjava2.rxjava2
     implementation rxjava2Android.rxandroid

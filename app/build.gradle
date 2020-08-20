@@ -68,12 +68,6 @@ dependencies {
     //NavigationView
     implementation material.material
 
- /*   //RxJava3
-    implementation rxjava3.rxandroid
-    implementation rxjava3.rxjava
-    implementation rxjava3.rxkotlin
-    implementation rxjava3.rxjavaRetrofit*/
-
     //RxJava2
     implementation rxjava2.rxjava2
     implementation rxjava2Android.rxandroid
@@ -88,6 +82,8 @@ dependencies {
 
     //NavigationFragment
     implementation navigationFragment.navFragment
+    implementation navigationFragment.navigationUi
+    implementation navigationFragment.navigationUiKtx
 
     //Activity-ktx
     implementation activity.activityKtx
@@ -99,5 +95,12 @@ dependencies {
     implementation dagger.daggerSupport
     implementation dagger.daggerProducers
 
+    //Room
+    implementation room.roomRuntime
+    kapt room.roomCompiler
+    implementation room.roomRxjava
+
+    //RecyclerView
+    implementation recyclerView.recyclerView
 
 }

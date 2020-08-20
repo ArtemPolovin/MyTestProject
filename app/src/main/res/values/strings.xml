@@ -5,4 +5,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_error">Sorry, you got some error!</string>
+    <string name="ten_day_text">10 Days</string>
+    <string name="three_days_text">3 Days</string>
+    <string name="today_text">Today</string>
 </resources>

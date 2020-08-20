@@ -1,18 +1,40 @@
 package com.example.data.mappers
 
-import com.example.data.modelsApi.weatherDataApiModel.WeatherDataApiModel
+import com.example.data.modelsApi.currentWeather.CurrentWeatherApiModel
+import com.example.data.modelsApi.multiDaysWeather.DailyWeatherApi
 import com.example.data.utils.ICON_URL
+import com.example.data.utils.parsingDate
 import com.example.domain.models.WeatherData
+import kotlin.math.roundToInt
 
 class WeatherDataMapper {
 
-    fun mapWeather(weatherDataApiModel: WeatherDataApiModel): WeatherData {
+    fun mapWeather(currentWeatherApiModel: CurrentWeatherApiModel): WeatherData {
         return WeatherData(
-            weatherDataApiModel.city_name,
-            "${weatherDataApiModel.data[0].temp}",
-            "$ICON_URL${
-            weatherDataApiModel.data[0].weather.icon}.png"
+            city_name = currentWeatherApiModel.data[0].city_name,
+            temp = "${currentWeatherApiModel.data[0].temp.roundToInt()}",
+            icon = "$ICON_URL${
+            currentWeatherApiModel.data[0].weather.icon}.png",
+            date = currentWeatherApiModel.data[0].datetime,
+            description = currentWeatherApiModel.data[0].weather.description
         )
+    }
+
+    fun mapToListOfWeather(dailyWeatherApi: DailyWeatherApi): List<WeatherData> {
+        val list = mutableListOf<WeatherData>()
+
+        for (i in 1 until  dailyWeatherApi.data.size) {  //The loop starts from the second element of the list because the first element (current day) is not included
+            list.add(
+                WeatherData(
+                    city_name = dailyWeatherApi.city_name,
+                    temp = dailyWeatherApi.data[i].max_temp.roundToInt().toString(),
+                    icon = "$ICON_URL${dailyWeatherApi.data[i].weather.icon}.png",
+                    date = parsingDate(dailyWeatherApi.data[i].datetime),
+                    description = dailyWeatherApi.data[i].weather.description
+                )
+            )
+        }
+        return list
     }
 
 }

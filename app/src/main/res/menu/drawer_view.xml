@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
 
-        <item android:id="@+id/nav_first_fragment"
+        <item
+            android:id="@+id/nav_today_weather"
             android:icon="@drawable/ic_one"
-            android:title="First"
-           />
+            android:menuCategory="secondary"
+            android:title="Current Weather" />
 
-        <item android:id="@+id/nav_second_fragment"
+        <item
+            android:id="@+id/nav_second_fragment"
             android:icon="@drawable/ic_two"
+            android:menuCategory="secondary"
             android:title="Second" />
 
-        <item android:id="@+id/nav_third_fragment"
+        <item
+            android:id="@+id/nav_third_fragment"
             android:icon="@drawable/ic_three"
+            android:menuCategory="secondary"
             android:title="Third" />
 
 
