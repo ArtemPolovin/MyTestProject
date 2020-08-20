@@ -2,8 +2,6 @@ package com.example.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.data.db.dao.TimezoneDao
 import com.example.data.db.dao.WeatherDataDao
 import com.example.data.db.tables.TimezoneTable

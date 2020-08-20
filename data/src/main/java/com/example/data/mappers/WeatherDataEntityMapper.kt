@@ -17,12 +17,12 @@ class WeatherDataEntityMapper(private val context: Context) {
 
     fun fromApiToEntity(currentWeatherApi: CurrentWeatherApiModel): WeatherDataTable { // The method takes data from api and saves the data to SQLite WeatherDataTable
         return WeatherDataTable(
-            cityModel = getCityModelByCityName(context,currentWeatherApi.data[0].city_name),
-            date = getCurrentDateByTimezone(currentWeatherApi.data[0].timezone),
-            temperature = currentWeatherApi.data[0].temp.roundToInt().toString(),
-            icon = "$ICON_URL${
-            currentWeatherApi.data[0].weather.icon}.png",
-            description = currentWeatherApi.data[0].weather.description
+                cityModel = getCityModelByCityName(context,currentWeatherApi.data[0].city_name),
+                date = getCurrentDateByTimezone(currentWeatherApi.data[0].timezone),
+                temperature = currentWeatherApi.data[0].temp.roundToInt().toString(),
+                icon = "$ICON_URL${
+                    currentWeatherApi.data[0].weather.icon}.png",
+                description = currentWeatherApi.data[0].weather.description
         )
     }
 
@@ -32,13 +32,13 @@ class WeatherDataEntityMapper(private val context: Context) {
 
         for (i in 1 until  dailyWeatherApi.data.size) { //The loop starts from the second element of the list because the first element (current day) is not included
             list.add(
-                WeatherDataTable(
-                    cityModel = cityModel,
-                    date = dailyWeatherApi.data[i].datetime,
-                    temperature = dailyWeatherApi.data[i].max_temp.roundToInt().toString(),
-                    icon = "$ICON_URL${dailyWeatherApi.data[i].weather.icon}.png",
-                    description = dailyWeatherApi.data[i].weather.description
-                )
+                    WeatherDataTable(
+                            cityModel = cityModel,
+                            date = dailyWeatherApi.data[i].datetime,
+                            temperature = dailyWeatherApi.data[i].max_temp.roundToInt().toString(),
+                            icon = "$ICON_URL${dailyWeatherApi.data[i].weather.icon}.png",
+                            description = dailyWeatherApi.data[i].weather.description
+                    )
             )
         }
         return list
@@ -48,11 +48,11 @@ class WeatherDataEntityMapper(private val context: Context) {
     @RequiresApi(Build.VERSION_CODES.O)
     fun fromEntityToWeatherData(weatherDataTable: WeatherDataTable): WeatherData { // The method takes weather data from SQLite table and save the data to WeatherData object
         return WeatherData(
-            city_name = weatherDataTable.cityModel.city_name,
-            temp = weatherDataTable.temperature,
-            icon = weatherDataTable.icon,
-            date = parsingDate(weatherDataTable.date),
-            description = weatherDataTable.description
+                city_name = weatherDataTable.cityModel.city_name,
+                temp = weatherDataTable.temperature,
+                icon = weatherDataTable.icon,
+                date = parsingDate(weatherDataTable.date),
+                description = weatherDataTable.description
         )
     }
 
@@ -63,13 +63,13 @@ class WeatherDataEntityMapper(private val context: Context) {
 
         for (element in tableList) {
             list.add(
-                WeatherData(
-                    city_name = element.cityModel.city_name,
-                    temp = element.temperature,
-                    icon = element.icon,
-                    date = parsingDate(element.date),
-                    description = element.description
-                )
+                    WeatherData(
+                            city_name = element.cityModel.city_name,
+                            temp = element.temperature,
+                            icon = element.icon,
+                            date = parsingDate(element.date),
+                            description = element.description
+                    )
             )
         }
         return list
