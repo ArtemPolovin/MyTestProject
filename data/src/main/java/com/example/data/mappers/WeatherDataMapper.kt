@@ -22,9 +22,6 @@ class WeatherDataMapper {
         )
     }
 
-
-    @ExperimentalStdlibApi
-    @RequiresApi(Build.VERSION_CODES.O)
     fun mapToListOfWeather(dailyWeatherApi: DailyWeatherApi): List<WeatherData> { //The method takes list of days with weather data from api and save it to list of WeatherData objects
         val list = mutableListOf<WeatherData>()
 

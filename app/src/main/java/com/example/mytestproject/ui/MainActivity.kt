@@ -1,9 +1,6 @@
 package com.example.mytestproject.ui
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -44,9 +41,9 @@ class MainActivity : AppCompatActivity(){
         bottom_navigation.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-           when (destination.id) {
-                R.id.nav_second_fragment,R.id.nav_third_fragment, R.id.search_city -> bottom_navigation.visibility = View.GONE
-                else -> bottom_navigation.visibility = View.VISIBLE
+            bottom_navigation.visibility =  when (destination.id) {
+                R.id.nav_second_fragment,R.id.nav_third_fragment, R.id.search_city ->  View.GONE
+                else ->  View.VISIBLE
             }
         }
     }

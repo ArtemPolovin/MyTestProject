@@ -29,12 +29,10 @@ class WeatherDataModule(private val context: Context) {
     fun provideContext(): Context = context
 
     @Provides
-    @Singleton
     fun provideFetchWeatherDataUseCase(currentWeatherRepository: CurrentWeatherRepository) =
         FetchCurrentWeatherUseCase(currentWeatherRepository)
 
     @Provides
-    @Singleton
     fun provideFetchDailyWeatherUseCase(dailyWeatherRepository: DailyWeatherRepository) =
         FetchDailyWeatherUseCase(dailyWeatherRepository)
 
@@ -102,11 +100,9 @@ class WeatherDataModule(private val context: Context) {
     }
 
     @Provides
-    @Singleton
     fun provideWeatherDataEntityMapper() = WeatherDataEntityMapper(context)
 
     @Provides
-    @Singleton
     fun provideTimezoneEntityMapper() = TimezoneEntityMapper(context)
 
     @Provides

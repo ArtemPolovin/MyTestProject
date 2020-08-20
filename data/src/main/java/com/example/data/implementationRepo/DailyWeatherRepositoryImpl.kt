@@ -20,9 +20,6 @@ class DailyWeatherRepositoryImpl(
     private val timezoneDao: TimezoneDao
 ) : DailyWeatherRepository {
 
-
-    @ExperimentalStdlibApi
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun getDailyWeather( // The method takes list of days with  weather data from api, then saves the data to SQLite table.
                                   // If there is an error in the request, the method takes data from SQLite table and return it
         cityId: Int,

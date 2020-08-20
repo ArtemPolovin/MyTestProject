@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.example.domain.models.CityModel
 
 @Entity(tableName = "timezone",primaryKeys = ["city_id","city_name"])
-class TimezoneTable(
+class TimezoneEntity(
 
     @Embedded
     val cityModel: CityModel,
