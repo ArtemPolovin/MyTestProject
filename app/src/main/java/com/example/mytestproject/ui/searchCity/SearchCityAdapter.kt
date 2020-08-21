@@ -12,7 +12,6 @@ import com.example.mytestproject.databinding.CellCityBinding
 class SearchCityAdapter: RecyclerView.Adapter<SearchCityAdapter.SearchCityViewHolder>() {
 
     private val cityModelList = mutableListOf<CityModel>()
-    private val displayList = mutableListOf<CityModel>()
 
     private var onclickListenerCityModel: OnClickListenerCityModel? = null
 
@@ -23,13 +22,6 @@ class SearchCityAdapter: RecyclerView.Adapter<SearchCityAdapter.SearchCityViewHo
     fun setData(newCityList: List<CityModel>) {
         cityModelList.clear()
         cityModelList.addAll(newCityList)
-    }
-
-    fun filter(query: String) {
-        displayList.clear()
-        displayList.addAll(cityModelList.filter {
-            it.city_name.contains(query, true)
-        })
         notifyDataSetChanged()
     }
 
@@ -44,12 +36,12 @@ class SearchCityAdapter: RecyclerView.Adapter<SearchCityAdapter.SearchCityViewHo
     }
 
     override fun getItemCount(): Int {
-        return displayList.size
+        return cityModelList.size
     }
 
     override fun onBindViewHolder(holder: SearchCityViewHolder, position: Int) {
-        holder.bind(displayList[position])
-        holder.clickItem(displayList[position])
+        holder.bind(cityModelList[position])
+        holder.clickItem(cityModelList[position])
     }
 
     class SearchCityViewHolder(cityModelItem: CellCityBinding,private val  onclickListener: OnClickListenerCityModel?) :

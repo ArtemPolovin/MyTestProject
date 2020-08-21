@@ -29,8 +29,8 @@ class CurrentWeatherRepositoryImpl(
         return weatherDataApiService.getCurrentWeatherData(cityId, degreeType)
             .subscribeOn(Schedulers.io())
             .doOnSuccess {
-                weatherDataDao.insertWeatherData(weatherDataEntityMapper.fromApiToEntity(it))
-                timezoneDao.insertTimezone(timezoneEntityMapper.fromApiToEntity(it))
+                weatherDataDao.insertWeatherData(weatherDataEntityMapper.fromApiToEntity(it,cityId))
+                timezoneDao.insertTimezone(timezoneEntityMapper.fromApiToEntity(it,cityId))
             }
             .map { mapper.mapWeather(it) }
             .onErrorResumeNext {

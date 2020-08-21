@@ -5,7 +5,7 @@ import com.example.data.db.tables.WeatherDataEntity
 import com.example.data.modelsApi.currentWeather.CurrentWeatherApiModel
 import com.example.data.modelsApi.multiDaysWeather.DailyWeatherApi
 import com.example.data.utils.ICON_URL
-import com.example.data.utils.getCityModelByCityName
+import com.example.data.utils.getCityModelByCityId
 import com.example.data.utils.getCurrentDateByTimezone
 import com.example.data.utils.parsingDate
 import com.example.domain.models.WeatherData
@@ -13,9 +13,10 @@ import kotlin.math.roundToInt
 
 class WeatherDataEntityMapper(private val context: Context) {
 
-    fun fromApiToEntity(currentWeatherApi: CurrentWeatherApiModel): WeatherDataEntity { // The method takes data from api and saves the data to SQLite WeatherDataTable
+    fun fromApiToEntity(currentWeatherApi: CurrentWeatherApiModel, cityId: Int): WeatherDataEntity { // The method takes data from api and saves the data to SQLite WeatherDataTable
+
         return WeatherDataEntity(
-            cityModel = getCityModelByCityName(context, currentWeatherApi.data[0].city_name),
+            cityModel = getCityModelByCityId(context, cityId),
             date = getCurrentDateByTimezone(currentWeatherApi.data[0].timezone),
             temperature = currentWeatherApi.data[0].temp.roundToInt().toString(),
             icon = "$ICON_URL${
@@ -25,9 +26,9 @@ class WeatherDataEntityMapper(private val context: Context) {
         )
     }
 
-    fun fromApiToEntityList(dailyWeatherApi: DailyWeatherApi): List<WeatherDataEntity> { // The method takes list of days with weather data from api and saves the data to SQLite WeatherDataTable
+    fun fromApiToEntityList(dailyWeatherApi: DailyWeatherApi,cityId: Int): List<WeatherDataEntity> { // The method takes list of days with weather data from api and saves the data to SQLite WeatherDataTable
         val list = mutableListOf<WeatherDataEntity>()
-        val cityModel = getCityModelByCityName(context, dailyWeatherApi.city_name)
+        val cityModel = getCityModelByCityId(context, cityId)
 
         for (i in 1 until dailyWeatherApi.data.size) { //The loop starts from the second element of the list because the first element (current day) is not included
             list.add(

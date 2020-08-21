@@ -8,17 +8,12 @@
     android:padding="8dp"
     tools:context=".ui.searchCity.SearchCityFragment">
 
-    <EditText
-        android:id="@+id/edit_search_city"
+    <SearchView
+        android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginTop="66dp"
         android:background="@drawable/search_city_background"
-        android:drawableEnd="@drawable/search_ic_shape"
-        android:hint="@string/search_city_hint"
-        android:paddingStart="8dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="RtlSymmetry" />
@@ -30,6 +25,6 @@
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_search_city" />
+        app:layout_constraintTop_toBottomOf="@+id/search_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

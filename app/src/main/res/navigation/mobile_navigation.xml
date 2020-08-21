@@ -9,204 +9,34 @@
         android:id="@+id/nav_today_weather"
         android:name="com.example.mytestproject.ui.weatherData.todayWeather.CurrentWeatherFragment"
         android:label="Today" >
-        <action
-            android:id="@+id/action_nav_today_weather_to_nav_second_fragment2"
-            app:destination="@id/nav_second_fragment"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_nav_today_weather_to_nav_third_fragment2"
-            app:destination="@id/nav_third_fragment"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_nav_today_weather_to_nav_three_days_weather2"
-            app:destination="@id/nav_three_days_weather"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_nav_today_weather_to_tenDaysWeatherFragment"
-            app:destination="@id/nav_ten_days_fragment"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_nav_today_weather_to_searchCityFragment"
-            app:destination="@id/search_city"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
+
     <fragment
         android:id="@+id/nav_second_fragment"
         android:name="com.example.mytestproject.ui.FragmentSecond"
         android:label="Second"
         tools:layout="@layout/fragment_second" >
-        <action
-            android:id="@+id/action_nav_second_fragment_to_nav_today_weather"
-            app:destination="@id/nav_today_weather"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_nav_second_fragment_to_nav_third_fragment"
-            app:destination="@id/nav_third_fragment"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_nav_second_fragment_to_nav_three_days_weather"
-            app:destination="@id/nav_three_days_weather"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_nav_second_fragment_to_tenDaysWeatherFragment"
-            app:destination="@id/nav_ten_days_fragment"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_nav_second_fragment_to_search_city"
-            app:destination="@id/search_city"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
+
     <fragment
         android:id="@+id/nav_third_fragment"
         android:name="com.example.mytestproject.ui.FragmentThird"
         android:label="Third"
         tools:layout="@layout/fragment_third" >
-        <action
-            android:id="@+id/action_nav_third_fragment_to_nav_today_weather"
-            app:destination="@id/nav_today_weather"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_nav_third_fragment_to_nav_second_fragment"
-            app:destination="@id/nav_second_fragment"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_nav_third_fragment_to_nav_three_days_weather"
-            app:destination="@id/nav_three_days_weather"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_nav_third_fragment_to_tenDaysWeatherFragment"
-            app:destination="@id/nav_ten_days_fragment"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_nav_third_fragment_to_search_city"
-            app:destination="@id/search_city"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
+
     <fragment
         android:id="@+id/nav_three_days_weather"
         android:name="com.example.mytestproject.ui.weatherData.dailyWeather.ThreeDaysWeatherFragment"
         tools:layout="@layout/fragment_three_days_weather">
-        <action
-            android:id="@+id/action_nav_three_days_weather_to_nav_today_weather"
-            app:destination="@id/nav_today_weather"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_nav_three_days_weather_to_nav_second_fragment"
-            app:destination="@id/nav_second_fragment"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_nav_three_days_weather_to_nav_third_fragment"
-            app:destination="@id/nav_third_fragment"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_three_days_weather_to_tenDaysWeatherFragment"
-            app:destination="@id/nav_ten_days_fragment"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_nav_three_days_weather_to_search_city"
-            app:destination="@id/search_city"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
+
     <fragment
         android:id="@+id/nav_ten_days_fragment"
         android:name="com.example.mytestproject.ui.weatherData.dailyWeather.TenDaysWeatherFragment"
         tools:layout="@layout/fragment_ten_days_weather">
-        <action
-            android:id="@+id/action_tenDaysWeatherFragment_to_nav_today_weather"
-            app:destination="@id/nav_today_weather"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_tenDaysWeatherFragment_to_nav_second_fragment"
-            app:destination="@id/nav_second_fragment"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_tenDaysWeatherFragment_to_nav_third_fragment"
-            app:destination="@id/nav_third_fragment"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_tenDaysWeatherFragment_to_three_days_weather"
-            app:destination="@id/nav_three_days_weather"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
-        <action
-            android:id="@+id/action_nav_ten_days_fragment_to_search_city"
-            app:destination="@id/search_city"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
     </fragment>
+
     <fragment
         android:id="@+id/search_city"
         android:name="com.example.mytestproject.ui.searchCity.SearchCityFragment"

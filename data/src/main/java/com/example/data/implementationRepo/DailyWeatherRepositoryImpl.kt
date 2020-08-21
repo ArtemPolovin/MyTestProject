@@ -27,7 +27,7 @@ class DailyWeatherRepositoryImpl(
         degreeType: String
     ): Single<List<WeatherData>> {
         return apiService.getDailyWeatherData(cityId, days, degreeType)
-              .doOnSuccess { weatherDataDao.insertListOfWeatherData(weatherDataEntityMapper.fromApiToEntityList(it)) }
+              .doOnSuccess { weatherDataDao.insertListOfWeatherData(weatherDataEntityMapper.fromApiToEntityList(it,cityId)) }
             .map { mapper.mapToListOfWeather(it) }
         .onErrorResumeNext {
             weatherDataDao.getListOfWeatherData(cityId,  getDateList(days,timezoneDao.getTimezoneByCityId(cityId)))

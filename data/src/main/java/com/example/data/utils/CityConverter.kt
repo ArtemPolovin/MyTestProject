@@ -1,24 +1,17 @@
-@file:Suppress("NAME_SHADOWING")
 
 package com.example.data.utils
 
 import android.content.Context
+import android.util.Log
 import com.example.data.R
 import com.example.domain.models.CityModel
 import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-fun getCityModelByCityName(context: Context, cityName: String): CityModel {
-    var cityModel = CityModel(0, "","")
+fun getCityModelByCityId(context: Context, cityId: Int): CityModel {
     val cityModelList = getCityModelsListFromJson(context)
-    cityModelList.forEach {
-        if (it.city_name == cityName) {
-            cityModel = it
-            return@forEach
-        }
-    }
-    return cityModel
+   return cityModelList.filter { it.city_id == cityId }[0] // the "cityId" comes from the same list from which the "cityModelList" consists, so the "cityModelList" necessarily contains the "cityId"
 }
 
 
@@ -27,14 +20,15 @@ private fun fromSteamToString(context: Context): String { //The method parses js
     val isReader = InputStreamReader(inputStream)
     val reader = BufferedReader(isReader)
     val strBuilder = StringBuilder()
-    reader.use { reader ->
-        var str = reader.readLine()
+    reader.use { it ->
+        var str = it.readLine()
         while (str != null) {
             strBuilder.append(str)
-            str = reader.readLine()
+            str = it.readLine()
         }
     }
     inputStream.close()
+    isReader.close()
     return strBuilder.toString()
 }
 

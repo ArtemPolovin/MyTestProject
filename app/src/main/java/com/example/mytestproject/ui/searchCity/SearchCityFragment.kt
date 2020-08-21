@@ -3,15 +3,13 @@ package com.example.mytestproject.ui.searchCity
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.data.utils.getCityModelsListFromJson
 import com.example.domain.models.CityModel
 import com.example.mytestproject.R
 import com.example.mytestproject.util.CITY_MODEL
@@ -22,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_search_city.*
 class SearchCityFragment : Fragment() {
 
     private lateinit var adapter: SearchCityAdapter
+    private val searchViewModel: SearchCityViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,37 +33,20 @@ class SearchCityFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         adapter = SearchCityAdapter()
-        adapter.setData(getCityModelsListFromJson(view.context).toList())
 
-        view.context.let {
-            rv_search_city.adapter = adapter
-            rv_search_city.layoutManager =
-                LinearLayoutManager(it, LinearLayoutManager.VERTICAL, false)
-        }
+        rv_search_city.adapter = adapter
+        rv_search_city.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        edit_search_city.addTextChangedListener(searchCityTextWatcher)
+        searchViewModel.searchCity(adapter, requireContext(), search_view)
 
         saveCityId()
+
     }
 
-
-    private val searchCityTextWatcher = (object : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {
-
-        }
-
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-        }
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            adapter.filter(query = s.toString())
-        }
-
-    })
-
     private fun saveCityId() {
-        adapter.attachCityModel(object : SearchCityAdapter.OnClickListenerCityModel { // the method takes object from recyclerView by clicking on item and saves the object to SharedPreferences
+        adapter.attachCityModel(object :
+            SearchCityAdapter.OnClickListenerCityModel { // the method takes object from recyclerView by clicking on item and saves the object to SharedPreferences
             override fun getCityModel(cityModel: CityModel) {
                 val json = Gson().toJson(cityModel)
                 val sharedPreferences =
