@@ -1,3 +1,4 @@
+
 package com.example.data.utils
 
 import java.text.SimpleDateFormat
@@ -18,8 +19,6 @@ fun getCurrentDateByTimezone(timezone: String) : String{
     requiredFormat.timeZone = timeZone
     return requiredFormat.format(Date())
 }
-
-
 
 fun getDateList(days: Int,timezone: String): List<String> { //The method gets current date by timezone and creates list of next dates depending on the number of received days
     val currentDate = getCurrentDateByTimezone(timezone)

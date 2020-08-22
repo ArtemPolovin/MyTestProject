@@ -15,8 +15,7 @@ class CurrentWeatherFactory @Inject constructor(
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CurrentWeatherViewModel::class.java)) {
-            return CurrentWeatherViewModel(
-                fetchCurrentWeatherUseCase,context) as T
+            return CurrentWeatherViewModel(fetchCurrentWeatherUseCase,context) as T
         }
         throw IllegalArgumentException("ViewModel was not found")
     }

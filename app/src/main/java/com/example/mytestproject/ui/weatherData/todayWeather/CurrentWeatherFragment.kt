@@ -12,9 +12,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.mytestproject.App
 import com.example.mytestproject.R
-import com.example.mytestproject.databinding.TodayWeatherDataFragmentBinding
+import com.example.mytestproject.databinding.CurrentWeatherDataFragmentBinding
 import com.example.mytestproject.viewState.WeatherViewState
-import kotlinx.android.synthetic.main.today_weather_data_fragment.*
+import kotlinx.android.synthetic.main.current_weather_data_fragment.*
 import javax.inject.Inject
 
 class CurrentWeatherFragment : Fragment() {
@@ -23,7 +23,7 @@ class CurrentWeatherFragment : Fragment() {
     lateinit var currentWeatherFactory: CurrentWeatherFactory
     private lateinit var currentWeatherViewModel: CurrentWeatherViewModel
 
-    private lateinit var weatherDataBinding: TodayWeatherDataFragmentBinding
+    private lateinit var weatherDataBinding: CurrentWeatherDataFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +31,7 @@ class CurrentWeatherFragment : Fragment() {
     ): View? {
 
         weatherDataBinding = DataBindingUtil.inflate(
-            layoutInflater, R.layout.today_weather_data_fragment, container, false
+            layoutInflater, R.layout.current_weather_data_fragment, container, false
         )
 
         return weatherDataBinding.root
@@ -56,12 +56,12 @@ class CurrentWeatherFragment : Fragment() {
 
         setupWeatherData()
 
-        btnRetry.setOnClickListener {
+        btn_retry.setOnClickListener {
             currentWeatherViewModel.onRetry()
         }
     }
 
-    private fun setupWeatherData() {  //the method shows information on UI, depending on what data comes from api
+    private fun setupWeatherData() {
         currentWeatherViewModel.viewState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 WeatherViewState.Loading -> {

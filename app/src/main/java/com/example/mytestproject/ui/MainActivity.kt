@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity(){
         bottom_navigation.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
+
             bottom_navigation.visibility =  when (destination.id) {
                 R.id.nav_second_fragment,R.id.nav_third_fragment, R.id.search_city ->  View.GONE
                 else ->  View.VISIBLE

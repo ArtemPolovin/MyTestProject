@@ -1,6 +1,5 @@
 package com.example.data.db.tables
 
-import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import com.example.domain.models.CityModel
