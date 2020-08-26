@@ -15,7 +15,7 @@ class SearchCityAdapter: RecyclerView.Adapter<SearchCityAdapter.SearchCityViewHo
 
     private var onclickListenerCityModel: OnClickListenerCityModel? = null
 
-    fun attachCityModel(onclickListener: OnClickListenerCityModel) {
+    fun onClickItemListener(onclickListener: OnClickListenerCityModel) {
         onclickListenerCityModel = onclickListener
     }
 
@@ -41,7 +41,7 @@ class SearchCityAdapter: RecyclerView.Adapter<SearchCityAdapter.SearchCityViewHo
 
     override fun onBindViewHolder(holder: SearchCityViewHolder, position: Int) {
         holder.bind(cityModelList[position])
-        holder.clickItem(cityModelList[position])
+        holder.clickItem(cityModelList[position].city_id)
     }
 
     class SearchCityViewHolder(cityModelItem: CellCityBinding,private val  onclickListener: OnClickListenerCityModel?) :
@@ -53,14 +53,14 @@ class SearchCityAdapter: RecyclerView.Adapter<SearchCityAdapter.SearchCityViewHo
             cellCityModel.cityModel = cityModel
         }
 
-        fun clickItem(cityModel: CityModel) {
+        fun clickItem(cityId: Int) {
             itemView.setOnClickListener {
-               onclickListener?.getCityModel(cityModel)
+               onclickListener?.getCityModel(cityId)
             }
         }
     }
 
     interface OnClickListenerCityModel {
-        fun getCityModel(cityModel: CityModel)
+        fun getCityModel(cityId: Int)
     }
 }

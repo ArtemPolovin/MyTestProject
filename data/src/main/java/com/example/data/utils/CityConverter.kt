@@ -2,7 +2,6 @@
 package com.example.data.utils
 
 import android.content.Context
-import android.util.Log
 import com.example.data.R
 import com.example.domain.models.CityModel
 import com.google.gson.Gson

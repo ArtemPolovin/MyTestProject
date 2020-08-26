@@ -7,20 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.domain.models.CityModel
+import com.example.mytestproject.App
 import com.example.mytestproject.R
-import com.example.mytestproject.util.CITY_MODEL
+import com.example.mytestproject.util.CITY_ID
 import com.example.mytestproject.util.SHARED_PREFS
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_search_city.*
+import javax.inject.Inject
 
 class SearchCityFragment : Fragment() {
 
     private lateinit var adapter: SearchCityAdapter
-    private val searchViewModel: SearchCityViewModel by viewModels()
+
+    @Inject
+    lateinit var searchCityFactory: SearchCityFactory
+    private lateinit var searchViewModel: SearchCityViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,27 +35,31 @@ class SearchCityFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (activity?.applicationContext as App).weatherDataComponent.inject(this)
+
+        searchViewModel =
+            ViewModelProvider(this, searchCityFactory).get(SearchCityViewModel::class.java)
+
         adapter = SearchCityAdapter()
 
         rv_search_city.adapter = adapter
         rv_search_city.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        searchViewModel.searchCity(adapter, requireContext(), search_view)
+        searchViewModel.searchCity(adapter, search_view)
 
         saveCityId()
 
     }
 
     private fun saveCityId() {
-        adapter.attachCityModel(object :
+        adapter.onClickItemListener(object :
             SearchCityAdapter.OnClickListenerCityModel { // the method takes object from recyclerView by clicking on item and saves the object to SharedPreferences
-            override fun getCityModel(cityModel: CityModel) {
-                val json = Gson().toJson(cityModel)
+            override fun getCityModel(cityId: Int) {
                 val sharedPreferences =
                     context?.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
                 val editor: SharedPreferences.Editor? = sharedPreferences?.edit()
-                editor?.putString(CITY_MODEL, json)
+                editor?.putInt(CITY_ID, cityId)
                 editor?.apply()
                 switchFragment()
             }

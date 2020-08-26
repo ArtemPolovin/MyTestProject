@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domain.useCase.weatherData.FetchCurrentWeatherUseCase
-import com.example.mytestproject.util.loadCityModel
+import com.example.mytestproject.util.loadCityId
 import com.example.mytestproject.viewState.WeatherViewState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -17,7 +17,7 @@ class CurrentWeatherViewModel(
     context: Context
 ) : ViewModel(){
 
-    private var cityId = loadCityModel(context).city_id // loading data from SharedPreferences
+    private var cityId = loadCityId(context)// loading city id from SharedPreferences
 
     private var disposable: Disposable? = null
 
