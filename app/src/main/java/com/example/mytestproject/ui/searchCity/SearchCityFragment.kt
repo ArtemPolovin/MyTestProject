@@ -1,7 +1,6 @@
 package com.example.mytestproject.ui.searchCity
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,8 +43,9 @@ class SearchCityFragment : Fragment() {
         rv_search_city.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        searchViewModel.searchCity(adapter, search_view)
+        searchViewModel.searchCity(search_view)
 
+        sendCityListToAdapter()
         chosenCity()
         switchFragment()
 
@@ -62,11 +62,17 @@ class SearchCityFragment : Fragment() {
 
     private fun switchFragment() {
         searchViewModel.navigateToCurrentWeather.observe(
-           viewLifecycleOwner, Observer {
+            viewLifecycleOwner, Observer {
                 it.getContentIfNotHandled()?.let {
                     findNavController().navigate(R.id.action_searchCityFragment_to_nav_today_weather)
                 }
             })
+    }
+
+    private fun sendCityListToAdapter() {
+        searchViewModel.filteredCityList.observe(viewLifecycleOwner, Observer {
+            adapter.setData(it)
+        })
     }
 
 }

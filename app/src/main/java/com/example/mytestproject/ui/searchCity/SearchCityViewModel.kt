@@ -7,6 +7,7 @@ import android.widget.SearchView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.domain.models.CityModel
 import com.example.mytestproject.util.CITY_ID
 import com.example.mytestproject.util.CityFilter
 import com.example.mytestproject.util.Event
@@ -27,6 +28,9 @@ class SearchCityViewModel(
     private val _navigateToCurrentWeather = MutableLiveData<Event<Int>>()
     val navigateToCurrentWeather: LiveData<Event<Int>> get() = _navigateToCurrentWeather
 
+    private val _filteredCityList = MutableLiveData<List<CityModel>>()
+    val filteredCityList: LiveData<List<CityModel>> get() = _filteredCityList
+
     private fun fromView(searchView: SearchView): Flowable<String> {
         return Flowable.create({ emitter ->
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -44,18 +48,14 @@ class SearchCityViewModel(
         }, BackpressureStrategy.LATEST)
     }
 
-    fun searchCity(
-        adapter: SearchCityAdapter,
-        searchView: SearchView
-    ) {
-                                                //  method sends filtered list of "CityModel"  by user-entered characters to adapter
+    fun searchCity(searchView: SearchView) {   //  method sends filtered list of "CityModel"  by user-entered characters to adapter
         disposable = fromView(searchView)
             .debounce(500, TimeUnit.MILLISECONDS)
             .distinctUntilChanged()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { inputResult ->
-                    adapter.setData(cityFilter.filterCityList(inputResult))
+                    _filteredCityList.value = cityFilter.filterCityList(inputResult)
                 },
                 {
                     Log.i("ERROR", "error = ${it.printStackTrace()}")
