@@ -24,6 +24,9 @@ class DailyWeatherViewModel(
     private val _viewState = MutableLiveData<WeatherViewState>()
     val viewState: LiveData<WeatherViewState> get() = _viewState
 
+    private val _cityName = MutableLiveData<String>()
+    val cityName : LiveData<String> get() = _cityName
+
     private fun fetchDailyWeather(days: Int) { // the method gets list of days with weather data from Api
         _viewState.value = WeatherViewState.Loading
 
@@ -33,6 +36,7 @@ class DailyWeatherViewModel(
             .subscribe(
                 {
                     _viewState.value = WeatherViewState.DailyWeatherLoaded(it)
+                    _cityName.value = it[0].city_name
                 }, {
                     _viewState.value = WeatherViewState.Error
                     Log.i("ERROR", "error = ${it.printStackTrace()}")

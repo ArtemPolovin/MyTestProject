@@ -12,8 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mytestproject.App
 import com.example.mytestproject.R
 import com.example.mytestproject.util.FOUR_DAYS
-import com.example.mytestproject.util.loadCityId
-import com.example.mytestproject.util.loadCityName
 import com.example.mytestproject.util.showDailyWeatherRequestResult
 import kotlinx.android.synthetic.main.fragment_three_days_weather.*
 import javax.inject.Inject
@@ -36,10 +34,10 @@ class ThreeDaysWeatherFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity?.applicationContext as App).weatherDataComponent.inject(this)
 
-        setTitle(loadCityName(view.context))
-
         dailyWeatherViewModel =
             ViewModelProvider(this, dailyWeatherFactory).get(DailyWeatherViewModel::class.java)
+
+        setTitle()
 
         dailyWeatherViewModel.getWeatherData(FOUR_DAYS) // one more day because the first current day is not included in the list
 
@@ -63,10 +61,12 @@ class ThreeDaysWeatherFragment : Fragment() {
 
     }
 
-    private fun setTitle(cityName: String) {
-        (activity as? AppCompatActivity)?.supportActionBar?.title =
-            cityName.capitalize()
-        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = getString(R.string.three_days_text)
+    private fun setTitle() {
+        dailyWeatherViewModel.cityName.observe(viewLifecycleOwner, Observer{cityName ->
+            (activity as? AppCompatActivity)?.supportActionBar?.title =
+                cityName.capitalize()
+            (activity as? AppCompatActivity)?.supportActionBar?.subtitle = getString(R.string.three_days_text)
+        })
     }
 
 }

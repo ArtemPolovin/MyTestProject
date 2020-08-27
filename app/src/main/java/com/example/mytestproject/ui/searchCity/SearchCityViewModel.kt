@@ -1,31 +1,31 @@
 package com.example.mytestproject.ui.searchCity
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import android.widget.SearchView
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.data.utils.getCityModelsListFromJson
-import com.example.domain.models.CityModel
-import com.example.mytestproject.App
+import com.example.mytestproject.util.CITY_ID
 import com.example.mytestproject.util.CityFilter
+import com.example.mytestproject.util.Event
+import com.example.mytestproject.util.SHARED_PREFS
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
-class SearchCityViewModel(context:Context) : ViewModel() {
-
-    @Inject
-    lateinit var cityFilter:CityFilter
-
-    init {
-        (context.applicationContext as App).weatherDataComponent.inject(this)
-    }
+class SearchCityViewModel(
+    private val context: Context,
+    private val cityFilter: CityFilter
+) : ViewModel() {
 
     private var disposable: Disposable? = null
+
+    private val _navigateToCurrentWeather = MutableLiveData<Event<Int>>()
+    val navigateToCurrentWeather: LiveData<Event<Int>> get() = _navigateToCurrentWeather
 
     private fun fromView(searchView: SearchView): Flowable<String> {
         return Flowable.create({ emitter ->
@@ -44,7 +44,11 @@ class SearchCityViewModel(context:Context) : ViewModel() {
         }, BackpressureStrategy.LATEST)
     }
 
-    fun searchCity(adapter: SearchCityAdapter, searchView: SearchView) { //  method sends filtered list of "CityModel"  by user-entered characters to adapter
+    fun searchCity(
+        adapter: SearchCityAdapter,
+        searchView: SearchView
+    ) {
+                                                //  method sends filtered list of "CityModel"  by user-entered characters to adapter
         disposable = fromView(searchView)
             .debounce(500, TimeUnit.MILLISECONDS)
             .distinctUntilChanged()
@@ -58,6 +62,17 @@ class SearchCityViewModel(context:Context) : ViewModel() {
                 }
             )
     }
+
+    fun saveCityId(cityId: Int) { // The method  saves the city id to SharedPreferences
+        _navigateToCurrentWeather.value = Event(cityId)
+
+        val sharedPreferences =
+            context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor? = sharedPreferences?.edit()
+        editor?.putInt(CITY_ID, cityId)
+        editor?.apply()
+    }
+
 
     override fun onCleared() {
         super.onCleared()

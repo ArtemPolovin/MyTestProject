@@ -1,19 +1,17 @@
 package com.example.mytestproject.ui.searchCity
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mytestproject.App
 import com.example.mytestproject.R
-import com.example.mytestproject.util.CITY_ID
-import com.example.mytestproject.util.SHARED_PREFS
 import kotlinx.android.synthetic.main.fragment_search_city.*
 import javax.inject.Inject
 
@@ -48,26 +46,27 @@ class SearchCityFragment : Fragment() {
 
         searchViewModel.searchCity(adapter, search_view)
 
-        saveCityId()
+        chosenCity()
+        switchFragment()
 
     }
 
-    private fun saveCityId() {
+    private fun chosenCity() {  // the method takes city id from recyclerView by clicking on item and saves the city id to SharedPreferences
         adapter.onClickItemListener(object :
-            SearchCityAdapter.OnClickListenerCityModel { // the method takes object from recyclerView by clicking on item and saves the object to SharedPreferences
-            override fun getCityModel(cityId: Int) {
-                val sharedPreferences =
-                    context?.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
-                val editor: SharedPreferences.Editor? = sharedPreferences?.edit()
-                editor?.putInt(CITY_ID, cityId)
-                editor?.apply()
-                switchFragment()
+            SearchCityAdapter.OnClickListenerCityModel {
+            override fun getCityId(cityId: Int) {
+                searchViewModel.saveCityId(cityId)
             }
         })
     }
 
     private fun switchFragment() {
-        findNavController().navigate(R.id.action_searchCityFragment_to_nav_today_weather)
+        searchViewModel.navigateToCurrentWeather.observe(
+           viewLifecycleOwner, Observer {
+                it.getContentIfNotHandled()?.let {
+                    findNavController().navigate(R.id.action_searchCityFragment_to_nav_today_weather)
+                }
+            })
     }
 
 }
