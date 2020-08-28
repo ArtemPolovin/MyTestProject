@@ -8,10 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domain.models.CityModel
-import com.example.mytestproject.util.CITY_ID
-import com.example.mytestproject.util.CityFilter
-import com.example.mytestproject.util.Event
-import com.example.mytestproject.util.SHARED_PREFS
+import com.example.mytestproject.util.*
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -50,6 +47,7 @@ class SearchCityViewModel(
 
     fun searchCity(searchView: SearchView) {   //  method sends filtered list of "CityModel"  by user-entered characters to adapter
         disposable = fromView(searchView)
+            .filter{it.length >= MINIMUM_SYMBOLS}
             .debounce(500, TimeUnit.MILLISECONDS)
             .distinctUntilChanged()
             .observeOn(AndroidSchedulers.mainThread())

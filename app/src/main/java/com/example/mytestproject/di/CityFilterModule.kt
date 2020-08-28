@@ -1,20 +1,14 @@
 package com.example.mytestproject.di
 
-import android.content.Context
+import com.example.data.utils.CityConverter
 import com.example.mytestproject.util.CityFilter
-import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
-class CityFilterModule(private val context: Context) {
+class CityFilterModule {
 
     @Provides
-    fun provideCityFilter(gson: Gson) = CityFilter(context,gson)
-
-    @Provides
-    @Singleton
-    fun provideGson() = Gson()
+    fun provideCityFilter(cityConverter: CityConverter) = CityFilter(cityConverter)
 
 }

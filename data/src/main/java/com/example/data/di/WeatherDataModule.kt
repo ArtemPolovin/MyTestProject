@@ -3,7 +3,6 @@ package com.example.data.di
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
-import androidx.room.migration.Migration
 import com.example.data.apiservice.WeatherDataApiService
 import com.example.data.db.Database
 import com.example.data.db.dao.TimezoneDao
@@ -13,10 +12,12 @@ import com.example.data.implementationRepo.DailyWeatherRepositoryImpl
 import com.example.data.mappers.TimezoneEntityMapper
 import com.example.data.mappers.WeatherDataEntityMapper
 import com.example.data.mappers.WeatherDataMapper
+import com.example.data.utils.CityConverter
 import com.example.domain.repositories.CurrentWeatherRepository
 import com.example.domain.repositories.DailyWeatherRepository
 import com.example.domain.useCase.weatherData.FetchCurrentWeatherUseCase
 import com.example.domain.useCase.weatherData.FetchDailyWeatherUseCase
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -100,13 +101,23 @@ class WeatherDataModule(private val context: Context) {
     }
 
     @Provides
-    fun provideWeatherDataEntityMapper() = WeatherDataEntityMapper(context)
+    fun provideWeatherDataEntityMapper(cityConverter: CityConverter) =
+        WeatherDataEntityMapper(cityConverter)
 
     @Provides
-    fun provideTimezoneEntityMapper() = TimezoneEntityMapper(context)
+    fun provideTimezoneEntityMapper(cityConverter: CityConverter) =
+        TimezoneEntityMapper(cityConverter)
 
     @Provides
     @Singleton
     fun provideActivity() = AppCompatActivity()
+
+    @Provides
+    @Singleton
+    fun provideCityConverter(gson: Gson) = CityConverter(context, gson)
+
+    @Provides
+    @Singleton
+    fun providGson() = Gson()
 
 }
