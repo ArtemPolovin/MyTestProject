@@ -62,9 +62,10 @@ class TenDaysWeatherFragment : Fragment() {
 
     private fun setTitle() {
         dailyWeatherViewModel.cityName.observe(viewLifecycleOwner, Observer{cityName ->
-            (activity as? AppCompatActivity)?.supportActionBar?.title =
-                cityName.capitalize()
-            (activity as? AppCompatActivity)?.supportActionBar?.subtitle = getString(R.string.ten_day_text)
+            (activity as? AppCompatActivity)?.supportActionBar?.run{
+                title = cityName.capitalize()
+                subtitle = getString(R.string.ten_day_text)
+            }
         })
     }
 
