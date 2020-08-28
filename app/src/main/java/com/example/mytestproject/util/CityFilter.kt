@@ -12,9 +12,7 @@ class CityFilter @Inject constructor(cityConverter: CityConverter) {
     }
 
     fun filterCityList(inputText: String): List<CityModel> {//  method filters the list of all cities by user-entered characters
-        val list = mutableListOf<CityModel>()
-        list.addAll( cityList.filter { it.city_name.contains(inputText, true) })
-        return list
+        return cityList.filter { it.city_name.contains(inputText, true) }
     }
 
 }

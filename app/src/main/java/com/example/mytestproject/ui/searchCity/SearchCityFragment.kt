@@ -55,7 +55,7 @@ class SearchCityFragment : Fragment() {
         adapter.onClickItemListener(object :
             SearchCityAdapter.OnClickListenerCityModel {
             override fun getCityId(cityId: Int) {
-                searchViewModel.saveCityId(cityId)
+                searchViewModel.onCityChosen(cityId)
             }
         })
     }

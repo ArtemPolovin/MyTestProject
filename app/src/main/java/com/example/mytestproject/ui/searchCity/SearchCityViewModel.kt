@@ -61,7 +61,7 @@ class SearchCityViewModel(
             )
     }
 
-    fun saveCityId(cityId: Int) { // The method  saves the city id to SharedPreferences
+    fun onCityChosen(cityId: Int) { // The method  saves the city id to SharedPreferences
         _navigateToCurrentWeather.value = Event(cityId)
 
         val sharedPreferences =
