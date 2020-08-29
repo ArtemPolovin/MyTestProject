@@ -43,10 +43,11 @@ class CurrentWeatherFragment : Fragment() {
 
         setTitle()
 
-        val animationDrawable = weather_data_fragment.background as AnimationDrawable //screen background animation
-        animationDrawable.setEnterFadeDuration(4000)
-        animationDrawable.setExitFadeDuration(4000)
-        animationDrawable.start()
+        (weather_data_fragment.background as AnimationDrawable).run {
+            setEnterFadeDuration(4000)
+            setExitFadeDuration(4000)
+            start()
+        }     //screen background animation
 
         (activity?.applicationContext as App).weatherDataComponent.inject(this)
 
@@ -90,13 +91,13 @@ class CurrentWeatherFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-     inflater.inflate(R.menu.menu_toolbar, menu)
-     super.onCreateOptionsMenu(menu,inflater)
- }
+        inflater.inflate(R.menu.menu_toolbar, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return NavigationUI.onNavDestinationSelected(
-            item,requireView().findNavController()
-        )|| super.onOptionsItemSelected(item)
+            item, requireView().findNavController()
+        ) || super.onOptionsItemSelected(item)
     }
 }
