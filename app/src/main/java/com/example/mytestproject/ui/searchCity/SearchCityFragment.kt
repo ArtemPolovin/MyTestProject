@@ -18,7 +18,6 @@ import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_search_city.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -54,6 +53,8 @@ class SearchCityFragment : Fragment() {
         rv_search_city.adapter = adapter
         rv_search_city.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+        showLastTenChosenCities()
 
         inputResultOfCitySearch()
         sendCityListToAdapter()
@@ -103,9 +104,9 @@ class SearchCityFragment : Fragment() {
         }, BackpressureStrategy.LATEST)
     }
 
-  private fun inputResultOfCitySearch() { // the method sends input result to ViewModel
+    private fun inputResultOfCitySearch() { // the method sends input result to ViewModel
         disposable = resultFromSearchView()
-            .filter{it.length >= MINIMUM_SYMBOLS }
+            .filter { it.length >= MINIMUM_SYMBOLS }
             .debounce(500, TimeUnit.MILLISECONDS)
             .distinctUntilChanged()
             .observeOn(AndroidSchedulers.mainThread())
@@ -116,6 +117,12 @@ class SearchCityFragment : Fragment() {
                     Log.i("ERROR", "error = ${it.printStackTrace()}")
                 }
             )
+    }
+
+    private fun showLastTenChosenCities() {
+        searchViewModel.lastTenChosenCities.observe(viewLifecycleOwner,Observer{
+            adapter.setData(it)
+        })
     }
 
     override fun onDestroy() {

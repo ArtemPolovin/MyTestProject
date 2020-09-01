@@ -5,18 +5,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import com.example.data.apiservice.WeatherDataApiService
 import com.example.data.db.Database
+import com.example.data.db.dao.CityDao
 import com.example.data.db.dao.TimezoneDao
 import com.example.data.db.dao.WeatherDataDao
 import com.example.data.implementationRepo.CurrentWeatherRepositoryImpl
 import com.example.data.implementationRepo.DailyWeatherRepositoryImpl
+import com.example.data.implementationRepo.LastTenChosenCitiesRepoImpl
+import com.example.data.mappers.LastTenChosenCitiesEntityMapper
 import com.example.data.mappers.TimezoneEntityMapper
 import com.example.data.mappers.WeatherDataEntityMapper
 import com.example.data.mappers.WeatherDataMapper
 import com.example.data.utils.CityConverter
 import com.example.domain.repositories.CurrentWeatherRepository
 import com.example.domain.repositories.DailyWeatherRepository
+import com.example.domain.repositories.LastTenChosenCitiesRepo
 import com.example.domain.useCase.weatherData.FetchCurrentWeatherUseCase
 import com.example.domain.useCase.weatherData.FetchDailyWeatherUseCase
+import com.example.domain.useCase.weatherData.GetLastTenChosenCitiesUseCase
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -36,6 +41,10 @@ class WeatherDataModule(private val context: Context) {
     @Provides
     fun provideFetchDailyWeatherUseCase(dailyWeatherRepository: DailyWeatherRepository) =
         FetchDailyWeatherUseCase(dailyWeatherRepository)
+
+    @Provides
+    fun provideGetLastTenChosenCitiesUseCase(lastTenChosenCitiesRepo: LastTenChosenCitiesRepo)=
+        GetLastTenChosenCitiesUseCase(lastTenChosenCitiesRepo)
 
     @Provides
     @Singleton
@@ -72,6 +81,13 @@ class WeatherDataModule(private val context: Context) {
         timezoneDao
     )
 
+    @Provides
+    @Singleton
+    fun provideLastTenChosenCitiesRepo(
+        cityDao: CityDao,
+        mapper: LastTenChosenCitiesEntityMapper
+    ): LastTenChosenCitiesRepo = LastTenChosenCitiesRepoImpl(cityDao,mapper)
+
 
     @Provides
     @Singleton
@@ -101,12 +117,21 @@ class WeatherDataModule(private val context: Context) {
     }
 
     @Provides
+    @Singleton
+    fun provideCityDao(database: Database): CityDao {
+        return database.cityDao()
+    }
+
+    @Provides
     fun provideWeatherDataEntityMapper(cityConverter: CityConverter) =
         WeatherDataEntityMapper(cityConverter)
 
     @Provides
     fun provideTimezoneEntityMapper(cityConverter: CityConverter) =
         TimezoneEntityMapper(cityConverter)
+
+    @Provides
+    fun provideLastTenChosenCitiesEntityMapper() = LastTenChosenCitiesEntityMapper()
 
     @Provides
     @Singleton

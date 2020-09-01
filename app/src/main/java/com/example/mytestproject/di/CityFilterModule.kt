@@ -18,7 +18,7 @@ class CityFilterModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun provideMySharedPref() = MySharedPreferences(context)
+    fun provideMySharedPref(sharePref:SharedPreferences) = MySharedPreferences(sharePref)
 
     @Provides
     @Singleton
