@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domain.useCase.weatherData.FetchDailyWeatherUseCase
-import com.example.mytestproject.util.MySharedPreferences
+import com.example.mytestproject.util.CityIdCache
 import com.example.mytestproject.viewState.WeatherViewState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -13,7 +13,7 @@ import io.reactivex.schedulers.Schedulers
 
 class DailyWeatherViewModel(
     private val dailyWeatherUseCase: FetchDailyWeatherUseCase,
-    mySharedPref: MySharedPreferences
+    mySharedPref: CityIdCache
 ) : ViewModel() {
 
     private var cityId = mySharedPref.loadCityId()// loading city id from SharedPreferences

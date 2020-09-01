@@ -1,6 +1,5 @@
 package com.example.mytestproject.ui.searchCity
 
-import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,10 +8,7 @@ import com.example.data.db.dao.CityDao
 import com.example.data.mappers.LastTenChosenCitiesEntityMapper
 import com.example.domain.models.CityModel
 import com.example.domain.useCase.weatherData.GetLastTenChosenCitiesUseCase
-import com.example.mytestproject.util.CITY_ID
-import com.example.mytestproject.util.CityFilter
-import com.example.mytestproject.util.Event
-import com.example.mytestproject.util.MAX_TABLE_SIZE
+import com.example.mytestproject.util.*
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -20,7 +16,7 @@ import io.reactivex.schedulers.Schedulers
 
 class SearchCityViewModel(
     private val cityFilter: CityFilter,
-    private val sharePref: SharedPreferences,
+    private val cityIdCache: CityIdCache,
     private val cityDao: CityDao,
     private val lastTenChosenCitiesEntityMapper: LastTenChosenCitiesEntityMapper,
     private val getLastTenChosenCitiesUseCase: GetLastTenChosenCitiesUseCase
@@ -52,7 +48,7 @@ class SearchCityViewModel(
     }
 
     private fun saveCityId(cityId: Int) { // The method  saves the city id to SharedPreferences
-        sharePref.edit().putInt(CITY_ID, cityId).apply()
+        cityIdCache.saveCityId(cityId)
     }
 
     private fun insertCityToEntity(cityId: Int) { // This method inserts chosen city to db table

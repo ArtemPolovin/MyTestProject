@@ -1,18 +1,18 @@
 package com.example.mytestproject.ui.searchCity
 
-import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.data.db.dao.CityDao
 import com.example.data.mappers.LastTenChosenCitiesEntityMapper
 import com.example.domain.useCase.weatherData.GetLastTenChosenCitiesUseCase
 import com.example.mytestproject.util.CityFilter
+import com.example.mytestproject.util.CityIdCache
 import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
 class SearchCityFactory @Inject constructor(
     private val cityFilter: CityFilter,
-    private val sharePref: SharedPreferences,
+    private val cityIdCache: CityIdCache,
     private val cityDao: CityDao,
     private val lastTenChosenCitiesEntityMapper: LastTenChosenCitiesEntityMapper,
     private val getLastTenChosenCitiesUseCase: GetLastTenChosenCitiesUseCase
@@ -21,7 +21,7 @@ class SearchCityFactory @Inject constructor(
         if (modelClass.isAssignableFrom(SearchCityViewModel::class.java)) {
             return SearchCityViewModel(
                 cityFilter,
-                sharePref,
+                cityIdCache,
                 cityDao,
                 lastTenChosenCitiesEntityMapper,
                 getLastTenChosenCitiesUseCase
