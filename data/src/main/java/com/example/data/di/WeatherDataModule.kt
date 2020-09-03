@@ -22,6 +22,7 @@ import com.example.domain.repositories.LastChosenCitiesRepo
 import com.example.domain.useCase.weatherData.FetchCurrentWeatherUseCase
 import com.example.domain.useCase.weatherData.FetchDailyWeatherUseCase
 import com.example.domain.useCase.cities.GetLastChosenCitiesUseCase
+import com.example.domain.useCase.cities.InsertCityToLastChosenCitiesEntityUseCase
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -45,6 +46,10 @@ class WeatherDataModule(private val context: Context) {
     @Provides
     fun provideGetLastChosenCitiesUseCase(lastChosenCitiesRepo: LastChosenCitiesRepo)=
         GetLastChosenCitiesUseCase(lastChosenCitiesRepo)
+
+    @Provides
+    fun provideInsertCityToLastChosenCitiesEntityUseCase(lastChosenCitiesRepo: LastChosenCitiesRepo) =
+        InsertCityToLastChosenCitiesEntityUseCase(lastChosenCitiesRepo)
 
     @Provides
     @Singleton

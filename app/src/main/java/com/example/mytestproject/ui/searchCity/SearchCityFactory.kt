@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.data.db.dao.CityDao
 import com.example.data.mappers.LastChosenCitiesEntityMapper
 import com.example.domain.useCase.cities.GetLastChosenCitiesUseCase
+import com.example.domain.useCase.cities.InsertCityToLastChosenCitiesEntityUseCase
 import com.example.mytestproject.util.CityFilter
 import com.example.mytestproject.util.CityIdCache
 import javax.inject.Inject
@@ -13,18 +14,16 @@ import javax.inject.Inject
 class SearchCityFactory @Inject constructor(
     private val cityFilter: CityFilter,
     private val cityIdCache: CityIdCache,
-    private val cityDao: CityDao,
-    private val lastChosenCitiesEntityMapper: LastChosenCitiesEntityMapper,
-    private val getLastChosenCitiesUseCase: GetLastChosenCitiesUseCase
+    private val getLastChosenCitiesUseCase: GetLastChosenCitiesUseCase,
+    private val insertCityToLastChosenCitiesEntityUseCase: InsertCityToLastChosenCitiesEntityUseCase
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SearchCityViewModel::class.java)) {
             return SearchCityViewModel(
                 cityFilter,
                 cityIdCache,
-                cityDao,
-                lastChosenCitiesEntityMapper,
-                getLastChosenCitiesUseCase
+                getLastChosenCitiesUseCase,
+                insertCityToLastChosenCitiesEntityUseCase
             ) as T
         }
         throw IllegalArgumentException("ViewModel was not found")
