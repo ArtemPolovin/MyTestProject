@@ -54,7 +54,7 @@ class SearchCityFragment : Fragment() {
         rv_search_city.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-        showLastTenChosenCities()
+        showLastChosenCities()
 
         inputResultOfCitySearch()
         sendCityListToAdapter()
@@ -119,8 +119,8 @@ class SearchCityFragment : Fragment() {
             )
     }
 
-    private fun showLastTenChosenCities() {
-        searchViewModel.lastTenChosenCities.observe(viewLifecycleOwner,Observer{
+    private fun showLastChosenCities() {
+        searchViewModel.lastChosenCities.observe(viewLifecycleOwner,Observer{
             adapter.setData(it)
         })
     }

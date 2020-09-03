@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.data.db.dao.CityDao
-import com.example.data.mappers.LastTenChosenCitiesEntityMapper
+import com.example.data.mappers.LastChosenCitiesEntityMapper
 import com.example.domain.models.CityModel
-import com.example.domain.useCase.weatherData.GetLastTenChosenCitiesUseCase
+import com.example.domain.useCase.cities.GetLastChosenCitiesUseCase
 import com.example.mytestproject.util.*
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -18,14 +18,14 @@ class SearchCityViewModel(
     private val cityFilter: CityFilter,
     private val cityIdCache: CityIdCache,
     private val cityDao: CityDao,
-    private val lastTenChosenCitiesEntityMapper: LastTenChosenCitiesEntityMapper,
-    private val getLastTenChosenCitiesUseCase: GetLastTenChosenCitiesUseCase
+    private val lastChosenCitiesEntityMapper: LastChosenCitiesEntityMapper,
+    private val getLastChosenCitiesUseCase: GetLastChosenCitiesUseCase
 ) : ViewModel() {
 
     private var disposable: Disposable? = null
 
-    private val _lastTenChosenCities = MutableLiveData<List<CityModel>>()
-    val lastTenChosenCities: LiveData<List<CityModel>> get() = _lastTenChosenCities
+    private val _lastChosenCities = MutableLiveData<List<CityModel>>()
+    val lastChosenCities: LiveData<List<CityModel>> get() = _lastChosenCities
 
     private val _navigateToCurrentWeather = MutableLiveData<Event<Int>>()
     val navigateToCurrentWeather: LiveData<Event<Int>> get() = _navigateToCurrentWeather
@@ -34,7 +34,7 @@ class SearchCityViewModel(
     val filteredCityList: LiveData<List<CityModel>> get() = _filteredCityList
 
     init {
-        getLastTenChosenCities()
+        getLastChosenCities()
     }
 
     fun searchCity(inputResult: String) {   //  method sends filtered list of "CityModel"  by user-entered characters to adapter
@@ -65,7 +65,7 @@ class SearchCityViewModel(
                     )
 
                     _filteredCityList.value?.filter { it.city_id == city_id }?.get(0)?.let {
-                        cityDao.insertCity(lastTenChosenCitiesEntityMapper.fromCityModelToEntity(it))
+                        cityDao.insertCity(lastChosenCitiesEntityMapper.fromCityModelToEntity(it))
                     }
                 },
                 {
@@ -74,13 +74,13 @@ class SearchCityViewModel(
             )
     }
 
-    private fun getLastTenChosenCities() { // This method gets list of  last ten chosen cities from db and assigns this list to LiveData
-        disposable = getLastTenChosenCitiesUseCase()
+    private fun getLastChosenCities() { // This method gets list of  last ten chosen cities from db and assigns this list to LiveData
+        disposable = getLastChosenCitiesUseCase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    _lastTenChosenCities.value = it.reversed()
+                    _lastChosenCities.value = it.reversed()
                 },
                 {
                     Log.i("ERROR", "error = ${it.printStackTrace()}")

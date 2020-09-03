@@ -5,13 +5,13 @@ import androidx.room.RoomDatabase
 import com.example.data.db.dao.CityDao
 import com.example.data.db.dao.TimezoneDao
 import com.example.data.db.dao.WeatherDataDao
-import com.example.data.db.tables.LastTenChosenCitiesEntity
+import com.example.data.db.tables.LastChosenCitiesEntity
 import com.example.data.db.tables.TimezoneEntity
 import com.example.data.db.tables.WeatherDataEntity
 
 @Database(
-    entities = [WeatherDataEntity::class, TimezoneEntity::class,LastTenChosenCitiesEntity::class],
-    version = 6,
+    entities = [WeatherDataEntity::class, TimezoneEntity::class,LastChosenCitiesEntity::class],
+    version = 7,
     exportSchema = false
 )
 abstract class Database : RoomDatabase() {
