@@ -2,6 +2,7 @@ package com.example.data.implementationRepo
 
 import android.util.Log
 import com.example.data.db.dao.CityDao
+import com.example.data.db.dao.TableSizeDeleteCityDao
 import com.example.data.mappers.LastChosenCitiesEntityMapper
 import com.example.data.utils.MAX_TABLE_SIZE
 import com.example.domain.models.CityModel
@@ -12,7 +13,8 @@ import io.reactivex.schedulers.Schedulers
 
 class LastChosenCitiesRepoImpl(
     private val cityDao: CityDao,
-    private val mapper: LastChosenCitiesEntityMapper
+    private val mapper: LastChosenCitiesEntityMapper,
+    private val tableSizeDeleteCityDao: TableSizeDeleteCityDao
 ) : LastChosenCitiesRepo {
 
     override fun getLastChosenCities(): Single<List<CityModel>> {//This method gets list of last ten chosen cities from db and maps the list to list of CityModels
@@ -27,9 +29,9 @@ class LastChosenCitiesRepoImpl(
             .subscribeOn(Schedulers.io())
             .subscribe(
                 { city_id ->
-                    val tableSize = cityDao.getTableSize()
+                    val tableSize = tableSizeDeleteCityDao.getTableSize()
 
-                    if (tableSize == MAX_TABLE_SIZE) cityDao.deleteExtraCity()
+                    if (tableSize == MAX_TABLE_SIZE) tableSizeDeleteCityDao.deleteExtraCity()
 
                     cityList?.filter { it.city_id == city_id }?.get(0)?.let {
                         cityDao.insertCity(mapper.fromCityModelToEntity(it))

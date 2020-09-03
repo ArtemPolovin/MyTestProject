@@ -6,6 +6,7 @@ import androidx.room.Room
 import com.example.data.apiservice.WeatherDataApiService
 import com.example.data.db.Database
 import com.example.data.db.dao.CityDao
+import com.example.data.db.dao.TableSizeDeleteCityDao
 import com.example.data.db.dao.TimezoneDao
 import com.example.data.db.dao.WeatherDataDao
 import com.example.data.implementationRepo.CurrentWeatherRepositoryImpl
@@ -90,8 +91,9 @@ class WeatherDataModule(private val context: Context) {
     @Singleton
     fun provideLastTenChosenCitiesRepo(
         cityDao: CityDao,
-        mapper: LastChosenCitiesEntityMapper
-    ): LastChosenCitiesRepo = LastChosenCitiesRepoImpl(cityDao,mapper)
+        mapper: LastChosenCitiesEntityMapper,
+        tableSizeDeleteCityDao: TableSizeDeleteCityDao
+    ): LastChosenCitiesRepo = LastChosenCitiesRepoImpl(cityDao,mapper,tableSizeDeleteCityDao)
 
 
     @Provides
@@ -105,7 +107,7 @@ class WeatherDataModule(private val context: Context) {
     @Singleton
     fun provideDatabase(): Database {
         return Room.databaseBuilder(context.applicationContext, Database::class.java, "WeatherDB")
-            //.fallbackToDestructiveMigration()
+           // .fallbackToDestructiveMigration()
             .build()
     }
 
@@ -126,6 +128,13 @@ class WeatherDataModule(private val context: Context) {
     fun provideCityDao(database: Database): CityDao {
         return database.cityDao()
     }
+
+    @Provides
+    @Singleton
+    fun provideTableSizeDeleteCityDao(database: Database) :TableSizeDeleteCityDao {
+        return database.tableSizeDeleteCityDao()
+    }
+
 
     @Provides
     fun provideWeatherDataEntityMapper(cityConverter: CityConverter) =
