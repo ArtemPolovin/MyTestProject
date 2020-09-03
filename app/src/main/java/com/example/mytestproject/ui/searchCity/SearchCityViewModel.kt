@@ -58,11 +58,8 @@ class SearchCityViewModel(
             .subscribe(
                 { city_id ->
                     val tableSize = cityDao.getTableSize()
-                    val currentTimeOfExtraCityInEntity = cityDao.getIdOfExtraCity()
 
-                    if (tableSize == MAX_TABLE_SIZE) cityDao.deleteExtraCity(
-                        currentTimeOfExtraCityInEntity
-                    )
+                    if (tableSize == MAX_TABLE_SIZE) cityDao.deleteExtraCity()
 
                     _filteredCityList.value?.filter { it.city_id == city_id }?.get(0)?.let {
                         cityDao.insertCity(lastChosenCitiesEntityMapper.fromCityModelToEntity(it))

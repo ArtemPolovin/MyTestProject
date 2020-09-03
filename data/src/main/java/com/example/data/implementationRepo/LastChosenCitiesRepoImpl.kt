@@ -1,5 +1,6 @@
 package com.example.data.implementationRepo
 
+import android.util.Log
 import com.example.data.db.dao.CityDao
 import com.example.data.mappers.LastChosenCitiesEntityMapper
 import com.example.domain.models.CityModel

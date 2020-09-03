@@ -6,11 +6,9 @@ import com.example.domain.models.CityModel
 class LastChosenCitiesEntityMapper {
 
     fun fromCityModelToEntity(cityModel: CityModel): LastChosenCitiesEntity { // This method maps CityModel to LastTenChosenCitiesEntity
-        val currentTimeInMillis = System.currentTimeMillis()
         return LastChosenCitiesEntity(
-            currentTime = currentTimeInMillis,
-            city = cityModel.city_name,
             cityId = cityModel.city_id,
+            city = cityModel.city_name,
             country = cityModel.country_full
         )
     }

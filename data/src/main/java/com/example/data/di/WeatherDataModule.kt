@@ -100,7 +100,7 @@ class WeatherDataModule(private val context: Context) {
     @Singleton
     fun provideDatabase(): Database {
         return Room.databaseBuilder(context.applicationContext, Database::class.java, "WeatherDB")
-            .fallbackToDestructiveMigration()
+            //.fallbackToDestructiveMigration()
             .build()
     }
 

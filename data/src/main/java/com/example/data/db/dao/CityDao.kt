@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.data.db.tables.LastChosenCitiesEntity
+import com.example.domain.models.CityModel
 import io.reactivex.Single
 
 @Dao
@@ -12,17 +13,20 @@ interface CityDao {
     @Insert
     fun insertCity(lastChosenCitiesEntity: LastChosenCitiesEntity)
 
-    @Query("SELECT COUNT(currentTime) FROM lastchosencitiesentity")
+    @Query("SELECT COUNT(id) FROM last_chosen_cities_entity")
     fun getTableSize(): Int
 
-    @Query("DELETE FROM lastchosencitiesentity WHERE currentTime = :currentTime")
-    fun deleteExtraCity(currentTime: Long)
-
-    @Query("SELECT MIN(currentTime) FROM lastchosencitiesentity")
+    @Query("SELECT MIN(id) FROM last_chosen_cities_entity")
     fun getIdOfExtraCity(): Long
 
-    @Query("SELECT * FROM lastchosencitiesentity")
+    @Query("SELECT * FROM last_chosen_cities_entity")
     fun getAllLastChosenCities(): Single<List<LastChosenCitiesEntity>>
+
+    @Query("DELETE FROM last_chosen_cities_entity WHERE id = (SELECT id FROM last_chosen_cities_entity ORDER BY id LIMIT 1)")
+    fun deleteExtraCity()
+
+    @Query("DELETE FROM last_chosen_cities_entity")
+    fun deleteAll()
 
 
 }
