@@ -7,18 +7,19 @@ import com.example.data.utils.MAX_TABLE_SIZE
 import com.example.domain.models.CityModel
 import com.example.domain.repositories.LastChosenCitiesRepo
 import io.reactivex.Completable
+import io.reactivex.Scheduler
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 
 class LastChosenCitiesRepoImpl(
     private val cityDao: CityDao,
     private val mapper: LastChosenCitiesEntityMapper,
-    private val database: Database
+    private val database: Database,
+    private val schedulersIO: Scheduler
 ) : LastChosenCitiesRepo {
 
     override fun getLastChosenCities(): Single<List<CityModel>> {//This method gets list of last ten chosen cities from db and maps the list to list of CityModels
         return cityDao.getAllLastChosenCities()
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(schedulersIO)
             .map { mapper.fromEntityToCityModelList(it) }
     }
 
@@ -28,13 +29,12 @@ class LastChosenCitiesRepoImpl(
     ): Completable {
         return Completable.fromCallable {
             database.runInTransaction {
-                val tempCityDao = database.cityDao()
-                val tableSize = tempCityDao.getTableSize()
-                if (tableSize == MAX_TABLE_SIZE) tempCityDao.deleteExtraCity()
+                val tableSize = cityDao.getTableSize()
+                if (tableSize == MAX_TABLE_SIZE) cityDao.deleteExtraCity()
             }
-                cityList?.filter { it.city_id == cityId }?.get(0)?.let {
-                    cityDao.insertCity(mapper.fromCityModelToEntity(it))
-                }
+            cityList?.filter { it.city_id == cityId }?.get(0)?.let {
+                cityDao.insertCity(mapper.fromCityModelToEntity(it))
+            }
         }
     }
 }

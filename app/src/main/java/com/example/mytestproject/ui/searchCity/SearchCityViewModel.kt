@@ -62,6 +62,7 @@ class SearchCityViewModel(
                     Log.i("ERROR", "error = ${it.printStackTrace()}")
                 }
             )
+        disposeBag.add(completable)
     }
 
     private fun getLastChosenCities() { // This method gets list of  last ten chosen cities from db and assigns this list to LiveData

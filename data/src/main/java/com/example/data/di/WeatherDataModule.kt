@@ -26,6 +26,9 @@ import com.example.domain.useCase.cities.InsertCityToLastChosenCitiesEntityUseCa
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
+import io.reactivex.Scheduler
+import io.reactivex.schedulers.Schedulers
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -59,7 +62,9 @@ class WeatherDataModule(private val context: Context) {
         weatherDataDao: WeatherDataDao,
         weatherDataEntityMapper: WeatherDataEntityMapper,
         timezoneDao: TimezoneDao,
-        timezoneEntityMapper: TimezoneEntityMapper
+        timezoneEntityMapper: TimezoneEntityMapper,
+        @Named("io")
+        schedulersIO: Scheduler
     ): CurrentWeatherRepository =
         CurrentWeatherRepositoryImpl(
             weatherDataApiService,
@@ -67,7 +72,8 @@ class WeatherDataModule(private val context: Context) {
             weatherDataDao,
             weatherDataEntityMapper,
             timezoneDao,
-            timezoneEntityMapper
+            timezoneEntityMapper,
+            schedulersIO
         )
 
     @Provides
@@ -91,8 +97,10 @@ class WeatherDataModule(private val context: Context) {
     fun provideLastChosenCitiesRepo(
         cityDao: CityDao,
         mapper: LastChosenCitiesEntityMapper,
-        database: Database
-    ): LastChosenCitiesRepo = LastChosenCitiesRepoImpl(cityDao,mapper,database)
+        database: Database,
+        @Named("io")
+        schedulersIO: Scheduler
+    ): LastChosenCitiesRepo = LastChosenCitiesRepoImpl(cityDao,mapper,database,schedulersIO)
 
 
     @Provides
@@ -150,5 +158,9 @@ class WeatherDataModule(private val context: Context) {
     @Provides
     @Singleton
     fun providGson() = Gson()
+
+    @Provides
+    @Named("io")
+    fun provideSchedulersIO(): Scheduler = Schedulers.io()
 
 }
