@@ -30,7 +30,6 @@ class DailyWeatherViewModel(
         _viewState.value = WeatherViewState.Loading
 
         disposable = dailyWeatherUseCase(cityId, days, "I")
-            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {

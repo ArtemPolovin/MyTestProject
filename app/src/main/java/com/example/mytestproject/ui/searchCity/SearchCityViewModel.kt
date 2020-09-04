@@ -53,7 +53,6 @@ class SearchCityViewModel(
     private fun insertCityToEntity(cityId: Int) { // This method inserts chosen city to db table
 
         val completable = insertCityToLastChosenCitiesEntityUseCase(cityId, filteredCityList.value)
-            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
@@ -67,7 +66,6 @@ class SearchCityViewModel(
 
     private fun getLastChosenCities() { // This method gets list of  last ten chosen cities from db and assigns this list to LiveData
         val disposable = getLastChosenCitiesUseCase()
-            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {

@@ -8,6 +8,7 @@ import com.example.data.mappers.WeatherDataMapper
 import com.example.data.utils.getDateList
 import com.example.domain.models.WeatherData
 import com.example.domain.repositories.DailyWeatherRepository
+import io.reactivex.Scheduler
 import io.reactivex.Single
 
 class DailyWeatherRepositoryImpl(
@@ -15,7 +16,8 @@ class DailyWeatherRepositoryImpl(
     private val mapper: WeatherDataMapper,
      private val weatherDataDao: WeatherDataDao,
     private val weatherDataEntityMapper: WeatherDataEntityMapper,
-    private val timezoneDao: TimezoneDao
+    private val timezoneDao: TimezoneDao,
+    private val schedulersIO: Scheduler
 ) : DailyWeatherRepository {
 
     override fun getDailyWeather( // The method takes list of days with  weather data from api, then saves the data to SQLite table.
@@ -25,6 +27,7 @@ class DailyWeatherRepositoryImpl(
         degreeType: String
     ): Single<List<WeatherData>> {
         return apiService.getDailyWeatherData(cityId, days, degreeType)
+            .subscribeOn(schedulersIO)
               .doOnSuccess { weatherDataDao.insertListOfWeatherData(weatherDataEntityMapper.fromApiToEntityList(it,cityId)) }
             .map { mapper.mapToListOfWeather(it) }
         .onErrorResumeNext {

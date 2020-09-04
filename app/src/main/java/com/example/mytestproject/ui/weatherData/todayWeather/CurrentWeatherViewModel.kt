@@ -31,7 +31,6 @@ class CurrentWeatherViewModel(
         _viewState.value = WeatherViewState.Loading
 
         disposable = fetchCurrentWeatherUseCase(cityId,  "I")
-            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {

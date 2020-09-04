@@ -36,5 +36,6 @@ class LastChosenCitiesRepoImpl(
                 cityDao.insertCity(mapper.fromCityModelToEntity(it))
             }
         }
+            .subscribeOn(schedulersIO)
     }
 }

@@ -83,13 +83,16 @@ class WeatherDataModule(private val context: Context) {
         weatherDataApiService: WeatherDataApiService,
         weatherDataDao: WeatherDataDao,
         weatherDataEntityMapper: WeatherDataEntityMapper,
-        timezoneDao: TimezoneDao
+        timezoneDao: TimezoneDao,
+        @Named("io")
+        schedulersIO: Scheduler
     ): DailyWeatherRepository = DailyWeatherRepositoryImpl(
         weatherDataApiService,
         mapper,
         weatherDataDao,
         weatherDataEntityMapper,
-        timezoneDao
+        timezoneDao,
+        schedulersIO
     )
 
     @Provides
