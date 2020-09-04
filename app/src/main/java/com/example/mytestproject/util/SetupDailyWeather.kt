@@ -33,7 +33,7 @@ fun showDailyWeatherRequestResult(
 
             when (adapter) {
                 is TenDaysWeatherAdapter -> {
-                   myAdapter =  TenDaysWeatherAdapter()
+                    myAdapter =  TenDaysWeatherAdapter()
                     recyclerView.adapter = myAdapter as TenDaysWeatherAdapter
                 }
                 else -> {

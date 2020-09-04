@@ -2,19 +2,19 @@ package com.example.mytestproject.ui.weatherData.todayWeather
 
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.example.mytestproject.App
 import com.example.mytestproject.R
-import com.example.mytestproject.databinding.WeatherDataFragmentBinding
+import com.example.mytestproject.databinding.CurrentWeatherDataFragmentBinding
 import com.example.mytestproject.viewState.WeatherViewState
-import kotlinx.android.synthetic.main.weather_data_fragment.*
+import kotlinx.android.synthetic.main.current_weather_data_fragment.*
 import javax.inject.Inject
 
 class CurrentWeatherFragment : Fragment() {
@@ -23,7 +23,7 @@ class CurrentWeatherFragment : Fragment() {
     lateinit var currentWeatherFactory: CurrentWeatherFactory
     private lateinit var currentWeatherViewModel: CurrentWeatherViewModel
 
-    private lateinit var weatherDataBinding: WeatherDataFragmentBinding
+    private lateinit var weatherDataBinding: CurrentWeatherDataFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +31,7 @@ class CurrentWeatherFragment : Fragment() {
     ): View? {
 
         weatherDataBinding = DataBindingUtil.inflate(
-            layoutInflater, R.layout.weather_data_fragment, container, false
+            layoutInflater, R.layout.current_weather_data_fragment, container, false
         )
 
         return weatherDataBinding.root
@@ -39,13 +39,15 @@ class CurrentWeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
 
         setTitle()
 
-        val animationDrawable = weather_data_fragment.background as AnimationDrawable
-        animationDrawable.setEnterFadeDuration(4000)
-        animationDrawable.setExitFadeDuration(4000)
-        animationDrawable.start()
+        (weather_data_fragment.background as AnimationDrawable).run {
+            setEnterFadeDuration(4000)
+            setExitFadeDuration(4000)
+            start()
+        }     //screen background animation
 
         (activity?.applicationContext as App).weatherDataComponent.inject(this)
 
@@ -58,7 +60,6 @@ class CurrentWeatherFragment : Fragment() {
         btn_retry.setOnClickListener {
             currentWeatherViewModel.onRetry()
         }
-
     }
 
     private fun setupWeatherData() {
@@ -87,5 +88,16 @@ class CurrentWeatherFragment : Fragment() {
 
     private fun setTitle() {
         (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_toolbar, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return NavigationUI.onNavDestinationSelected(
+            item, requireView().findNavController()
+        ) || super.onOptionsItemSelected(item)
     }
 }

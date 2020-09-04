@@ -7,7 +7,7 @@ import java.util.*
 const val REQUEST_FORMAT_DATE = "yyyy-MM-dd"
 const val CONVERTED_FORMAT_DATE = "EEEE, d"
 
-fun parsingDate(dateString: String): String {
+fun parsingDate(dateString: String): String {  //The method converts date. For example from "8.16.2020" to "Sunday, 16"
     val requestFormat = SimpleDateFormat(REQUEST_FORMAT_DATE,Locale.ENGLISH)
     val date = requestFormat.parse(dateString)
     return SimpleDateFormat(CONVERTED_FORMAT_DATE,Locale.ENGLISH).format(date ?: "")
@@ -20,7 +20,7 @@ fun getCurrentDateByTimezone(timezone: String) : String{
     return requiredFormat.format(Date())
 }
 
- fun getDateList(days: Int,timezone: String): List<String> {
+fun getDateList(days: Int,timezone: String): List<String> { //The method gets current date by timezone and creates list of next dates depending on the number of received days
     val currentDate = getCurrentDateByTimezone(timezone)
     val list = mutableListOf<String>()
 

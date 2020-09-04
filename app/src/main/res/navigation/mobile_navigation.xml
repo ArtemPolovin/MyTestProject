@@ -36,4 +36,18 @@
         android:name="com.example.mytestproject.ui.weatherData.dailyWeather.TenDaysWeatherFragment"
         tools:layout="@layout/fragment_ten_days_weather">
     </fragment>
+
+    <fragment
+        android:id="@+id/search_city"
+        android:name="com.example.mytestproject.ui.searchCity.SearchCityFragment"
+        android:label="Search city"
+        tools:layout="@layout/fragment_search_city">
+        <action
+            android:id="@+id/action_searchCityFragment_to_nav_today_weather"
+            app:destination="@id/nav_today_weather"
+            app:enterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:popExitAnim="@anim/exit_to_right" />
+    </fragment>
 </navigation>

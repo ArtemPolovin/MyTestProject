@@ -98,9 +98,11 @@ dependencies {
     //Room
     implementation room.roomRuntime
     kapt room.roomCompiler
-    implementation room.roomRxjava
 
     //RecyclerView
     implementation recyclerView.recyclerView
+
+    //Gson
+    implementation gson.gson
 
 }

@@ -3,16 +3,18 @@ package com.example.mytestproject.ui.weatherData.dailyWeather
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.domain.useCase.weatherData.FetchDailyWeatherUseCase
-import java.lang.IllegalArgumentException
+import com.example.mytestproject.util.CityIdCache
 import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
-class DailyWeatherFactory @Inject constructor (private val dailyWeatherUseCase: FetchDailyWeatherUseCase) :
-    ViewModelProvider.Factory {
+class DailyWeatherFactory @Inject constructor(
+    private val dailyWeatherUseCase: FetchDailyWeatherUseCase,
+    private val mySharedPref: CityIdCache
+) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DailyWeatherViewModel::class.java)) {
-            return DailyWeatherViewModel(dailyWeatherUseCase) as T
+            return DailyWeatherViewModel(dailyWeatherUseCase,mySharedPref) as T
         }
         throw IllegalArgumentException("ViewModel was not found")
     }

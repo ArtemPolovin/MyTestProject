@@ -46,7 +46,8 @@ ext.versions = [
         room            : "2.2.5",
         rxjava2         : "2.2.12",
         rxjava2Android  : "2.1.1",
-        recyclerView    : "1.1.0"
+        recyclerView    : "1.1.0",
+        gson            : "2.8.5"
 
 ]
 
@@ -131,4 +132,8 @@ ext.rxjava2Android = [
 
 ext.recyclerView = [
         recyclerView: "androidx.recyclerview:recyclerview:$versions.recyclerView"
+]
+
+ext.gson = [
+        gson: "com.google.code.gson:gson:$versions.gson"
 ]

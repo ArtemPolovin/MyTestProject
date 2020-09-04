@@ -12,6 +12,6 @@ interface TimezoneDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertTimezone(timezone: TimezoneEntity)
 
-    @Query("SELECT time_zone FROM timezone WHERE cityName = :cityName ")
-    fun getTimezoneByCityName(cityName: String): String
+    @Query("SELECT time_zone FROM timezone WHERE city_id = :cityId ")
+    fun getTimezoneByCityId(cityId: Int): String
 }

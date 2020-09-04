@@ -5,10 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.*
 import com.example.mytestproject.R
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -24,6 +21,8 @@ class MainActivity : AppCompatActivity(){
 
         setSupportActionBar(toolbar)
 
+
+
         navController = findNavController(R.id.nav_host_fragment)
 
         appBarConfiguration = AppBarConfiguration(
@@ -32,17 +31,19 @@ class MainActivity : AppCompatActivity(){
                 R.id.nav_third_fragment,
                 R.id.nav_today_weather,
                 R.id.nav_three_days_weather,
-                R.id.nav_ten_days_fragment
+                R.id.nav_ten_days_fragment,
+                R.id.search_city
             ), drawer_layout
         )
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         nav_view.setupWithNavController(navController)
         bottom_navigation.setupWithNavController(navController)
-        
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            bottom_navigation.visibility =   when (destination.id) {
-                R.id.nav_second_fragment,R.id.nav_third_fragment ->  View.GONE
+
+            bottom_navigation.visibility =  when (destination.id) {
+                R.id.nav_second_fragment,R.id.nav_third_fragment, R.id.search_city ->  View.GONE
                 else ->  View.VISIBLE
             }
         }

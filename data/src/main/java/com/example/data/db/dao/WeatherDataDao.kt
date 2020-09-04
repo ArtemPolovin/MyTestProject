@@ -17,11 +17,11 @@ interface WeatherDataDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertListOfWeatherData(weatherDataList: List<WeatherDataEntity>)
 
-    @Query("SELECT * FROM weather_data WHERE city_name = :cityName AND date = :currentDate")
-    fun getWeatherDataFromDb(cityName: String, currentDate: String): Single<WeatherDataEntity>
+    @Query("SELECT * FROM weather_data WHERE city_id = :cityId AND date = :currentDate")
+    fun getWeatherDataFromDb(cityId: Int, currentDate: String): Single<WeatherDataEntity>
 
-    @Query("SELECT * FROM weather_data WHERE city_name = :cityName AND date in (:dateList)")
-    fun getListOfWeatherData(cityName: String, dateList: List<String>): Single<List<WeatherDataEntity>>
+    @Query("SELECT * FROM weather_data WHERE city_id = :cityId AND date in (:dateList)")
+    fun getListOfWeatherData(cityId:Int, dateList: List<String>): Single<List<WeatherDataEntity>>
 
     @Query("DELETE FROM weather_data")
     fun deleteAllFromWeatherDataTable()

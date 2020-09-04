@@ -1,6 +1,5 @@
 package com.example.mytestproject.ui.weatherData.dailyWeather
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -8,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.domain.models.WeatherData
 import com.example.mytestproject.R
 import com.example.mytestproject.databinding.CellThreeDaysWeatherBinding
-import com.example.mytestproject.databinding.WeatherDataFragmentBinding
 import com.example.mytestproject.util.MyAdapter
 
 class ThreeDaysWeatherAdapter :
@@ -33,7 +31,7 @@ class ThreeDaysWeatherAdapter :
     }
 
     override fun getItemCount(): Int {
-       return weatherDataList.size
+        return weatherDataList.size
     }
 
     override fun onBindViewHolder(holder: ThreeDaysWeatherViewHolder, position: Int) {
