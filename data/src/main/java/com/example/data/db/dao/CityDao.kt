@@ -1,8 +1,6 @@
 package com.example.data.db.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.example.data.db.tables.LastChosenCitiesEntity
 import com.example.domain.models.CityModel
 import io.reactivex.Single
@@ -10,7 +8,7 @@ import io.reactivex.Single
 @Dao
 interface CityDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCity(lastChosenCitiesEntity: LastChosenCitiesEntity)
 
     @Query("SELECT COUNT(id) FROM last_chosen_cities_entity")
@@ -27,6 +25,5 @@ interface CityDao {
 
     @Query("DELETE FROM last_chosen_cities_entity")
     fun deleteAll()
-
 
 }

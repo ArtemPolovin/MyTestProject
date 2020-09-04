@@ -4,16 +4,14 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.data.db.dao.CityDao
-import com.example.data.mappers.LastChosenCitiesEntityMapper
 import com.example.domain.models.CityModel
 import com.example.domain.useCase.cities.GetLastChosenCitiesUseCase
 import com.example.domain.useCase.cities.InsertCityToLastChosenCitiesEntityUseCase
-import com.example.mytestproject.util.*
-import io.reactivex.Single
+import com.example.mytestproject.util.CityFilter
+import com.example.mytestproject.util.CityIdCache
+import com.example.mytestproject.util.Event
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 class SearchCityViewModel(
@@ -54,12 +52,20 @@ class SearchCityViewModel(
 
     private fun insertCityToEntity(cityId: Int) { // This method inserts chosen city to db table
 
-       disposeBag.add(insertCityToLastChosenCitiesEntityUseCase(cityId, filteredCityList.value))
-
+        val completable = insertCityToLastChosenCitiesEntityUseCase(cityId, filteredCityList.value)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    Log.i("Result", " completable was successful")
+                }, {
+                    Log.i("ERROR", "error = ${it.printStackTrace()}")
+                }
+            )
     }
 
     private fun getLastChosenCities() { // This method gets list of  last ten chosen cities from db and assigns this list to LiveData
-       val  disposable = getLastChosenCitiesUseCase()
+        val disposable = getLastChosenCitiesUseCase()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
