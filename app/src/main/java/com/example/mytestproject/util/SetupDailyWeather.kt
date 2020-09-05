@@ -20,6 +20,7 @@ fun showDailyWeatherRequestResult(
     when (viewState) {
         WeatherViewState.Loading -> {
             progressBar.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
         }
         WeatherViewState.Error -> {
             progressBar.visibility = View.GONE

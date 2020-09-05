@@ -44,6 +44,8 @@ class TenDaysWeatherFragment : Fragment() {
             LinearLayoutManager.VERTICAL, false)
 
         setupDailyWeatherData()
+
+        dailyWeatherViewModel.refreshWeatherDataList(pull_refresh_layout)
     }
 
     private fun setupDailyWeatherData() {
