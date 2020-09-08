@@ -38,14 +38,13 @@ class TenDaysWeatherFragment : Fragment() {
 
         setTitle()
 
-        dailyWeatherViewModel.getWeatherData(ELEVEN_DAYS) // one more day because the first current day is not included in the list
+        dailyWeatherViewModel.daysForForecastWeather(ELEVEN_DAYS) // one more day because the first current day is not included in the list
 
         rv_ten_days_weather.layoutManager = LinearLayoutManager(requireContext(),
             LinearLayoutManager.VERTICAL, false)
 
         setupDailyWeatherData()
-
-        dailyWeatherViewModel.refreshWeatherDataList(pull_refresh_layout)
+        refreshingWeather()
     }
 
     private fun setupDailyWeatherData() {
@@ -53,7 +52,7 @@ class TenDaysWeatherFragment : Fragment() {
         dailyWeatherViewModel.viewState.observe(viewLifecycleOwner, Observer {viewState ->
             showDailyWeatherRequestResult(
                 viewState,
-                progressbar,
+                pull_refresh_layout,
                 txt_error,
                 rv_ten_days_weather,
                 TenDaysWeatherAdapter()
@@ -69,6 +68,12 @@ class TenDaysWeatherFragment : Fragment() {
                 subtitle = getString(R.string.ten_day_text)
             }
         })
+    }
+
+  private  fun refreshingWeather() {
+        pull_refresh_layout.setOnRefreshListener {
+            dailyWeatherViewModel.refreshWeatherDataList()
+        }
     }
 
 }

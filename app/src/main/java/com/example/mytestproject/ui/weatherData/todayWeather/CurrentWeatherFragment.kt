@@ -60,6 +60,8 @@ class CurrentWeatherFragment : Fragment() {
         btn_retry.setOnClickListener {
             currentWeatherViewModel.onRetry()
         }
+
+        refreshingWeather()
     }
 
     private fun setupWeatherData() {
@@ -67,17 +69,17 @@ class CurrentWeatherFragment : Fragment() {
             when (it) {
                 WeatherViewState.Loading -> {
                     group_temp_abbreviation.visibility = View.GONE
-                    progressBar.visibility = View.VISIBLE
+                    refresh_layout.isRefreshing = true
                     group_error_views.visibility = View.GONE
                 }
                 WeatherViewState.Error -> {
                     group_temp_abbreviation.visibility = View.GONE
-                    progressBar.visibility = View.GONE
+                    refresh_layout.isRefreshing = false
                     group_error_views.visibility = View.VISIBLE
                 }
                 is WeatherViewState.CurrentWeatherLoaded -> {
                     group_temp_abbreviation.visibility = View.VISIBLE
-                    progressBar.visibility = View.GONE
+                    refresh_layout.isRefreshing = false
                     group_error_views.visibility = View.GONE
                     weatherDataBinding.weatherData = it.weatherData
                 }
@@ -88,6 +90,12 @@ class CurrentWeatherFragment : Fragment() {
 
     private fun setTitle() {
         (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
+    }
+
+    private fun refreshingWeather() {
+        refresh_layout.setOnRefreshListener {
+            currentWeatherViewModel.refreshWeatherDataList()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -44,17 +44,15 @@ class DailyWeatherViewModel(
             )
     }
 
-    fun getWeatherData(days: Int) { // the method takes the number of days that come from the fragment
+    fun daysForForecastWeather(days: Int) { // the method takes the number of days that come from the fragment
         numberOfWeatherForecastDays = days
         fetchDailyWeather()
     }
 
-    fun refreshWeatherDataList(swipeRefreshLayout: SwipeRefreshLayout) {
-        swipeRefreshLayout.setOnRefreshListener {
-            fetchDailyWeather()
-            swipeRefreshLayout.isRefreshing = false
-        }
+    fun refreshWeatherDataList() {
+        fetchDailyWeather()
     }
+
 
     override fun onCleared() {
         super.onCleared()
