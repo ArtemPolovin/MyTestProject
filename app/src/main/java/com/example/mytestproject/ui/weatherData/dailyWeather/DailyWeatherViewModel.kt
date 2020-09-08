@@ -4,17 +4,19 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.domain.useCase.weatherData.FetchDailyWeatherUseCase
 import com.example.mytestproject.util.CityIdCache
 import com.example.mytestproject.viewState.WeatherViewState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 
 class DailyWeatherViewModel(
     private val dailyWeatherUseCase: FetchDailyWeatherUseCase,
     mySharedPref: CityIdCache
 ) : ViewModel() {
+
+    private var numberOfWeatherForecastDays = 0
 
     private var cityId = mySharedPref.loadCityId()// loading city id from SharedPreferences
 
@@ -24,12 +26,12 @@ class DailyWeatherViewModel(
     val viewState: LiveData<WeatherViewState> get() = _viewState
 
     private val _cityName = MutableLiveData<String>()
-    val cityName : LiveData<String> get() = _cityName
+    val cityName: LiveData<String> get() = _cityName
 
-    private fun fetchDailyWeather(days: Int) { // the method gets list of days with weather data from Api
+    private fun fetchDailyWeather() { // the method gets list of days with weather data from Api
         _viewState.value = WeatherViewState.Loading
 
-        disposable = dailyWeatherUseCase(cityId, days, "I")
+        disposable = dailyWeatherUseCase(cityId, numberOfWeatherForecastDays, "I")
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
@@ -42,9 +44,15 @@ class DailyWeatherViewModel(
             )
     }
 
-    fun getWeatherData(days: Int) { // the method takes the number of days that come from the fragment
-        fetchDailyWeather(days)
+    fun daysForForecastWeather(days: Int) { // the method takes the number of days that come from the fragment
+        numberOfWeatherForecastDays = days
+        fetchDailyWeather()
     }
+
+    fun refreshWeatherDataList() {
+        fetchDailyWeather()
+    }
+
 
     override fun onCleared() {
         super.onCleared()

@@ -1,9 +1,9 @@
 package com.example.mytestproject.util
 
 import android.view.View
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.mytestproject.ui.weatherData.dailyWeather.TenDaysWeatherAdapter
 import com.example.mytestproject.ui.weatherData.dailyWeather.ThreeDaysWeatherAdapter
 import com.example.mytestproject.viewState.WeatherViewState
@@ -12,23 +12,24 @@ private lateinit var myAdapter: MyAdapter
 
 fun showDailyWeatherRequestResult(
     viewState: WeatherViewState,
-    progressBar: ProgressBar,
+    swipeRefreshLayout: SwipeRefreshLayout,
     errorText: TextView,
     recyclerView: RecyclerView,
     adapter: MyAdapter
 ) {
+
+    recyclerView.visibility = View.GONE
+    swipeRefreshLayout.isRefreshing = false
+    errorText.visibility = View.GONE
+
     when (viewState) {
         WeatherViewState.Loading -> {
-            progressBar.visibility = View.VISIBLE
+            swipeRefreshLayout.isRefreshing = true
         }
         WeatherViewState.Error -> {
-            progressBar.visibility = View.GONE
             errorText.visibility = View.VISIBLE
-            recyclerView.visibility = View.GONE
         }
         is WeatherViewState.DailyWeatherLoaded -> {
-            progressBar.visibility = View.GONE
-            errorText.visibility = View.GONE
             recyclerView.visibility = View.VISIBLE
 
             when (adapter) {

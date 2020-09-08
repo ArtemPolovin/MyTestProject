@@ -47,6 +47,10 @@ class CurrentWeatherViewModel(
         getWeather(cityId)
     }
 
+    fun refreshWeatherDataList() {
+        getWeather(cityId)
+    }
+
     override fun onCleared() {
         super.onCleared()
         disposable?.dispose()

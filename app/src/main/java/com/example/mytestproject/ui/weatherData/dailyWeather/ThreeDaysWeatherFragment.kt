@@ -39,20 +39,22 @@ class ThreeDaysWeatherFragment : Fragment() {
 
         setTitle()
 
-        dailyWeatherViewModel.getWeatherData(FOUR_DAYS) // one more day because the first current day is not included in the list
+        dailyWeatherViewModel.daysForForecastWeather(FOUR_DAYS) // one more day because the first current day is not included in the list
 
         rv_three_days_weather.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         setupDailyWeatherData()
+        refreshingWeather()
+
     }
 
     private fun setupDailyWeatherData() {
 
-        dailyWeatherViewModel.viewState.observe(viewLifecycleOwner, Observer {viewState->
+        dailyWeatherViewModel.viewState.observe(viewLifecycleOwner, Observer { viewState ->
             showDailyWeatherRequestResult(
                 viewState,
-                progressbar,
+                pull_refresh_layout,
                 txt_error,
                 rv_three_days_weather,
                 ThreeDaysWeatherAdapter()
@@ -62,12 +64,18 @@ class ThreeDaysWeatherFragment : Fragment() {
     }
 
     private fun setTitle() {
-        dailyWeatherViewModel.cityName.observe(viewLifecycleOwner, Observer{cityName ->
-            (activity as? AppCompatActivity)?.supportActionBar?.run{
-                 title = cityName.capitalize()
+        dailyWeatherViewModel.cityName.observe(viewLifecycleOwner, Observer { cityName ->
+            (activity as? AppCompatActivity)?.supportActionBar?.run {
+                title = cityName.capitalize()
                 subtitle = getString(R.string.three_days_text)
             }
         })
+    }
+
+    private fun refreshingWeather() {
+        pull_refresh_layout.setOnRefreshListener {
+            dailyWeatherViewModel.refreshWeatherDataList()
+        }
     }
 
 }
