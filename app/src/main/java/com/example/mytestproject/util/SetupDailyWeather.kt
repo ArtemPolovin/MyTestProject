@@ -17,19 +17,19 @@ fun showDailyWeatherRequestResult(
     recyclerView: RecyclerView,
     adapter: MyAdapter
 ) {
+
+    recyclerView.visibility = View.GONE
+    swipeRefreshLayout.isRefreshing = false
+    errorText.visibility = View.GONE
+
     when (viewState) {
         WeatherViewState.Loading -> {
             swipeRefreshLayout.isRefreshing = true
-            recyclerView.visibility = View.GONE
         }
         WeatherViewState.Error -> {
-            swipeRefreshLayout.isRefreshing = false
             errorText.visibility = View.VISIBLE
-            recyclerView.visibility = View.GONE
         }
         is WeatherViewState.DailyWeatherLoaded -> {
-            swipeRefreshLayout.isRefreshing = false
-            errorText.visibility = View.GONE
             recyclerView.visibility = View.VISIBLE
 
             when (adapter) {
