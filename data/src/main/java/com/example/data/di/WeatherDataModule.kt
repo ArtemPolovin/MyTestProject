@@ -10,6 +10,7 @@ import com.example.data.db.dao.TimezoneDao
 import com.example.data.db.dao.WeatherDataDao
 import com.example.data.implementationRepo.CurrentWeatherRepositoryImpl
 import com.example.data.implementationRepo.DailyWeatherRepositoryImpl
+import com.example.data.implementationRepo.DeleteOldWeatherDataRepoImpl
 import com.example.data.implementationRepo.LastChosenCitiesRepoImpl
 import com.example.data.mappers.LastChosenCitiesEntityMapper
 import com.example.data.mappers.TimezoneEntityMapper
@@ -18,11 +19,13 @@ import com.example.data.mappers.WeatherDataMapper
 import com.example.data.utils.CityConverter
 import com.example.domain.repositories.CurrentWeatherRepository
 import com.example.domain.repositories.DailyWeatherRepository
+import com.example.domain.repositories.DeleteOldWeatherDataRepository
 import com.example.domain.repositories.LastChosenCitiesRepo
 import com.example.domain.useCase.weatherData.FetchCurrentWeatherUseCase
 import com.example.domain.useCase.weatherData.FetchDailyWeatherUseCase
 import com.example.domain.useCase.cities.GetLastChosenCitiesUseCase
 import com.example.domain.useCase.cities.InsertCityToLastChosenCitiesEntityUseCase
+import com.example.domain.useCase.weatherData.DeleteOldWeatherDataFromEntityUseCase
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -53,6 +56,11 @@ class WeatherDataModule(private val context: Context) {
     @Provides
     fun provideInsertCityToLastChosenCitiesEntityUseCase(lastChosenCitiesRepo: LastChosenCitiesRepo) =
         InsertCityToLastChosenCitiesEntityUseCase(lastChosenCitiesRepo)
+
+    @Provides
+    fun provideDeleteOldWeatherDataFromEntityUseCase(
+        deleteOldWeatherDataRepository: DeleteOldWeatherDataRepository
+    ) = DeleteOldWeatherDataFromEntityUseCase(deleteOldWeatherDataRepository)
 
     @Provides
     @Singleton
@@ -104,6 +112,13 @@ class WeatherDataModule(private val context: Context) {
         @Named("io")
         schedulersIO: Scheduler
     ): LastChosenCitiesRepo = LastChosenCitiesRepoImpl(cityDao,mapper,database,schedulersIO)
+
+    @Provides
+    @Singleton
+    fun provideDeleteOldWeatherDataRepo(
+        weatherDataDao: WeatherDataDao,
+        timezoneDao: TimezoneDao
+    ): DeleteOldWeatherDataRepository = DeleteOldWeatherDataRepoImpl(weatherDataDao,timezoneDao)
 
 
     @Provides

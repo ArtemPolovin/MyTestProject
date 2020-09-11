@@ -3,7 +3,7 @@ package com.example.data.mappers
 import com.example.data.db.tables.LastChosenCitiesEntity
 import com.example.domain.models.CityModel
 
-class LastChosenCitiesEntityMapper {
+class LastChosenCitiesEntityMapper{
 
     fun fromCityModelToEntity(cityModel: CityModel): LastChosenCitiesEntity { // This method maps CityModel to LastTenChosenCitiesEntity
         return LastChosenCitiesEntity(

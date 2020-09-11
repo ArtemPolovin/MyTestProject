@@ -10,7 +10,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module
+@Module(includes = [AssistModule::class])
 class CityFilterModule(private val context: Context) {
 
     @Provides

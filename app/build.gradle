@@ -35,7 +35,6 @@ android {
     dataBinding {
         enabled = true
     }
-
 }
 
 dependencies {
@@ -105,4 +104,16 @@ dependencies {
     //Gson
     implementation gson.gson
 
+  /*  //WorkManager
+    implementation workManager.workRuntime
+    implementation workManager.workRuntimeKtx*/
+
+    implementation "androidx.work:work-runtime:2.4.0"
+    implementation "androidx.work:work-runtime-ktx:2.4.0"
+
+  /*  compileOnly "com.squareup.inject:assisted-inject-annotations-dagger2:0.5.2"
+    kapt "com.squareup.inject:assisted-inject-processor-dagger2:0.5.2"*/
+
+    implementation "com.vikingsen.inject:worker-inject:0.2.2"
+    kapt "com.vikingsen.inject:worker-inject-processor:0.2.2"
 }
