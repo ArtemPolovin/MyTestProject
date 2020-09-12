@@ -4,16 +4,15 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.domain.useCase.weatherData.FetchDailyWeatherUseCase
-import com.example.mytestproject.util.CityIdCache
+import com.example.mytestproject.util.CityDataCache
 import com.example.mytestproject.viewState.WeatherViewState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 
 class DailyWeatherViewModel(
     private val dailyWeatherUseCase: FetchDailyWeatherUseCase,
-    mySharedPref: CityIdCache
+    mySharedPref: CityDataCache
 ) : ViewModel() {
 
     private var numberOfWeatherForecastDays = 0
@@ -25,7 +24,8 @@ class DailyWeatherViewModel(
     private val _viewState = MutableLiveData<WeatherViewState>()
     val viewState: LiveData<WeatherViewState> get() = _viewState
 
-    private val _cityName = MutableLiveData<String>()
+    private val _cityName =
+        MutableLiveData<String>().apply {value = mySharedPref.loadCityName() }
     val cityName: LiveData<String> get() = _cityName
 
     private fun fetchDailyWeather() { // the method gets list of days with weather data from Api
@@ -36,7 +36,6 @@ class DailyWeatherViewModel(
             .subscribe(
                 {
                     _viewState.value = WeatherViewState.DailyWeatherLoaded(it)
-                    _cityName.value = it[0].city_name
                 }, {
                     _viewState.value = WeatherViewState.Error
                     Log.i("ERROR", "error = ${it.printStackTrace()}")

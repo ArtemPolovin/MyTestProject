@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.example.data.utils.CityConverter
 import com.example.mytestproject.util.CityFilter
-import com.example.mytestproject.util.CityIdCache
+import com.example.mytestproject.util.CityDataCache
 import com.example.mytestproject.util.SHARED_PREFS
 import dagger.Module
 import dagger.Provides
@@ -18,7 +18,7 @@ class CityFilterModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun provideMySharedPref(sharePref:SharedPreferences) = CityIdCache(sharePref)
+    fun provideMySharedPref(sharePref:SharedPreferences) = CityDataCache(sharePref)
 
     @Provides
     @Singleton

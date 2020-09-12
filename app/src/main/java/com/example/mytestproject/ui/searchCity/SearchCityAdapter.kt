@@ -1,5 +1,6 @@
 package com.example.mytestproject.ui.searchCity
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -43,8 +44,9 @@ class SearchCityAdapter: RecyclerView.Adapter<SearchCityAdapter.SearchCityViewHo
     }
 
     override fun onBindViewHolder(holder: SearchCityViewHolder, position: Int) {
-        holder.bind(cityModelList[position])
-        holder.clickItem()
+        val cityModel = cityModelList[position]
+        holder.bind(cityModel)
+        holder.clickItem(cityModel)
     }
 
     override fun getItemId(position: Int): Long {
@@ -60,14 +62,14 @@ class SearchCityAdapter: RecyclerView.Adapter<SearchCityAdapter.SearchCityViewHo
             cellCityModel.cityModel = cityModel
         }
 
-        fun clickItem() {
+        fun clickItem(citYModel: CityModel) {
             itemView.setOnClickListener {
-               onclickListener?.getCityId(itemId.toInt())
+               onclickListener?.getCityId(itemId.toInt(),citYModel.city_name)
             }
         }
     }
 
     interface OnClickListenerCityModel {
-        fun getCityId(cityId: Int)
+        fun getCityId(cityId: Int, cityName: String)
     }
 }

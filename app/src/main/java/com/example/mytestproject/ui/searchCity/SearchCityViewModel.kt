@@ -8,15 +8,14 @@ import com.example.domain.models.CityModel
 import com.example.domain.useCase.cities.GetLastChosenCitiesUseCase
 import com.example.domain.useCase.cities.InsertCityToLastChosenCitiesEntityUseCase
 import com.example.mytestproject.util.CityFilter
-import com.example.mytestproject.util.CityIdCache
+import com.example.mytestproject.util.CityDataCache
 import com.example.mytestproject.util.Event
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 
 class SearchCityViewModel(
     private val cityFilter: CityFilter,
-    private val cityIdCache: CityIdCache,
+    private val cityDataCache: CityDataCache,
     private val getLastChosenCitiesUseCase: GetLastChosenCitiesUseCase,
     private val insertCityToLastChosenCitiesEntityUseCase: InsertCityToLastChosenCitiesEntityUseCase
 ) : ViewModel() {
@@ -40,14 +39,15 @@ class SearchCityViewModel(
         _filteredCityList.value = cityFilter.filterCityList(inputResult)
     }
 
-    fun onCityChosen(cityId: Int) {
+    fun onCityChosen(cityId: Int, cityName: String) {
         _navigateToCurrentWeather.value = Event(cityId)
-        saveCityId(cityId)
+        saveCityDataToSharedPreferences(cityId,cityName)
         insertCityToEntity(cityId)
     }
 
-    private fun saveCityId(cityId: Int) { // The method  saves the city id to SharedPreferences
-        cityIdCache.saveCityId(cityId)
+    private fun saveCityDataToSharedPreferences(cityId: Int, cityName:String) { // The method  saves the city id to SharedPreferences
+        cityDataCache.saveCityId(cityId)
+        cityDataCache.saveCityName(cityName)
     }
 
     private fun insertCityToEntity(cityId: Int) { // This method inserts chosen city to db table

@@ -2,18 +2,16 @@ package com.example.mytestproject.ui.searchCity
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.data.db.dao.CityDao
-import com.example.data.mappers.LastChosenCitiesEntityMapper
 import com.example.domain.useCase.cities.GetLastChosenCitiesUseCase
 import com.example.domain.useCase.cities.InsertCityToLastChosenCitiesEntityUseCase
 import com.example.mytestproject.util.CityFilter
-import com.example.mytestproject.util.CityIdCache
+import com.example.mytestproject.util.CityDataCache
 import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
 class SearchCityFactory @Inject constructor(
     private val cityFilter: CityFilter,
-    private val cityIdCache: CityIdCache,
+    private val cityDataCache: CityDataCache,
     private val getLastChosenCitiesUseCase: GetLastChosenCitiesUseCase,
     private val insertCityToLastChosenCitiesEntityUseCase: InsertCityToLastChosenCitiesEntityUseCase
 ) : ViewModelProvider.Factory {
@@ -21,7 +19,7 @@ class SearchCityFactory @Inject constructor(
         if (modelClass.isAssignableFrom(SearchCityViewModel::class.java)) {
             return SearchCityViewModel(
                 cityFilter,
-                cityIdCache,
+                cityDataCache,
                 getLastChosenCitiesUseCase,
                 insertCityToLastChosenCitiesEntityUseCase
             ) as T
