@@ -1,7 +1,7 @@
 package com.example.mytestproject.workManager
 
 import android.content.Context
-import androidx.work.PeriodicWorkRequest
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import java.util.concurrent.TimeUnit
@@ -20,7 +20,13 @@ class WorkScheduler @Inject constructor(
             PeriodicWorkRequestBuilder<DeleteOldWeatherDataWorker>(24, TimeUnit.HOURS)
                 .build()
 
-        workManager.apply { enqueue(workRequest) }
+        workManager.apply {
+            enqueueUniquePeriodicWork(
+                "delete old weather data",
+                ExistingPeriodicWorkPolicy.KEEP,
+                workRequest
+            )
+        }
     }
 
 }
