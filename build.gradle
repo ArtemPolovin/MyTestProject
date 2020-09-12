@@ -47,8 +47,9 @@ ext.versions = [
         rxjava2         : "2.2.12",
         rxjava2Android  : "2.1.1",
         recyclerView    : "1.1.0",
-        gson            : "2.8.5"
-       // workManager     : " 2.4.0"
+        gson            : "2.8.5",
+        injectWorker    : "0.2.2",
+        workManager     : "2.4.0"
 
 ]
 
@@ -139,7 +140,12 @@ ext.gson = [
         gson: "com.google.code.gson:gson:$versions.gson"
 ]
 
-/*ext.workManager = [
+ext.injectWorker = [
+        workerInject         : "com.vikingsen.inject:worker-inject:$versions.injectWorker",
+        workerInjectProcessor: "com.vikingsen.inject:worker-inject-processor:$versions.injectWorker"
+]
+
+ext.workManager = [
         workRuntime   : "androidx.work:work-runtime:$versions.workManager",
         workRuntimeKtx: "androidx.work:work-runtime-ktx:$versions.workManager"
-]*/
+]
