@@ -46,7 +46,7 @@ class SearchCityAdapter: RecyclerView.Adapter<SearchCityAdapter.SearchCityViewHo
     override fun onBindViewHolder(holder: SearchCityViewHolder, position: Int) {
         val cityModel = cityModelList[position]
         holder.bind(cityModel)
-        holder.clickItem(cityModel)
+        holder.clickItem()
     }
 
     override fun getItemId(position: Int): Long {
@@ -62,14 +62,14 @@ class SearchCityAdapter: RecyclerView.Adapter<SearchCityAdapter.SearchCityViewHo
             cellCityModel.cityModel = cityModel
         }
 
-        fun clickItem(citYModel: CityModel) {
+        fun clickItem() {
             itemView.setOnClickListener {
-               onclickListener?.getCityId(itemId.toInt(),citYModel.city_name)
+               onclickListener?.getCityId(itemId.toInt())
             }
         }
     }
 
     interface OnClickListenerCityModel {
-        fun getCityId(cityId: Int, cityName: String)
+        fun getCityId(cityId: Int)
     }
 }

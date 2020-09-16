@@ -66,8 +66,8 @@ class SearchCityFragment : Fragment() {
     private fun chosenCity() {  // the method takes city id from recyclerView by clicking on item and sends the id to ViewModel
         adapter.onClickItemListener(object :
             SearchCityAdapter.OnClickListenerCityModel {
-            override fun getCityId(cityId: Int, cityName: String) {
-                searchViewModel.onCityChosen(cityId,cityName)
+            override fun getCityId(cityId: Int) {
+                searchViewModel.onCityChosen(cityId)
             }
         })
     }

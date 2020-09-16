@@ -4,11 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.data.utils.CityDataCache
 import com.example.domain.models.CityModel
 import com.example.domain.useCase.cities.GetLastChosenCitiesUseCase
 import com.example.domain.useCase.cities.InsertCityToLastChosenCitiesEntityUseCase
 import com.example.mytestproject.util.CityFilter
-import com.example.data.utils.CityDataCache
 import com.example.mytestproject.util.Event
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -39,15 +39,22 @@ class SearchCityViewModel(
         _filteredCityList.value = cityFilter.filterCityList(inputResult)
     }
 
-    fun onCityChosen(cityId: Int, cityName: String) {
+    fun onCityChosen(cityId: Int) {
         _navigateToCurrentWeather.value = Event(cityId)
-        saveCityDataToSharedPreferences(cityId,cityName)
+        saveCityDataToSharedPreferences(cityId)
         insertCityToEntity(cityId)
     }
 
-    private fun saveCityDataToSharedPreferences(cityId: Int, cityName:String) { // The method  saves the city id to SharedPreferences
+    private fun saveCityDataToSharedPreferences(cityId: Int) { // The method  saves the city id to SharedPreferences
         cityDataCache.saveCityId(cityId)
-        cityDataCache.saveCityName(cityName)
+        cityDataCache.saveCityName(getChosenCityNameById(cityId))
+    }
+
+    private fun getChosenCityNameById(cityId: Int): String? {
+        var cityName = _filteredCityList.value?.filter { it.city_id == cityId }?.get(0)?.city_name
+        if (cityName == null) cityName =
+            _lastChosenCities.value?.filter { it.city_id == cityId }?.get(0)?.city_name
+        return cityName
     }
 
     private fun insertCityToEntity(cityId: Int) { // This method inserts chosen city to db table

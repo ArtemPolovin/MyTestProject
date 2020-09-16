@@ -14,7 +14,7 @@ class CityDataCache(
         sharedPref.edit().putInt(CITY_ID,cityId).apply()
     }
 
-    fun saveCityName(cityName: String) {
+    fun saveCityName(cityName: String?) {
         sharedPref.edit().putString(CITY_NAME,cityName).apply()
     }
 
