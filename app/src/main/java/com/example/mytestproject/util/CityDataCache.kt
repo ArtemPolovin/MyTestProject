@@ -1,7 +1,10 @@
 package com.example.mytestproject.util
 
 import android.content.SharedPreferences
-class CityDataCache(private val sharedPref: SharedPreferences){
+
+class CityDataCache(
+    private val sharedPref: SharedPreferences
+){
 
     fun loadCityId(): Int {
         return sharedPref.getInt(CITY_ID, DEFAULT_VALUE_NEW_YORK_ID)

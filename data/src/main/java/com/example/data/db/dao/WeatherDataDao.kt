@@ -28,4 +28,7 @@ interface WeatherDataDao {
 
     @Query("DELETE FROM weather_data WHERE date < :todayData")
     fun deleteOldWeatherData(todayData: String)
+
+    @Query("SELECT * FROM weather_data ")
+    fun getAllFromWeatherDataTable(): List<WeatherDataEntity>
 }

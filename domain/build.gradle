@@ -16,6 +16,13 @@ dependencies {
     //RxJava2
     implementation rxjava2.rxjava2
 
+    //Dagger2
+    kapt dagger.daggerCompiler
+    kapt dagger.daggerProcessor
+    implementation dagger.dagger
+    implementation dagger.daggerSupport
+    implementation dagger.daggerProducers
+
     implementation "androidx.work:work-runtime:2.4.0"
     implementation "androidx.work:work-runtime-ktx:2.4.0"
 

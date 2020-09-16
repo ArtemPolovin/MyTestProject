@@ -11,7 +11,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [WeatherDataModule::class, CityFilterModule::class])
+@Component(modules = [WeatherDataModule::class, CityFilterModule::class,WorkerBindingModule::class])
 interface WeatherDataComponent {
 
   fun inject(currentWeatherFragment: CurrentWeatherFragment)
