@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.domain.useCase.cities.GetLastChosenCitiesUseCase
 import com.example.domain.useCase.cities.InsertCityToLastChosenCitiesEntityUseCase
 import com.example.mytestproject.util.CityFilter
-import com.example.mytestproject.util.CityDataCache
+import com.example.data.utils.CityDataCache
 import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")

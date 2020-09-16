@@ -3,7 +3,7 @@ package com.example.mytestproject.ui.weatherData.dailyWeather
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.domain.useCase.weatherData.FetchDailyWeatherUseCase
-import com.example.mytestproject.util.CityDataCache
+import com.example.data.utils.CityDataCache
 import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")

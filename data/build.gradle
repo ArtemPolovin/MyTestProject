@@ -76,7 +76,4 @@ dependencies {
     kapt room.roomCompiler
     implementation room.roomRxjava
 
-    implementation "androidx.work:work-runtime:2.4.0"
-    implementation "androidx.work:work-runtime-ktx:2.4.0"
-
 }

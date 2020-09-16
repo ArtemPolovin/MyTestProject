@@ -1,4 +1,4 @@
-package com.example.mytestproject.util
+package com.example.data.utils
 
 import android.content.SharedPreferences
 

@@ -108,7 +108,4 @@ dependencies {
     implementation workManager.workRuntime
     implementation workManager.workRuntimeKtx
 
-    // WorkerInject
-    implementation injectWorker.workerInject
-    kapt injectWorker.workerInjectProcessor
 }

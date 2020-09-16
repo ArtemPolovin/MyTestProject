@@ -26,7 +26,6 @@ class App : Application() {
         super.onCreate()
         weatherDataComponent = DaggerWeatherDataComponent.builder()
             .weatherDataModule(WeatherDataModule(applicationContext))
-            .cityFilterModule(CityFilterModule(applicationContext))
             .build()
 
         weatherDataComponent.inject(this)

@@ -8,7 +8,7 @@ import com.example.domain.models.CityModel
 import com.example.domain.useCase.cities.GetLastChosenCitiesUseCase
 import com.example.domain.useCase.cities.InsertCityToLastChosenCitiesEntityUseCase
 import com.example.mytestproject.util.CityFilter
-import com.example.mytestproject.util.CityDataCache
+import com.example.data.utils.CityDataCache
 import com.example.mytestproject.util.Event
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

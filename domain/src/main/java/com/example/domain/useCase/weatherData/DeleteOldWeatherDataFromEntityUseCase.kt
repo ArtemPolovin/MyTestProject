@@ -5,7 +5,7 @@ import com.example.domain.repositories.DeleteOldWeatherDataRepository
 class DeleteOldWeatherDataFromEntityUseCase (
     private val deleteOldWeatherDataRepository: DeleteOldWeatherDataRepository
 ) {
-    operator fun invoke(cityId: Int) {
-        deleteOldWeatherDataRepository.deleteOldWeatherDataFromEntity(cityId)
+    operator fun invoke() {
+        deleteOldWeatherDataRepository.deleteOldWeatherDataFromEntity()
     }
 }

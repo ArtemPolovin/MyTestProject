@@ -3,7 +3,7 @@ package com.example.mytestproject.ui.weatherData.todayWeather
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.domain.useCase.weatherData.FetchCurrentWeatherUseCase
-import com.example.mytestproject.util.CityDataCache
+import com.example.data.utils.CityDataCache
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
 

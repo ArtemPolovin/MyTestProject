@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domain.useCase.weatherData.FetchCurrentWeatherUseCase
-import com.example.mytestproject.util.CityDataCache
+import com.example.data.utils.CityDataCache
 import com.example.mytestproject.viewState.WeatherViewState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
