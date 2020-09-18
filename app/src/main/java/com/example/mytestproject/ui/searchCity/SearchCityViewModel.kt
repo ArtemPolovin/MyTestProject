@@ -50,12 +50,11 @@ class SearchCityViewModel(
         cityDataCache.saveCityName(getChosenCityNameById(cityId))
     }
 
-    private fun getChosenCityNameById(cityId: Int): String? {
-        var cityName = _filteredCityList.value?.filter { it.city_id == cityId }?.get(0)?.city_name
-        if (cityName == null) cityName =
-            _lastChosenCities.value?.filter { it.city_id == cityId }?.get(0)?.city_name
-        return cityName
-    }
+    private fun getChosenCityNameById(cityId: Int): String? = // The method finds the chosen city name from one of the lists
+      mutableListOf<CityModel>().apply {
+          addAll(_filteredCityList.value ?: emptyList())
+          addAll(_lastChosenCities.value ?: emptyList())
+      }.filter { it.city_id == cityId }[0].city_name
 
     private fun insertCityToEntity(cityId: Int) { // This method inserts chosen city to db table
 
