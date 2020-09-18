@@ -23,7 +23,6 @@ class WeatherRepositoryImpl(
     private val timezoneEntityMapper: TimezoneEntityMapper,
     private val schedulersIO: Scheduler,
     private val apiService: WeatherDataApiService,
-    private val timeZoneDao: TimezoneDao,
     private val cityDataCache: CityDataCache
 ): IWeatherRepository {
 
@@ -63,7 +62,7 @@ class WeatherRepositoryImpl(
 
     override fun deleteOldWeatherDataFromEntity() {
         val currentDate =
-            getCurrentDateByTimezone(timeZoneDao.getTimezoneByCityId(cityDataCache.loadCityId()))
+            getCurrentDateByTimezone(timezoneDao.getTimezoneByCityId(cityDataCache.loadCityId()))
         weatherDataDao.deleteOldWeatherData(currentDate)
     }
 
