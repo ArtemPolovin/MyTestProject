@@ -21,8 +21,14 @@ interface WeatherDataDao {
     fun getWeatherDataFromDb(cityId: Int, currentDate: String): Single<WeatherDataEntity>
 
     @Query("SELECT * FROM weather_data WHERE city_id = :cityId AND date in (:dateList)")
-    fun getListOfWeatherData(cityId:Int, dateList: List<String>): Single<List<WeatherDataEntity>>
+    fun getListOfWeatherData(cityId: Int, dateList: List<String>): Single<List<WeatherDataEntity>>
 
     @Query("DELETE FROM weather_data")
     fun deleteAllFromWeatherDataTable()
+
+    @Query("DELETE FROM weather_data WHERE date < :todayData")
+    fun deleteOldWeatherData(todayData: String)
+
+    @Query("SELECT * FROM weather_data ")
+    fun getAllFromWeatherDataTable(): List<WeatherDataEntity>
 }

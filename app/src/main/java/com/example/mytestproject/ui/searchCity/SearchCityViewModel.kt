@@ -4,19 +4,18 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.data.utils.CityDataCache
 import com.example.domain.models.CityModel
 import com.example.domain.useCase.cities.GetLastChosenCitiesUseCase
 import com.example.domain.useCase.cities.InsertCityToLastChosenCitiesEntityUseCase
 import com.example.mytestproject.util.CityFilter
-import com.example.mytestproject.util.CityIdCache
 import com.example.mytestproject.util.Event
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 
 class SearchCityViewModel(
     private val cityFilter: CityFilter,
-    private val cityIdCache: CityIdCache,
+    private val cityDataCache: CityDataCache,
     private val getLastChosenCitiesUseCase: GetLastChosenCitiesUseCase,
     private val insertCityToLastChosenCitiesEntityUseCase: InsertCityToLastChosenCitiesEntityUseCase
 ) : ViewModel() {
@@ -42,13 +41,20 @@ class SearchCityViewModel(
 
     fun onCityChosen(cityId: Int) {
         _navigateToCurrentWeather.value = Event(cityId)
-        saveCityId(cityId)
+        saveCityDataToSharedPreferences(cityId)
         insertCityToEntity(cityId)
     }
 
-    private fun saveCityId(cityId: Int) { // The method  saves the city id to SharedPreferences
-        cityIdCache.saveCityId(cityId)
+    private fun saveCityDataToSharedPreferences(cityId: Int) { // The method  saves the city id to SharedPreferences
+        cityDataCache.saveCityId(cityId)
+        cityDataCache.saveCityName(getChosenCityNameById(cityId))
     }
+
+    private fun getChosenCityNameById(cityId: Int): String? = // The method finds the chosen city name from one of the lists
+      mutableListOf<CityModel>().apply {
+          addAll(_filteredCityList.value ?: emptyList())
+          addAll(_lastChosenCities.value ?: emptyList())
+      }.filter { it.city_id == cityId }[0].city_name
 
     private fun insertCityToEntity(cityId: Int) { // This method inserts chosen city to db table
 

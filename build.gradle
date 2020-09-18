@@ -47,7 +47,8 @@ ext.versions = [
         rxjava2         : "2.2.12",
         rxjava2Android  : "2.1.1",
         recyclerView    : "1.1.0",
-        gson            : "2.8.5"
+        gson            : "2.8.5",
+        workManager     : "2.4.0"
 
 ]
 
@@ -99,7 +100,7 @@ ext.picasso = [
 ]
 
 ext.navigationFragment = [
-        navFragment: "androidx.navigation:navigation-fragment-ktx:$versions.navFragment",
+        navFragment    : "androidx.navigation:navigation-fragment-ktx:$versions.navFragment",
         navigationUi   : "androidx.navigation:navigation-ui:$versions.navFragment",
         navigationUiKtx: "androidx.navigation:navigation-ui-ktx:$versions.navFragment"
 ]
@@ -122,7 +123,7 @@ ext.room = [
         roomRxjava  : "androidx.room:room-rxjava2:$versions.room"
 ]
 
-ext.rxjava2 =[
+ext.rxjava2 = [
         rxjava2: "io.reactivex.rxjava2:rxjava:$versions.rxjava2"
 ]
 
@@ -136,4 +137,9 @@ ext.recyclerView = [
 
 ext.gson = [
         gson: "com.google.code.gson:gson:$versions.gson"
+]
+
+ext.workManager = [
+        workRuntime   : "androidx.work:work-runtime:$versions.workManager",
+        workRuntimeKtx: "androidx.work:work-runtime-ktx:$versions.workManager"
 ]

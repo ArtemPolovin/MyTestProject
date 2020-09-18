@@ -1,5 +1,6 @@
 package com.example.mytestproject.ui.searchCity
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -43,7 +44,8 @@ class SearchCityAdapter: RecyclerView.Adapter<SearchCityAdapter.SearchCityViewHo
     }
 
     override fun onBindViewHolder(holder: SearchCityViewHolder, position: Int) {
-        holder.bind(cityModelList[position])
+        val cityModel = cityModelList[position]
+        holder.bind(cityModel)
         holder.clickItem()
     }
 

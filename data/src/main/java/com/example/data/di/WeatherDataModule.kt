@@ -1,6 +1,7 @@
 package com.example.data.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import androidx.room.Room
 import com.example.data.apiservice.WeatherDataApiService
@@ -8,21 +9,22 @@ import com.example.data.db.Database
 import com.example.data.db.dao.CityDao
 import com.example.data.db.dao.TimezoneDao
 import com.example.data.db.dao.WeatherDataDao
-import com.example.data.implementationRepo.CurrentWeatherRepositoryImpl
-import com.example.data.implementationRepo.DailyWeatherRepositoryImpl
 import com.example.data.implementationRepo.LastChosenCitiesRepoImpl
+import com.example.data.implementationRepo.WeatherRepositoryImpl
 import com.example.data.mappers.LastChosenCitiesEntityMapper
 import com.example.data.mappers.TimezoneEntityMapper
 import com.example.data.mappers.WeatherDataEntityMapper
 import com.example.data.mappers.WeatherDataMapper
 import com.example.data.utils.CityConverter
-import com.example.domain.repositories.CurrentWeatherRepository
-import com.example.domain.repositories.DailyWeatherRepository
+import com.example.data.utils.CityDataCache
+import com.example.data.utils.SHARED_PREFS
+import com.example.domain.repositories.IWeatherRepository
 import com.example.domain.repositories.LastChosenCitiesRepo
-import com.example.domain.useCase.weatherData.FetchCurrentWeatherUseCase
-import com.example.domain.useCase.weatherData.FetchDailyWeatherUseCase
 import com.example.domain.useCase.cities.GetLastChosenCitiesUseCase
 import com.example.domain.useCase.cities.InsertCityToLastChosenCitiesEntityUseCase
+import com.example.domain.useCase.weatherData.DeleteOldWeatherDataFromEntityUseCase
+import com.example.domain.useCase.weatherData.FetchCurrentWeatherUseCase
+import com.example.domain.useCase.weatherData.FetchDailyWeatherUseCase
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -39,15 +41,15 @@ class WeatherDataModule(private val context: Context) {
     fun provideContext(): Context = context
 
     @Provides
-    fun provideFetchWeatherDataUseCase(currentWeatherRepository: CurrentWeatherRepository) =
-        FetchCurrentWeatherUseCase(currentWeatherRepository)
+    fun provideFetchWeatherDataUseCase(weatherRepository: IWeatherRepository) =
+        FetchCurrentWeatherUseCase(weatherRepository)
 
     @Provides
-    fun provideFetchDailyWeatherUseCase(dailyWeatherRepository: DailyWeatherRepository) =
-        FetchDailyWeatherUseCase(dailyWeatherRepository)
+    fun provideFetchDailyWeatherUseCase(weatherRepository: IWeatherRepository) =
+        FetchDailyWeatherUseCase(weatherRepository)
 
     @Provides
-    fun provideGetLastChosenCitiesUseCase(lastChosenCitiesRepo: LastChosenCitiesRepo)=
+    fun provideGetLastChosenCitiesUseCase(lastChosenCitiesRepo: LastChosenCitiesRepo) =
         GetLastChosenCitiesUseCase(lastChosenCitiesRepo)
 
     @Provides
@@ -55,44 +57,33 @@ class WeatherDataModule(private val context: Context) {
         InsertCityToLastChosenCitiesEntityUseCase(lastChosenCitiesRepo)
 
     @Provides
+    fun provideDeleteOldWeatherDataFromEntityUseCase(weatherRepository: IWeatherRepository) =
+        DeleteOldWeatherDataFromEntityUseCase(weatherRepository)
+
+
+    @Provides
     @Singleton
-    fun providerWeatherDataRepository(
-        mapper: WeatherDataMapper,
+    fun provideWeatherRepositoryImpl(
         weatherDataApiService: WeatherDataApiService,
+        mapper: WeatherDataMapper,
         weatherDataDao: WeatherDataDao,
         weatherDataEntityMapper: WeatherDataEntityMapper,
         timezoneDao: TimezoneDao,
         timezoneEntityMapper: TimezoneEntityMapper,
         @Named("io")
-        schedulersIO: Scheduler
-    ): CurrentWeatherRepository =
-        CurrentWeatherRepositoryImpl(
-            weatherDataApiService,
-            mapper,
-            weatherDataDao,
-            weatherDataEntityMapper,
-            timezoneDao,
-            timezoneEntityMapper,
-            schedulersIO
-        )
-
-    @Provides
-    @Singleton
-    fun provideDailyWeatherRepository(
-        mapper: WeatherDataMapper,
-        weatherDataApiService: WeatherDataApiService,
-        weatherDataDao: WeatherDataDao,
-        weatherDataEntityMapper: WeatherDataEntityMapper,
-        timezoneDao: TimezoneDao,
-        @Named("io")
-        schedulersIO: Scheduler
-    ): DailyWeatherRepository = DailyWeatherRepositoryImpl(
+        schedulersIO: Scheduler,
+        apiService: WeatherDataApiService,
+        cityDataCache: CityDataCache
+    ): IWeatherRepository = WeatherRepositoryImpl(
         weatherDataApiService,
         mapper,
         weatherDataDao,
         weatherDataEntityMapper,
         timezoneDao,
-        schedulersIO
+        timezoneEntityMapper,
+        schedulersIO,
+        apiService,
+        cityDataCache
     )
 
     @Provides
@@ -103,7 +94,7 @@ class WeatherDataModule(private val context: Context) {
         database: Database,
         @Named("io")
         schedulersIO: Scheduler
-    ): LastChosenCitiesRepo = LastChosenCitiesRepoImpl(cityDao,mapper,database,schedulersIO)
+    ): LastChosenCitiesRepo = LastChosenCitiesRepoImpl(cityDao, mapper, database, schedulersIO)
 
 
     @Provides
@@ -165,5 +156,14 @@ class WeatherDataModule(private val context: Context) {
     @Provides
     @Named("io")
     fun provideSchedulersIO(): Scheduler = Schedulers.io()
+
+    @Provides
+    @Singleton
+    fun provideCityDataCache(sharePref: SharedPreferences) = CityDataCache(sharePref)
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(): SharedPreferences =
+        context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
 
 }
