@@ -147,7 +147,7 @@ class WeatherDataModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun provideCityConverter(gson: Gson) = CityConverter(context, gson)
+    fun provideCityConverter(context: Context,gson: Gson) = CityConverter(context, gson)
 
     @Provides
     @Singleton

@@ -36,6 +36,7 @@ ext.versions = [
         support4        : "1.0.0",
         junit           : "4.12",
         junitTest       : "1.1.1",
+        unitJupiter     : "5.7.0",
         espressoCore    : "3.2.0",
         retrofit        : "2.8.1",
         liveData        : "2.2.0",
@@ -48,7 +49,8 @@ ext.versions = [
         rxjava2Android  : "2.1.1",
         recyclerView    : "1.1.0",
         gson            : "2.8.5",
-        workManager     : "2.4.0"
+        workManager     : "2.4.0",
+        mockito         : "2.2.0"
 
 ]
 
@@ -70,6 +72,10 @@ ext.legacy = [
 
 ext.junit = [
         junit: "junit:junit:$versions.junit"
+]
+
+ext.junitJupiter = [
+        jupiter: "org.junit.jupiter:junit-jupiter:$versions.unitJupiter"
 ]
 
 ext.testExt = [
@@ -142,4 +148,8 @@ ext.gson = [
 ext.workManager = [
         workRuntime   : "androidx.work:work-runtime:$versions.workManager",
         workRuntimeKtx: "androidx.work:work-runtime-ktx:$versions.workManager"
+]
+
+ext.mockitoKotlin = [
+        mockitoKotlin: "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockito"
 ]

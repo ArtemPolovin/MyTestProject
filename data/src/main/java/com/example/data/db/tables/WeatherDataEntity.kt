@@ -5,7 +5,7 @@ import androidx.room.Entity
 import com.example.domain.models.CityModel
 
 @Entity(tableName = "weather_data", primaryKeys = ["city_id","date"])
-class WeatherDataEntity(
+data class WeatherDataEntity(
 
     @Embedded
     val cityModel: CityModel,

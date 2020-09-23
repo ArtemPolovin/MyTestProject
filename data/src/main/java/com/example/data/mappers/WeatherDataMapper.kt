@@ -28,9 +28,9 @@ class WeatherDataMapper {
                 WeatherData(
                     city_name = dailyWeatherApi.city_name,
                     temp = dailyWeatherApi.data[i].max_temp.roundToInt().toString(),
-                    icon = "$ICON_URL${dailyWeatherApi.data[i].weather.icon}.png",
+                    icon = "$ICON_URL${dailyWeatherApi.data[i].dailyWeather.icon}.png",
                     date = parsingDate(dailyWeatherApi.data[i].datetime),
-                    description = dailyWeatherApi.data[i].weather.description
+                    description = dailyWeatherApi.data[i].dailyWeather.description
                 )
             )
         }

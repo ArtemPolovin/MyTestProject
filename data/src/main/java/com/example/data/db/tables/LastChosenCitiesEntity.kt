@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
     tableName = "last_chosen_cities_entity",
     indices = [Index(value = ["cityId"], unique = true)]
 )
-class LastChosenCitiesEntity(
+data class LastChosenCitiesEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val cityId: Int,

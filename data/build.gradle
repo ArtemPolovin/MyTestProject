@@ -33,6 +33,10 @@ android {
         jvmTarget = "1.8"
     }
 
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
+
 }
 
 dependencies {
@@ -48,6 +52,10 @@ dependencies {
 
     //junit
     testImplementation junit.junit
+    testImplementation junitJupiter.jupiter
+
+    // Mockito
+    testImplementation mockitoKotlin.mockitoKotlin
 
     //test.ext
     androidTestImplementation testExt.junit
