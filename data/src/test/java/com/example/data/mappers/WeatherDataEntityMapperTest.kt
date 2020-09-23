@@ -8,6 +8,7 @@ import com.example.data.modelsApi.multiDaysWeather.DailyData
 import com.example.data.modelsApi.multiDaysWeather.DailyWeather
 import com.example.data.modelsApi.multiDaysWeather.DailyWeatherApi
 import com.example.data.utils.CityConverter
+import com.example.data.utils.ICON_URL
 import com.example.domain.models.CityModel
 import com.example.domain.models.WeatherData
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -21,27 +22,32 @@ internal class WeatherDataEntityMapperTest {
 
     private val cityConverter = mock(CityConverter::class.java)
     private val weatherDataEntityMapper = WeatherDataEntityMapper(cityConverter)
-    private val iconUrl = "https://www.weatherbit.io/static/img/icons/"
 
     @Test
     fun returnWeatherDataEntity() {
+        // Given
         val cityId = 5128581
         val cityModel = CityModel(cityId, "New York City", "United States")
         val weather = Weather("800", "Clear sky", "c01d")
-        val data = Data("New York City", 52.3, weather, "2020-09-22", "America/New_York")
+        val data = Data("New York City", 52.3, weather, "2020-09-23", "America/New_York")
         val dataList = listOf(data)
         val apiModel = CurrentWeatherApiModel(dataList)
 
         `when`(cityConverter.getCityModelByCityId(cityId)).thenReturn(cityModel)
 
         val weatherDataEntity =
-            WeatherDataEntity(cityModel, "2020-09-22", "52", "${iconUrl}c01d.png", "Clear sky")
+            WeatherDataEntity(cityModel, "2020-09-23", "52", "${ICON_URL}c01d.png", "Clear sky")
 
-        assertEquals(weatherDataEntity, weatherDataEntityMapper.fromApiToEntity(apiModel, cityId))
+        // When
+        val result = weatherDataEntityMapper.fromApiToEntity(apiModel, cityId)
+
+        // Then
+        assertEquals(weatherDataEntity,result )
     }
 
     @Test
     fun returnWeatherDataEntityList() {
+        // Given
         val skippedCurrentWeather = DailyWeather(801, "Few clouds", "c02d")
         val weather1 = DailyWeather(801, "Few clouds", "c02d")
         val weather2 = DailyWeather(804, "Overcast clouds", "c04d")
@@ -59,38 +65,42 @@ internal class WeatherDataEntityMapperTest {
         `when`(cityConverter.getCityModelByCityId(cityId)).thenReturn(cityModel)
 
         val weatherDataEntityList = listOf(
-            WeatherDataEntity(cityModel, "2020-09-23", "63", "${iconUrl}c02d.png", "Few clouds"),
+            WeatherDataEntity(cityModel, "2020-09-23", "63", "${ICON_URL}c02d.png", "Few clouds"),
             WeatherDataEntity(
                 cityModel,
                 "2020-09-24",
                 "74",
-                "${iconUrl}c04d.png",
+                "${ICON_URL}c04d.png",
                 "Overcast clouds"
             )
         )
 
-        assertEquals(
-            weatherDataEntityList,
-            weatherDataEntityMapper.fromApiToEntityList(dailyWeatherApi, cityId)
-        )
+        // When
+        val result =  weatherDataEntityMapper.fromApiToEntityList(dailyWeatherApi, cityId)
+
+        // Then
+        assertEquals(weatherDataEntityList, result)
     }
 
     @Test
     fun returnWeatherData() {
+        // Given
         val cityModel = CityModel(4343, "Milan", "Italy")
         val weatherDataEntity =
             WeatherDataEntity(cityModel, "2020-09-23", "82", "iconUrl", "Few clouds")
 
         val weatherData = WeatherData("Milan", "82", "iconUrl", "Wednesday, 23", "Few clouds")
 
-        assertEquals(
-            weatherData,
-            weatherDataEntityMapper.fromEntityToWeatherData(weatherDataEntity)
-        )
+        // When
+        val result = weatherDataEntityMapper.fromEntityToWeatherData(weatherDataEntity)
+
+        // Then
+        assertEquals(weatherData,result)
     }
 
     @Test
     fun returnWeatherDataList() {
+        // Given
         val moscowCityModel = CityModel(2323, "Moscow", "Russia")
         val kievCityModel = CityModel(1233, "Kiev", "Ukraine")
 
@@ -104,10 +114,11 @@ internal class WeatherDataEntityMapperTest {
             WeatherData("Kiev", "74", "iconUrl2", "Wednesday, 23", "Overcast clouds")
         )
 
-        assertEquals(
-            weatherDataList,
-            weatherDataEntityMapper.fromEntityListToWeatherDataList(weatherDataEntityList)
-        )
+        // When
+        val result =  weatherDataEntityMapper.fromEntityListToWeatherDataList(weatherDataEntityList)
+
+        // Then
+        assertEquals(weatherDataList,result)
     }
 
 }

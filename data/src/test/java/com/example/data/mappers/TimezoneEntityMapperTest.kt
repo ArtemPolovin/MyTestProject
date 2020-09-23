@@ -6,16 +6,18 @@ import com.example.data.modelsApi.currentWeather.Data
 import com.example.data.modelsApi.currentWeather.Weather
 import com.example.data.utils.CityConverter
 import com.example.domain.models.CityModel
-import org.mockito.Mockito.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 
 internal class TimezoneEntityMapperTest {
 
     @Test
     fun returnTimezoneEntity() {
+        // Given
         val cityId = 5128581
-        val cityModel = CityModel(cityId,"New York City","United States")
+        val cityModel = CityModel(cityId, "New York City", "United States")
 
         val cityConverter = mock(CityConverter::class.java)
         `when`(cityConverter.getCityModelByCityId(cityId)).thenReturn(cityModel)
@@ -26,10 +28,12 @@ internal class TimezoneEntityMapperTest {
         val dataList = listOf(data)
         val apiModel = CurrentWeatherApiModel(dataList)
 
-        assertEquals( TimezoneEntity(cityModel, "America/New_York"),
-            timezoneEntityMapper.fromApiToEntity(apiModel, cityId)
-        )
+        val timeZoneEntity = TimezoneEntity(cityModel, "America/New_York")
 
+        // When
+        val result = timezoneEntityMapper.fromApiToEntity(apiModel, cityId)
 
+        // Then
+        assertEquals(timeZoneEntity, result)
     }
 }

@@ -39,6 +39,7 @@ ext.versions = [
         unitJupiter     : "5.7.0",
         espressoCore    : "3.2.0",
         retrofit        : "2.8.1",
+        retrofitRx      : "2.3.0",
         liveData        : "2.2.0",
         picasso         : "2.71828",
         navFragment     : "2.2.2",
@@ -93,6 +94,10 @@ ext.material = [
 ext.retrofit2 = [
         retrofit     : "com.squareup.retrofit2:retrofit:$versions.retrofit",
         converterGson: "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+]
+
+ext.retrofitAdapterRx = [
+        retrofitRx: "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofitRx"
 ]
 
 ext.lifecycle = [

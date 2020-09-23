@@ -13,26 +13,35 @@ internal class LastChosenCitiesEntityMapperTest {
 
     @Test
     fun returnLastChosenCitiesEntityFromCityModel() {
+        // Given
         val cityModel = CityModel(223, "Moscow", "Russia")
-        assertEquals(LastChosenCitiesEntity(cityId = 223, city = "Moscow", country = "Russia"),
-            lastChosenCitiesMapper.fromCityModelToEntity(cityModel)
-        )
+        val lastChosenCitiesEntity = LastChosenCitiesEntity(cityId = 223, city = "Moscow", country = "Russia")
+
+        // When
+        val result = lastChosenCitiesMapper.fromCityModelToEntity(cityModel)
+
+        // Then
+        assertEquals(lastChosenCitiesEntity,result)
     }
 
     @Test
     fun returnCityModelListFromEntity() {
+        // Given
         val listOfCitiesEntity = listOf(
             LastChosenCitiesEntity(cityId = 223, city = "Moscow", country = "Russia"),
             LastChosenCitiesEntity(cityId = 342, city = "New York", country = "USA"),
             LastChosenCitiesEntity(cityId = 113, city = "Kiev", country = "Ukraine")
         )
-
         val cityModelList = listOf(
             CityModel(223,"Moscow","Russia"),
             CityModel(342,"New York","USA"),
             CityModel(113,"Kiev","Ukraine")
         )
 
-        assertEquals(cityModelList,lastChosenCitiesMapper.fromEntityToCityModelList(listOfCitiesEntity))
+        // When
+        val result = lastChosenCitiesMapper.fromEntityToCityModelList(listOfCitiesEntity)
+
+        // Then
+        assertEquals(cityModelList,result)
     }
 }

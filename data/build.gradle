@@ -66,7 +66,9 @@ dependencies {
     //Retrofit2
     implementation retrofit2.retrofit
     implementation retrofit2.converterGson
-    implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
+
+    // RetrofitRx
+    implementation retrofitAdapterRx.retrofitRx
 
     //RxJava2
     implementation rxjava2.rxjava2
