@@ -1,7 +1,7 @@
 package com.example.data.modelsApi.multiDaysWeather
 
-data class Data(
+data class DailyData(
     val datetime: String,
     val max_temp: Double,
-    val weather: Weather
+    val dailyWeather: DailyWeather
 )

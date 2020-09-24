@@ -36,8 +36,10 @@ ext.versions = [
         support4        : "1.0.0",
         junit           : "4.12",
         junitTest       : "1.1.1",
+        unitJupiter     : "5.7.0",
         espressoCore    : "3.2.0",
         retrofit        : "2.8.1",
+        retrofitRx      : "2.3.0",
         liveData        : "2.2.0",
         picasso         : "2.71828",
         navFragment     : "2.2.2",
@@ -48,7 +50,8 @@ ext.versions = [
         rxjava2Android  : "2.1.1",
         recyclerView    : "1.1.0",
         gson            : "2.8.5",
-        workManager     : "2.4.0"
+        workManager     : "2.4.0",
+        mockito         : "2.2.0"
 
 ]
 
@@ -72,6 +75,10 @@ ext.junit = [
         junit: "junit:junit:$versions.junit"
 ]
 
+ext.junitJupiter = [
+        jupiter: "org.junit.jupiter:junit-jupiter:$versions.unitJupiter"
+]
+
 ext.testExt = [
         junit: "androidx.test.ext:junit:$versions.junitTest"
 ]
@@ -87,6 +94,10 @@ ext.material = [
 ext.retrofit2 = [
         retrofit     : "com.squareup.retrofit2:retrofit:$versions.retrofit",
         converterGson: "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+]
+
+ext.retrofitAdapterRx = [
+        retrofitRx: "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofitRx"
 ]
 
 ext.lifecycle = [
@@ -142,4 +153,8 @@ ext.gson = [
 ext.workManager = [
         workRuntime   : "androidx.work:work-runtime:$versions.workManager",
         workRuntimeKtx: "androidx.work:work-runtime-ktx:$versions.workManager"
+]
+
+ext.mockitoKotlin = [
+        mockitoKotlin: "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockito"
 ]
