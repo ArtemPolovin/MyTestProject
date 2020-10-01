@@ -45,4 +45,4 @@ jobs:
           name: Run Lint Test
           command: ./gradlew lint
       - store_artifacts:
-          path: presentation/build/reports
+          path: app/build/reports
