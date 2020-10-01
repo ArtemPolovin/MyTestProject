@@ -10,23 +10,23 @@ jobs:
       - checkout
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}
-      #      - run:
-      #         name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
-      #         command: sudo chmod +x ./gradlew
+      - run:
+          name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
+          command: sudo chmod +x ./gradlew
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
       - save_cache:
           paths:
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-          name: Run Presentation Module Unit Tests
-          command: ./gradlew :presentation:testDebugUnitTest
+          name: Run App Module Unit Tests
+          command: ./gradlew :app:testDebugUnitTest
       - store_artifacts:
-          path: presentation/build/reports
+          path: app/build/reports
       - store_test_results:
-          path: presentation/build/test-results
+          path: app/build/test-results
       - run:
           name: Run Domain Module Unit Tests
           command: ./gradlew :domain:test
