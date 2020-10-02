@@ -11,8 +11,8 @@ import com.example.data.utils.CityConverter
 import com.example.data.utils.ICON_URL
 import com.example.domain.models.CityModel
 import com.example.domain.models.WeatherData
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
+import org.junit.Assert.assertEquals
+import org.junit.Test
 import org.junit.jupiter.api.TestInstance
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
@@ -36,7 +36,8 @@ internal class WeatherDataEntityMapperTest {
         `when`(cityConverter.getCityModelByCityId(cityId)).thenReturn(cityModel)
 
         val weatherDataEntity =
-            WeatherDataEntity(cityModel, "2020-09-23", "52", "${ICON_URL}c01d.png", "Clear sky")
+            WeatherDataEntity(cityModel, "2020-10-01", "52", "${ICON_URL}c01d.png", "Clear sky") // The current date must be specified in the method parameters,
+                                                                                                                                 // otherwise there will be an error
 
         // When
         val result = weatherDataEntityMapper.fromApiToEntity(apiModel, cityId)

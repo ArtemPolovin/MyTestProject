@@ -8,8 +8,8 @@ import com.example.data.modelsApi.multiDaysWeather.DailyWeather
 import com.example.data.modelsApi.multiDaysWeather.DailyWeatherApi
 import com.example.data.utils.ICON_URL
 import com.example.domain.models.WeatherData
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
+import org.junit.Assert.assertEquals
+import org.junit.Test
 import org.junit.jupiter.api.TestInstance
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

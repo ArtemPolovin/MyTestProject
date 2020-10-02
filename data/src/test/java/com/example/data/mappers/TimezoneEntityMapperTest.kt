@@ -6,8 +6,8 @@ import com.example.data.modelsApi.currentWeather.Data
 import com.example.data.modelsApi.currentWeather.Weather
 import com.example.data.utils.CityConverter
 import com.example.domain.models.CityModel
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
+import org.junit.Assert.assertEquals
+import org.junit.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 

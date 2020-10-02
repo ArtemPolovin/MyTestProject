@@ -2,8 +2,10 @@ package com.example.data.mappers
 
 import com.example.data.db.tables.LastChosenCitiesEntity
 import com.example.domain.models.CityModel
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
+//import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.Assert.assertEquals
+import org.junit.Test
+//import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
