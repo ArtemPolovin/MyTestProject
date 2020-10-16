@@ -3,8 +3,7 @@ package com.example.mytestproject.util
 import com.example.data.utils.CityConverter
 import com.example.domain.models.CityModel
 import javax.inject.Inject
-
-class CityFilter @Inject constructor(cityConverter: CityConverter) {
+ class CityFilter @Inject constructor(cityConverter: CityConverter) {
     private val cityList = mutableListOf<CityModel>()
 
     init {
