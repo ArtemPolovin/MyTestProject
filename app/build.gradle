@@ -32,21 +32,15 @@ android {
         jvmTarget = "1.8"
     }
 
-  /*  dataBinding {
-        enabled = true
-    }*/
-
     buildFeatures {
 
         dataBinding = true
-
-        // for view binding:
-        // viewBinding = true
     }
 }
  
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //noinspection GradleDependency
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation project(path: ':domain')
     implementation project(path: ':data')
@@ -65,6 +59,7 @@ dependencies {
 
     //junit
     testImplementation junit.junit
+    testImplementation junitJupiter.jupiter
 
     //test.ext
     androidTestImplementation testExt.junit
@@ -115,5 +110,12 @@ dependencies {
     // WorkManager
     implementation workManager.workRuntime
     implementation workManager.workRuntimeKtx
+
+    // AndroidXTestCore
+    testImplementation androidXTestCoreKtx.testKoreKtx
+    testImplementation androidXArchCoreTesting.archCoreTesting
+
+    // Mockito
+    testImplementation mockitoKotlin.mockitoKotlin
 
 }

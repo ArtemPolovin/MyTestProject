@@ -12,31 +12,31 @@ import io.reactivex.disposables.Disposable
 
 class CurrentWeatherViewModel(
     private val fetchCurrentWeatherUseCase: FetchCurrentWeatherUseCase,
-    mySharedPref: CityDataCache
+    cityDataCache: CityDataCache
 ) : ViewModel(){
 
-    private var cityId = mySharedPref.loadCityId()// loading city id from SharedPreferences
+    private var cityId = cityDataCache.loadCityId()// loading city id from SharedPreferences
 
     private var disposable: Disposable? = null
 
-    private val _viewState = MutableLiveData<WeatherViewState>()
-    val viewState: LiveData<WeatherViewState> get() = _viewState
+    private val _weatherViewState = MutableLiveData<WeatherViewState>()
+    val weatherViewState: LiveData<WeatherViewState> get() = _weatherViewState
 
     init {
         getWeather(cityId)
     }
 
     private fun getWeather(cityId: Int) { // the method gets current weather data from Api
-        _viewState.value = WeatherViewState.Loading
+        _weatherViewState.value = WeatherViewState.Loading
 
         disposable = fetchCurrentWeatherUseCase(cityId,  "I")
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    _viewState.value = WeatherViewState.CurrentWeatherLoaded(it)
+                    _weatherViewState.value = WeatherViewState.CurrentWeatherLoaded(it)
                 },
                 {
-                    _viewState.value = WeatherViewState.Error
+                    _weatherViewState.value = WeatherViewState.Error
                     Log.i("ERROR", "error = ${it.printStackTrace()}")
                 }
             )

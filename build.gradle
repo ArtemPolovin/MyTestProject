@@ -8,7 +8,7 @@ buildscript {
 
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.android.tools.build:gradle:4.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -51,7 +51,9 @@ ext.versions = [
         recyclerView    : "1.1.0",
         gson            : "2.8.5",
         workManager     : "2.4.0",
-        mockito         : "2.2.0"
+        mockito         : "2.2.0",
+        testcoreKtx     : '1.3.0',
+        archCoreTesting : "2.1.0"
 
 ]
 
@@ -157,4 +159,12 @@ ext.workManager = [
 
 ext.mockitoKotlin = [
         mockitoKotlin: "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockito"
+]
+
+ext.androidXTestCoreKtx = [
+        testKoreKtx: "androidx.test:core-ktx:$versions.testcoreKtx"
+]
+
+ext.androidXArchCoreTesting = [
+        archCoreTesting: "androidx.arch.core:core-testing:$versions.archCoreTesting"
 ]
