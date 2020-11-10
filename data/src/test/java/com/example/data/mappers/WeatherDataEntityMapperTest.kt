@@ -3,6 +3,7 @@ package com.example.data.mappers
 import com.example.data.db.tables.WeatherDataEntity
 import com.example.data.modelsApi.currentWeather.CurrentWeatherApiModel
 import com.example.data.modelsApi.currentWeather.Data
+import com.example.data.modelsApi.currentWeather.Weather
 import com.example.data.modelsApi.multiDaysWeather.DailyData
 import com.example.data.modelsApi.multiDaysWeather.DailyWeatherApi
 import com.example.data.utils.CityConverter
