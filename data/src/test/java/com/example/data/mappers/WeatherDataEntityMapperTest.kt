@@ -3,9 +3,7 @@ package com.example.data.mappers
 import com.example.data.db.tables.WeatherDataEntity
 import com.example.data.modelsApi.currentWeather.CurrentWeatherApiModel
 import com.example.data.modelsApi.currentWeather.Data
-import com.example.data.modelsApi.currentWeather.Weather
 import com.example.data.modelsApi.multiDaysWeather.DailyData
-import com.example.data.modelsApi.multiDaysWeather.DailyWeather
 import com.example.data.modelsApi.multiDaysWeather.DailyWeatherApi
 import com.example.data.utils.CityConverter
 import com.example.data.utils.ICON_URL
@@ -49,9 +47,10 @@ internal class WeatherDataEntityMapperTest {
     @Test
     fun returnWeatherDataEntityList() {
         // Given
-        val skippedCurrentWeather = DailyWeather(801, "Few clouds", "c02d")
-        val weather1 = DailyWeather(801, "Few clouds", "c02d")
-        val weather2 = DailyWeather(804, "Overcast clouds", "c04d")
+        val skippedCurrentWeather =
+            com.example.data.modelsApi.multiDaysWeather.Weather(801, "Few clouds", "c02d")
+        val weather1 = com.example.data.modelsApi.multiDaysWeather.Weather(801, "Few clouds", "c02d")
+        val weather2 = com.example.data.modelsApi.multiDaysWeather.Weather(804, "Overcast clouds", "c04d")
 
         val skippedCurrentData = DailyData("2020-09-22", 92.8, skippedCurrentWeather)
         val data1 = DailyData("2020-09-23", 63.2, weather1)

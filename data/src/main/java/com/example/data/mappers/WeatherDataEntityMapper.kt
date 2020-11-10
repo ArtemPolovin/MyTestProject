@@ -32,8 +32,8 @@ class WeatherDataEntityMapper(private val cityConverter: CityConverter) {
                     cityModel = cityModel,
                     date = dailyWeatherApi.data[i].datetime,
                     temperature = dailyWeatherApi.data[i].max_temp.roundToInt().toString(),
-                    icon = "$ICON_URL${dailyWeatherApi.data[i].dailyWeather.icon}.png",
-                    description = dailyWeatherApi.data[i].dailyWeather.description
+                    icon = "$ICON_URL${dailyWeatherApi.data[i].weather.icon}.png",
+                    description = dailyWeatherApi.data[i].weather.description
                 )
             )
         }

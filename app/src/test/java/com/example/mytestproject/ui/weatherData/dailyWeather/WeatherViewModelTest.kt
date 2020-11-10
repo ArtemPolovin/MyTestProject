@@ -14,14 +14,13 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.mockito.InOrder
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
 @RunWith(JUnit4::class)
-internal class DailyWeatherViewModelTest {
+internal class WeatherViewModelTest {
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
@@ -77,8 +76,7 @@ internal class DailyWeatherViewModelTest {
             //Then
             val inOrder = Mockito.inOrder(observerViewState)
             inOrder.verify(observerViewState).onChanged(WeatherViewState.Loading)
-            inOrder.verify(observerViewState)
-                .onChanged(WeatherViewState.DailyWeatherLoaded(listOfApeWeatherData))
+            inOrder.verify(observerViewState).onChanged(WeatherViewState.DailyWeatherLoaded(listOfApeWeatherData))
 
         } finally {
             dailyWeatherViewModel.weatherDataViewState.removeObserver(observerViewState)

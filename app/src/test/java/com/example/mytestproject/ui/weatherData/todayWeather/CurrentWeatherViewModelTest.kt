@@ -6,6 +6,7 @@ import com.example.data.utils.CityDataCache
 import com.example.domain.models.WeatherData
 import com.example.domain.useCase.weatherData.FetchCurrentWeatherUseCase
 import com.example.mytestproject.viewState.WeatherViewState
+import com.nhaarman.mockitokotlin2.verify
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.schedulers.Schedulers
@@ -14,7 +15,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.mockito.InOrder
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
@@ -75,9 +75,8 @@ internal class CurrentWeatherViewModelTest {
 
             // Then
            val inOrder = Mockito.inOrder(observerViewState)
-            inOrder.verify(observerViewState)
-                .onChanged(WeatherViewState.CurrentWeatherLoaded(currentWeather))
             inOrder.verify(observerViewState).onChanged(WeatherViewState.Loading)
+            inOrder.verify(observerViewState).onChanged(WeatherViewState.CurrentWeatherLoaded(currentWeather))
         } finally {
             currentWeatherViewModel.weatherViewState.removeObserver(observerViewState)
         }
