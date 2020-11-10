@@ -24,7 +24,7 @@ class CurrentWeatherViewModel(
 
     init {
         getWeather(cityId)
-        _weatherViewState.value = WeatherViewState.Loading
+       // _weatherViewState.value = WeatherViewState.Loading
     }
 
     private fun getWeather(cityId: Int) { // the method gets current weather data from Api
