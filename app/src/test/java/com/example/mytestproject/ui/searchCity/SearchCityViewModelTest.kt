@@ -40,12 +40,6 @@ internal class SearchCityViewModelTest {
     @Mock
     private lateinit var insertCityToLastChosenCitiesEntityUseCase: InsertCityToLastChosenCitiesEntityUseCase
 
-    @Mock
-    lateinit var observerListCityModel: Observer<List<CityModel>>
-
-    @Mock
-    lateinit var observerEvent: Observer<Event<Int>>
-
     private lateinit var searchCityViewModel: SearchCityViewModel
 
     @Before
@@ -73,18 +67,24 @@ internal class SearchCityViewModelTest {
             getLastChosenCitiesUseCase,
             insertCityToLastChosenCitiesEntityUseCase
         )
-        searchCityViewModel.filteredCityList.observeForever(observerListCityModel)
-        searchCityViewModel.lastChosenCities.observeForever(observerListCityModel)
-        searchCityViewModel.navigateToCurrentWeather.observeForever(observerEvent)
     }
 
     @Test
-    fun get_last_chosen_cities_is_not_empty() {
+    fun `get last chosen cities is not empty`() {
+
+        // When
+        val privateGetLastChosenCitiesMethod =
+            SearchCityViewModel::class.java.getDeclaredMethod("getLastChosenCities")
+        privateGetLastChosenCitiesMethod.isAccessible = true
+
+        val list = mutableListOf<List<CityModel>>()
+        val observer = Observer<List<CityModel>>{
+            list.add(it)
+        }
+
         try {
-            // When
-            val privateGetLastChosenCitiesMethod =
-                SearchCityViewModel::class.java.getDeclaredMethod("getLastChosenCities")
-            privateGetLastChosenCitiesMethod.isAccessible = true
+
+            searchCityViewModel.lastChosenCities.observeForever(observer)
 
             val value = searchCityViewModel.lastChosenCities.value
             val isEmpty = value?.isEmpty()
@@ -93,22 +93,31 @@ internal class SearchCityViewModelTest {
             isEmpty?.let { assertFalse(it) }
             assertEquals(3, value?.size)
         } finally {
-            searchCityViewModel.lastChosenCities.removeObserver(observerListCityModel)
+            searchCityViewModel.lastChosenCities.removeObserver(observer)
         }
     }
 
 
     @Test
-    fun search_city_is_not_empty() {
+    fun `search city is not empty`() {
         // Given
         val cityName = "Moscow"
+        val cityId = 234
         `when`(cityFilter.filterCityList(cityName)).thenReturn(
             listOf(
-                CityModel(3435, cityName, "Russia")
+                CityModel(cityId, cityName, "Russia")
             )
         )
 
+        val list = mutableListOf<List<CityModel>>()
+        val observer = Observer<List<CityModel>>{
+            list.add(it)
+        }
+
         try {
+
+            searchCityViewModel.lastChosenCities.observeForever(observer)
+
             // When
             searchCityViewModel.searchCity(cityName)
 
@@ -119,22 +128,38 @@ internal class SearchCityViewModelTest {
             isEmpty?.let { assertFalse(it) }
             assertEquals(1, value?.size)
         } finally {
-            searchCityViewModel.filteredCityList.removeObserver(observerListCityModel)
+            searchCityViewModel.filteredCityList.removeObserver(observer)
         }
 
     }
 
     @Test
-    fun on_city_chose_check_navigateToCurrentWeather_value() {
+    fun `on city chose check navigateToCurrentWeather value`() {
 
         // Given
         val cityId = 234
-        val cityList = searchCityViewModel.filteredCityList.value
-        `when`(insertCityToLastChosenCitiesEntityUseCase.invoke(cityId, cityList)).thenReturn(
-            Completable.never()
-        )
+
+        val listCityModel = mutableListOf<List<CityModel>>()
+        val observerListCityModel = Observer<List<CityModel>>{
+            listCityModel.add(it)
+        }
+
+        val listEvent = mutableListOf<Event<Int>>()
+        val observerEvent = Observer<Event<Int>>{
+            listEvent.add(it)
+        }
 
         try {
+
+            searchCityViewModel.navigateToCurrentWeather.observeForever(observerEvent)
+
+            searchCityViewModel.filteredCityList.observeForever(observerListCityModel)
+
+            val cityList = searchCityViewModel.filteredCityList.value
+            `when`(insertCityToLastChosenCitiesEntityUseCase.invoke(cityId, cityList)).thenReturn(
+                Completable.never()
+            )
+
             // When
             searchCityViewModel.onCityChosen(cityId)
             val value = searchCityViewModel.navigateToCurrentWeather.value

@@ -12,10 +12,10 @@ import io.reactivex.schedulers.Schedulers
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
@@ -31,10 +31,10 @@ internal class WeatherViewModelTest {
     @Mock
     private lateinit var cityDataCache: CityDataCache
 
-    @Mock
-    private lateinit var observerViewState: Observer<WeatherViewState>
-
     private lateinit var dailyWeatherViewModel: DailyWeatherViewModel
+
+   private val numberOfDays = 5
+   private val cityId = 333
 
     @Before
     fun setUp() {
@@ -43,76 +43,80 @@ internal class WeatherViewModelTest {
         }
 
         MockitoAnnotations.initMocks(this)
+
+        `when`(cityDataCache.loadCityId()).thenReturn(cityId)
     }
 
     @Test
-    fun test_api_fetch_weather_data_success() {
+    fun `test api fetch weather data success`() {
+
+        // Given
+        val listOfApeWeatherData = listOf(
+            WeatherData("Moscow", "73", "iconURL", "2020-10-18", "Clear sky"),
+            WeatherData("Moscow", "82", "iconURL", "2020-10-19", "Clear sky"),
+            WeatherData("Moscow", "80", "iconURL", "2020-10-20", "Clear sky"),
+            WeatherData("Moscow", "89", "iconURL", "2020-10-21", "Clear sky"),
+            WeatherData("Moscow", "85", "iconURL", "2020-10-22", "Clear sky")
+        )
+
+        `when`(fetchDailyWeatherUseCase.invoke(cityId, numberOfDays, "I")).thenReturn(
+            Single.just(listOfApeWeatherData)
+        )
+
+        dailyWeatherViewModel = DailyWeatherViewModel(fetchDailyWeatherUseCase, cityDataCache)
+
+        val list = mutableListOf<WeatherViewState>()
+        val observer = Observer<WeatherViewState> {
+            list.add(it)
+        }
+
         try {
-            // Given
-            val numberOfDays = 5
-            val cityId = 333
-            `when`(cityDataCache.loadCityId()).thenReturn(cityId)
 
-            val listOfApeWeatherData = listOf(
-                WeatherData("Moscow", "73", "iconURL", "2020-10-18", "Clear sky"),
-                WeatherData("Moscow", "82", "iconURL", "2020-10-19", "Clear sky"),
-                WeatherData("Moscow", "80", "iconURL", "2020-10-20", "Clear sky"),
-                WeatherData("Moscow", "89", "iconURL", "2020-10-21", "Clear sky"),
-                WeatherData("Moscow", "85", "iconURL", "2020-10-22", "Clear sky")
-            )
-
-            `when`(cityDataCache.loadCityId()).thenReturn(cityId)
-
-            `when`(fetchDailyWeatherUseCase.invoke(cityId, numberOfDays, "I")).thenReturn(
-                Single.just(listOfApeWeatherData)
-            )
-
-            dailyWeatherViewModel = DailyWeatherViewModel(fetchDailyWeatherUseCase, cityDataCache)
-            dailyWeatherViewModel.weatherDataViewState.observeForever(observerViewState)
+            dailyWeatherViewModel.weatherDataViewState.observeForever(observer)
 
             // When
             dailyWeatherViewModel.daysForForecastWeather(numberOfDays)
 
             //Then
-            val inOrder = Mockito.inOrder(observerViewState)
-            inOrder.verify(observerViewState).onChanged(WeatherViewState.Loading)
-            inOrder.verify(observerViewState).onChanged(WeatherViewState.DailyWeatherLoaded(listOfApeWeatherData))
-
+            assertEquals(list[0], WeatherViewState.Loading)
+            assertEquals(list[1], WeatherViewState.DailyWeatherLoaded(listOfApeWeatherData))
         } finally {
-            dailyWeatherViewModel.weatherDataViewState.removeObserver(observerViewState)
+            dailyWeatherViewModel.weatherDataViewState.removeObserver(observer)
         }
 
     }
 
     @Test
-    fun test_api_fetch_weather_data_error() {
+    fun `test api fetch weather data error`() {
+
+        // Given
+        `when`(
+            fetchDailyWeatherUseCase.invoke(
+                cityId,
+                numberOfDays,
+                "I"
+            )
+        ).thenReturn(Single.error(Throwable("Api error")))
+
+        dailyWeatherViewModel = DailyWeatherViewModel(fetchDailyWeatherUseCase, cityDataCache)
+
+        val list = mutableListOf<WeatherViewState>()
+        val observer = Observer<WeatherViewState>{
+            list.add(it)
+        }
+
         try {
-            // Given
-            val numberOfDays = 3
-            val cityId = 555
-            `when`(cityDataCache.loadCityId()).thenReturn(cityId)
 
-
-            `when`(
-                fetchDailyWeatherUseCase.invoke(
-                    cityId,
-                    numberOfDays,
-                    "I"
-                )
-            ).thenReturn(Single.error(Throwable("Api error")))
-
-            dailyWeatherViewModel = DailyWeatherViewModel(fetchDailyWeatherUseCase, cityDataCache)
-            dailyWeatherViewModel.weatherDataViewState.observeForever(observerViewState)
+            dailyWeatherViewModel.weatherDataViewState.observeForever(observer)
 
             // When
             dailyWeatherViewModel.daysForForecastWeather(numberOfDays)
 
             // Then
-            val inOrder = Mockito.inOrder(observerViewState)
-            inOrder.verify(observerViewState).onChanged(WeatherViewState.Loading)
-            inOrder.verify(observerViewState).onChanged(WeatherViewState.Error)
+            assertEquals(list[0], WeatherViewState.Loading)
+            assertEquals(list[1], WeatherViewState.Error)
         } finally {
-            dailyWeatherViewModel.weatherDataViewState.removeObserver(observerViewState)
+            dailyWeatherViewModel.weatherDataViewState.removeObserver(observer)
         }
 
     }
