@@ -20,6 +20,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
+import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
 @RunWith(JUnit4::class)
@@ -56,7 +57,7 @@ internal class SearchCityViewModelTest {
                 listOf(
                     CityModel(234, "Moscow", "Russia"),
                     CityModel(345, "Milan", "Italy"),
-                    CityModel(6662, "Sacrament", "USA")
+                    CityModel(6662, "Sacramento", "USA")
                 )
             )
         )
@@ -72,26 +73,29 @@ internal class SearchCityViewModelTest {
     @Test
     fun `get last chosen cities is not empty`() {
 
-        // When
-        val privateGetLastChosenCitiesMethod =
-            SearchCityViewModel::class.java.getDeclaredMethod("getLastChosenCities")
-        privateGetLastChosenCitiesMethod.isAccessible = true
-
+        // Given
         val list = mutableListOf<List<CityModel>>()
-        val observer = Observer<List<CityModel>>{
+        val observer = Observer<List<CityModel>> {
             list.add(it)
         }
 
         try {
 
+            // When
             searchCityViewModel.lastChosenCities.observeForever(observer)
 
             val value = searchCityViewModel.lastChosenCities.value
-            val isEmpty = value?.isEmpty()
 
             // Then
-            isEmpty?.let { assertFalse(it) }
-            assertEquals(3, value?.size)
+            val lastChosenCitiesList = listOf(
+                CityModel(6662, "Sacramento", "USA"),
+                CityModel(345, "Milan", "Italy"),
+                CityModel(234, "Moscow", "Russia")
+            )
+
+            assertEquals(lastChosenCitiesList[0], value?.get(0))
+            assertEquals(lastChosenCitiesList[1], value?.get(1))
+            assertEquals(lastChosenCitiesList[2], value?.get(2))
         } finally {
             searchCityViewModel.lastChosenCities.removeObserver(observer)
         }
@@ -110,7 +114,7 @@ internal class SearchCityViewModelTest {
         )
 
         val list = mutableListOf<List<CityModel>>()
-        val observer = Observer<List<CityModel>>{
+        val observer = Observer<List<CityModel>> {
             list.add(it)
         }
 
@@ -122,11 +126,12 @@ internal class SearchCityViewModelTest {
             searchCityViewModel.searchCity(cityName)
 
             val value = searchCityViewModel.filteredCityList.value
-            val isEmpty = value?.isEmpty()
 
             // Then
-            isEmpty?.let { assertFalse(it) }
-            assertEquals(1, value?.size)
+            val filteredCityList = listOf(CityModel(cityId, cityName, "Russia"))
+
+            assertEquals(filteredCityList[0], value?.get(0))
+
         } finally {
             searchCityViewModel.filteredCityList.removeObserver(observer)
         }
@@ -140,12 +145,12 @@ internal class SearchCityViewModelTest {
         val cityId = 234
 
         val listCityModel = mutableListOf<List<CityModel>>()
-        val observerListCityModel = Observer<List<CityModel>>{
+        val observerListCityModel = Observer<List<CityModel>> {
             listCityModel.add(it)
         }
 
         val listEvent = mutableListOf<Event<Int>>()
-        val observerEvent = Observer<Event<Int>>{
+        val observerEvent = Observer<Event<Int>> {
             listEvent.add(it)
         }
 
@@ -175,34 +180,34 @@ internal class SearchCityViewModelTest {
     }
 
     @Test
-    fun get_chosen_city_name_by_id_not_null() {
+    fun `check passed data to cityDataCash `() {
 
         // Given
-        val cityId = 3435
-        val cityName = "Kiev"
-        `when`(cityFilter.filterCityList(cityName)).thenReturn(
-            listOf(
-                CityModel(cityId, cityName, "Ukraine")
-            )
+        val moscowCityId = 222
+        val moscowCity = "Moscow"
+
+        val filteredCityList = listOf(
+            CityModel(6662, "Sacramento", "USA"),
+            CityModel(345, "Milan", "Italy"),
+            CityModel(moscowCityId, moscowCity, "Russia")
         )
-        searchCityViewModel.searchCity(cityName)
+
+        `when`(cityFilter.filterCityList(moscowCity)).thenReturn(filteredCityList)
+
+        `when`(
+            insertCityToLastChosenCitiesEntityUseCase.invoke(moscowCityId, filteredCityList)
+        ).thenReturn (Completable.never())
+
+        searchCityViewModel.searchCity(moscowCity)
 
         // When
-        val chosenCityName = createPrivateGetChosenCityNameByIdMethod(cityId)
+        searchCityViewModel.onCityChosen(moscowCityId)
 
         // Then
-        assertEquals(cityName, chosenCityName)
-    }
+        verify(cityDataCache).saveCityId(moscowCityId)
+        verify(cityDataCache).saveCityName(moscowCity)
+        verify(insertCityToLastChosenCitiesEntityUseCase).invoke(moscowCityId,filteredCityList)
 
-    private fun createPrivateGetChosenCityNameByIdMethod(cityId: Int): String {
-        val privateGetChosenCityNameByIdMethod =
-            SearchCityViewModel::class.java.getDeclaredMethod(
-                "getChosenCityNameById",
-                Int::class.java
-            )
-        privateGetChosenCityNameByIdMethod.isAccessible = true
-
-        return privateGetChosenCityNameByIdMethod.invoke(searchCityViewModel, cityId) as String
     }
 
 
