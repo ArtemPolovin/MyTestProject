@@ -1,5 +1,6 @@
 package com.example.mytestproject.ui.searchCity
 
+import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.data.utils.CityDataCache
@@ -74,9 +75,10 @@ internal class SearchCityViewModelTest {
     fun `get last chosen cities is not empty`() {
 
         // Given
-        val list = mutableListOf<List<CityModel>>()
+        val list = mutableListOf<CityModel>()
         val observer = Observer<List<CityModel>> {
-            list.add(it)
+            list.clear()
+            list.addAll(it)
         }
 
         try {
@@ -84,18 +86,16 @@ internal class SearchCityViewModelTest {
             // When
             searchCityViewModel.lastChosenCities.observeForever(observer)
 
-            val value = searchCityViewModel.lastChosenCities.value
-
             // Then
             val lastChosenCitiesList = listOf(
-                CityModel(6662, "Sacramento", "USA"),
+                CityModel(234, "Moscow", "Russia"),
                 CityModel(345, "Milan", "Italy"),
-                CityModel(234, "Moscow", "Russia")
-            )
+                CityModel(6662, "Sacramento", "USA")
+            ).reversed()
 
-            assertEquals(lastChosenCitiesList[0], value?.get(0))
-            assertEquals(lastChosenCitiesList[1], value?.get(1))
-            assertEquals(lastChosenCitiesList[2], value?.get(2))
+            assertEquals(lastChosenCitiesList[0], list[0])
+            assertEquals(lastChosenCitiesList[1], list[1])
+            assertEquals(lastChosenCitiesList[2], list[2])
         } finally {
             searchCityViewModel.lastChosenCities.removeObserver(observer)
         }
@@ -107,16 +107,14 @@ internal class SearchCityViewModelTest {
         // Given
         val cityName = "Moscow"
         val cityId = 234
+
         `when`(cityFilter.filterCityList(cityName)).thenReturn(
             listOf(
                 CityModel(cityId, cityName, "Russia")
             )
         )
 
-        val list = mutableListOf<List<CityModel>>()
-        val observer = Observer<List<CityModel>> {
-            list.add(it)
-        }
+        val observer = Observer<List<CityModel>> {}
 
         try {
 
@@ -133,7 +131,7 @@ internal class SearchCityViewModelTest {
             assertEquals(filteredCityList[0], value?.get(0))
 
         } finally {
-            searchCityViewModel.filteredCityList.removeObserver(observer)
+            searchCityViewModel.lastChosenCities.removeObserver(observer)
         }
 
     }
@@ -149,10 +147,7 @@ internal class SearchCityViewModelTest {
             listCityModel.add(it)
         }
 
-        val listEvent = mutableListOf<Event<Int>>()
-        val observerEvent = Observer<Event<Int>> {
-            listEvent.add(it)
-        }
+        val observerEvent = Observer<Event<Int>> {}
 
         try {
 
@@ -170,8 +165,7 @@ internal class SearchCityViewModelTest {
             val value = searchCityViewModel.navigateToCurrentWeather.value
 
             // Then
-            assertNotNull(value)
-            assertTrue(value is Event)
+            assertEquals( Event(cityId),value)
         } finally {
             searchCityViewModel.navigateToCurrentWeather.removeObserver(observerEvent)
             searchCityViewModel.filteredCityList.removeObserver(observerListCityModel)
