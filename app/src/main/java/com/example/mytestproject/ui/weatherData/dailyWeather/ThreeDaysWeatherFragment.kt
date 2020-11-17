@@ -51,7 +51,7 @@ class ThreeDaysWeatherFragment : Fragment() {
 
     private fun setupDailyWeatherData() {
 
-        dailyWeatherViewModel.viewState.observe(viewLifecycleOwner, Observer { viewState ->
+        dailyWeatherViewModel.weatherDataViewState.observe(viewLifecycleOwner, Observer { viewState ->
             showDailyWeatherRequestResult(
                 viewState,
                 pull_refresh_layout,

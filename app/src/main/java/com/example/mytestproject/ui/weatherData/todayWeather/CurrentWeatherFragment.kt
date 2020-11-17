@@ -65,7 +65,7 @@ class CurrentWeatherFragment : Fragment() {
     }
 
     private fun setupWeatherData() {
-        currentWeatherViewModel.viewState.observe(viewLifecycleOwner, Observer {
+        currentWeatherViewModel.weatherViewState.observe(viewLifecycleOwner, Observer {
 
             group_temp_abbreviation.visibility = View.GONE
             group_error_views.visibility = View.GONE
