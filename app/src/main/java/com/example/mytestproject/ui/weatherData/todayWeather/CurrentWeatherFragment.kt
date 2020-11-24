@@ -96,15 +96,4 @@ class CurrentWeatherFragment : Fragment() {
             currentWeatherViewModel.refreshWeatherDataList()
         }
     }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_toolbar, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(
-            item, requireView().findNavController()
-        ) || super.onOptionsItemSelected(item)
-    }
 }

@@ -4,10 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -41,9 +43,15 @@ class SearchCityFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_search_city, container, false)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setTitle()
 
         (activity?.applicationContext as App).weatherDataComponent.inject(this)
 
@@ -77,8 +85,9 @@ class SearchCityFragment : Fragment() {
 
     private fun closeKeyboard() {
         activity?.currentFocus?.let {
-            val imm: InputMethodManager = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(it.windowToken,0)
+            val imm: InputMethodManager =
+                activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(it.windowToken, 0)
         }
 
     }
@@ -131,9 +140,18 @@ class SearchCityFragment : Fragment() {
     }
 
     private fun showLastChosenCities() {
-        searchViewModel.lastChosenCities.observe(viewLifecycleOwner,Observer{
+        searchViewModel.lastChosenCities.observe(viewLifecycleOwner, Observer {
             adapter.setData(it)
         })
+    }
+
+    private fun setTitle() {
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val menuItem = menu.findItem(R.id.search_city)
+        if(menuItem != null) menuItem.isVisible = false
     }
 
     override fun onDestroy() {

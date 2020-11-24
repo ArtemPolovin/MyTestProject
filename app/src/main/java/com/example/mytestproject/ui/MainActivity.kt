@@ -1,6 +1,8 @@
 package com.example.mytestproject.ui
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -9,7 +11,7 @@ import androidx.navigation.ui.*
 import com.example.mytestproject.R
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
@@ -20,8 +22,6 @@ class MainActivity : AppCompatActivity(){
         setContentView(R.layout.activity_main)
 
         setSupportActionBar(toolbar)
-
-
 
         navController = findNavController(R.id.nav_host_fragment)
 
@@ -42,14 +42,25 @@ class MainActivity : AppCompatActivity(){
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
-            bottom_navigation.visibility =  when (destination.id) {
-                R.id.nav_second_fragment,R.id.nav_third_fragment, R.id.search_city ->  View.GONE
-                else ->  View.VISIBLE
+            bottom_navigation.visibility = when (destination.id) {
+                R.id.nav_second_fragment, R.id.nav_third_fragment, R.id.search_city -> View.GONE
+                else -> View.VISIBLE
             }
         }
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        this.menuInflater.inflate(R.menu.menu_toolbar, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return NavigationUI.onNavDestinationSelected(
+            item, navController
+        ) || super.onOptionsItemSelected(item)
     }
 }
