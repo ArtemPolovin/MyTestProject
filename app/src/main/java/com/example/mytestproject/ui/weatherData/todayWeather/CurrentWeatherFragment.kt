@@ -8,7 +8,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.mytestproject.App
 import com.example.mytestproject.R
@@ -53,7 +56,6 @@ class CurrentWeatherFragment : Fragment() {
 
         currentWeatherViewModel =
             ViewModelProvider(this, currentWeatherFactory).get(CurrentWeatherViewModel::class.java)
-
 
         setupWeatherData()
 
