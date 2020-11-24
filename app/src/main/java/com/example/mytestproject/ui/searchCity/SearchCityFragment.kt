@@ -1,10 +1,12 @@
 package com.example.mytestproject.ui.searchCity
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -68,8 +70,17 @@ class SearchCityFragment : Fragment() {
             SearchCityAdapter.OnClickListenerCityModel {
             override fun getCityId(cityId: Int) {
                 searchViewModel.onCityChosen(cityId)
+                closeKeyboard()
             }
         })
+    }
+
+    private fun closeKeyboard() {
+        activity?.currentFocus?.let {
+            val imm: InputMethodManager = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(it.windowToken,0)
+        }
+
     }
 
     private fun switchFragment() {
