@@ -35,7 +35,7 @@ internal class WeatherDataEntityMapperTest {
         `when`(cityConverter.getCityModelByCityId(cityId)).thenReturn(cityModel)
 
         val weatherDataEntity =
-            WeatherDataEntity(cityModel, "2020-11-16", "52", "${ICON_URL}c01d.png", "Clear sky") // The current date must be specified in the method parameters,
+            WeatherDataEntity(cityModel, "2020-11-24", "52", "${ICON_URL}c01d.png", "Clear sky") // The current date must be specified in the method parameters,
                                                                                                                                  // otherwise there will be an error
 
         // When
