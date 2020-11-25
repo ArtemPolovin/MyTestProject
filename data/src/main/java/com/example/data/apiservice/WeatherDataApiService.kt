@@ -17,14 +17,14 @@ interface WeatherDataApiService {
     @GET("/v2.0/current")
     fun getCurrentWeatherData(
         @Query("city_id") cityId: Int,
-        @Query("units") degreeType: String
+        @Query("units") degreeType: String = "M"
     ): Single<CurrentWeatherApiModel>
 
     @GET("/v2.0/forecast/daily")
     fun getDailyWeatherData(
         @Query("city_id") cityId: Int,
         @Query("days") days: Int,
-        @Query("units") degreeType: String
+        @Query("units") degreeType: String = "M"
     ):Single<DailyWeatherApi>
 
     companion object {
