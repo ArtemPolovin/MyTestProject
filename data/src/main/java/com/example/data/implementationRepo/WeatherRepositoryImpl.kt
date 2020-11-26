@@ -26,9 +26,9 @@ class WeatherRepositoryImpl(
     private val cityDataCache: CityDataCache
 ): IWeatherRepository {
 
-    override fun getWeatherData(cityId: Int, degreeType: String): Single<WeatherData> { // The method takes current weather data from api, then saves the data to SQLite table.
+    override fun getWeatherData(cityId: Int): Single<WeatherData> { // The method takes current weather data from api, then saves the data to SQLite table.
                                                                                         // If there is an error in the request, the method takes data from SQLite table and return it
-        return weatherDataApiService.getCurrentWeatherData(cityId, degreeType)
+        return weatherDataApiService.getCurrentWeatherData(cityId)
             .subscribeOn(schedulersIO)
             .doOnSuccess {
                 weatherDataDao.insertWeatherData(weatherDataEntityMapper.fromApiToEntity(it,cityId))
@@ -47,10 +47,9 @@ class WeatherRepositoryImpl(
     override fun getDailyWeather( // The method takes list of days with  weather data from api, then saves the data to SQLite table.
         // If there is an error in the request, the method takes data from SQLite table and return it
         cityId: Int,
-        days: Int,
-        degreeType: String
+        days: Int
     ): Single<List<WeatherData>> {
-        return apiService.getDailyWeatherData(cityId, days, degreeType)
+        return apiService.getDailyWeatherData(cityId, days)
             .subscribeOn(schedulersIO)
             .doOnSuccess { weatherDataDao.insertListOfWeatherData(weatherDataEntityMapper.fromApiToEntityList(it,cityId)) }
             .map { mapper.mapToListOfWeather(it) }
