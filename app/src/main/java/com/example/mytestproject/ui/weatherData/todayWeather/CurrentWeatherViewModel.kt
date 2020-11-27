@@ -29,7 +29,7 @@ class CurrentWeatherViewModel(
     private fun getWeather(cityId: Int) { // the method gets current weather data from Api
         _weatherViewState.value = WeatherViewState.Loading
 
-        disposable = fetchCurrentWeatherUseCase(cityId,  "I")
+        disposable = fetchCurrentWeatherUseCase(cityId)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
