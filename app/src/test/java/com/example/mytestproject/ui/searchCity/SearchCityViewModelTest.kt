@@ -75,16 +75,14 @@ internal class SearchCityViewModelTest {
     fun `get last chosen cities is not empty`() {
 
         // Given
-        val list = mutableListOf<CityModel>()
-        val observer = Observer<List<CityModel>> {
-            list.clear()
-            list.addAll(it)
-        }
+        val observer = Observer<List<CityModel>> {}
 
         try {
 
             // When
             searchCityViewModel.lastChosenCities.observeForever(observer)
+
+            val value = searchCityViewModel.lastChosenCities.value
 
             // Then
             val lastChosenCitiesList = listOf(
@@ -93,9 +91,9 @@ internal class SearchCityViewModelTest {
                 CityModel(6662, "Sacramento", "USA")
             ).reversed()
 
-            assertEquals(lastChosenCitiesList[0], list[0])
-            assertEquals(lastChosenCitiesList[1], list[1])
-            assertEquals(lastChosenCitiesList[2], list[2])
+            assertEquals(lastChosenCitiesList[0], value?.get(0))
+            assertEquals(lastChosenCitiesList[1], value?.get(1))
+            assertEquals(lastChosenCitiesList[2], value?.get(2))
         } finally {
             searchCityViewModel.lastChosenCities.removeObserver(observer)
         }
@@ -142,11 +140,7 @@ internal class SearchCityViewModelTest {
         // Given
         val cityId = 234
 
-        val listCityModel = mutableListOf<List<CityModel>>()
-        val observerListCityModel = Observer<List<CityModel>> {
-            listCityModel.add(it)
-        }
-
+        val observerListCityModel = Observer<List<CityModel>> {}
         val observerEvent = Observer<Event<Int>> {}
 
         try {
