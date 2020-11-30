@@ -58,7 +58,7 @@ internal class CurrentWeatherViewModelTest {
             "2020-10-19", "Clear sky"
         )
 
-        `when`(fetchCurrentWeatherUseCase.invoke(cityId, "I")).thenReturn(
+        `when`(fetchCurrentWeatherUseCase.invoke(cityId)).thenReturn(
             Single.just(
                 currentWeather
             )
@@ -93,7 +93,7 @@ internal class CurrentWeatherViewModelTest {
     fun `test api fetch current weather data error`() {
 
         // Given
-        `when`(fetchCurrentWeatherUseCase.invoke(cityId, "I")).thenReturn(
+        `when`(fetchCurrentWeatherUseCase.invoke(cityId)).thenReturn(
             Single.error(
                 Throwable("Api error")
             )
