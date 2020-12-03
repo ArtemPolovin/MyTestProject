@@ -8,11 +8,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
 import com.example.mytestproject.App
 import com.example.mytestproject.R
 import com.example.mytestproject.databinding.CurrentWeatherDataFragmentBinding
+import com.example.mytestproject.ui.weatherData.WeatherFragment
 import com.example.mytestproject.viewState.WeatherViewState
 import kotlinx.android.synthetic.main.current_weather_data_fragment.*
 import javax.inject.Inject
@@ -39,7 +38,7 @@ class CurrentWeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
+       // setHasOptionsMenu(true)
 
         setTitle()
 
@@ -53,7 +52,6 @@ class CurrentWeatherFragment : Fragment() {
 
         currentWeatherViewModel =
             ViewModelProvider(this, currentWeatherFactory).get(CurrentWeatherViewModel::class.java)
-
 
         setupWeatherData()
 
@@ -88,23 +86,15 @@ class CurrentWeatherFragment : Fragment() {
     }
 
     private fun setTitle() {
-        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
+        (activity as? AppCompatActivity)?.supportActionBar?.run {
+            title = getString(R.string.current_weather_title)
+            subtitle = null
+        }
     }
 
     private fun refreshingWeather() {
         refresh_layout.setOnRefreshListener {
             currentWeatherViewModel.refreshWeatherDataList()
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_toolbar, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(
-            item, requireView().findNavController()
-        ) || super.onOptionsItemSelected(item)
     }
 }

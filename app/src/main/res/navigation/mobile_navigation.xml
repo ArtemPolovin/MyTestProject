@@ -3,13 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/nav_today_weather">
-
-    <fragment
-        android:id="@+id/nav_today_weather"
-        android:name="com.example.mytestproject.ui.weatherData.todayWeather.CurrentWeatherFragment"
-        android:label="Today" >
-    </fragment>
+    app:startDestination="@id/weather_fragment">
 
     <fragment
         android:id="@+id/nav_second_fragment"
@@ -26,28 +20,31 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_three_days_weather"
-        android:name="com.example.mytestproject.ui.weatherData.dailyWeather.ThreeDaysWeatherFragment"
-        tools:layout="@layout/fragment_three_days_weather">
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_ten_days_fragment"
-        android:name="com.example.mytestproject.ui.weatherData.dailyWeather.TenDaysWeatherFragment"
-        tools:layout="@layout/fragment_ten_days_weather">
-    </fragment>
-
-    <fragment
         android:id="@+id/search_city"
         android:name="com.example.mytestproject.ui.searchCity.SearchCityFragment"
         android:label="Search city"
         tools:layout="@layout/fragment_search_city">
         <action
-            android:id="@+id/action_searchCityFragment_to_nav_today_weather"
-            app:destination="@id/nav_today_weather"
-            app:enterAnim="@anim/enter_from_right"
-            app:exitAnim="@anim/exit_to_right"
-            app:popEnterAnim="@anim/enter_from_right"
-            app:popExitAnim="@anim/exit_to_right" />
+            android:id="@+id/action_search_city_to_weather_fragment"
+            app:destination="@id/weather_fragment" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_ten_days_fragment"
+        android:name="com.example.mytestproject.ui.weatherData.dailyWeather.TenDaysWeatherFragment"
+        android:label="fragment_ten_days_weather"
+        tools:layout="@layout/fragment_ten_days_weather" />
+    <fragment
+        android:id="@+id/nav_three_days_weather"
+        android:name="com.example.mytestproject.ui.weatherData.dailyWeather.ThreeDaysWeatherFragment"
+        android:label="fragment_three_days_weather"
+        tools:layout="@layout/fragment_three_days_weather" />
+    <fragment
+        android:id="@+id/weather_fragment"
+        android:name="com.example.mytestproject.ui.weatherData.WeatherFragment"
+        android:label="fragment_weather"
+        tools:layout="@layout/fragment_weather" />
+    <fragment
+        android:id="@+id/nav_today_weather"
+        android:name="com.example.mytestproject.ui.weatherData.todayWeather.CurrentWeatherFragment"
+        android:label="CurrentWeatherFragment" />
 </navigation>
