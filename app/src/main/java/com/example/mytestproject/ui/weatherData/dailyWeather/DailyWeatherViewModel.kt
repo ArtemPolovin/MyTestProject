@@ -31,7 +31,7 @@ class DailyWeatherViewModel(
     private fun fetchDailyWeather() { // the method gets list of days with weather data from Api
         _weatherDataViewState.value = WeatherViewState.Loading
 
-        disposable = dailyWeatherUseCase(cityId, numberOfWeatherForecastDays, "I")
+        disposable = dailyWeatherUseCase(cityId, numberOfWeatherForecastDays)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {

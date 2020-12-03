@@ -6,7 +6,7 @@ import io.reactivex.Single
 
 class FetchCurrentWeatherUseCase (private val weatherRepository: IWeatherRepository) {
 
-   operator fun invoke(cityId: Int, degreeType: String): Single<WeatherData> {
-        return weatherRepository.getWeatherData(cityId,degreeType)
+   operator fun invoke(cityId: Int): Single<WeatherData> {
+        return weatherRepository.getWeatherData(cityId)
     }
 }
