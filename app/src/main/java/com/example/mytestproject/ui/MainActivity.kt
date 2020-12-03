@@ -32,13 +32,16 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_today_weather,
                 R.id.nav_three_days_weather,
                 R.id.nav_ten_days_fragment,
-                R.id.search_city
+                R.id.search_city,
+                R.id.weather_fragment
             ), drawer_layout
         )
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         nav_view.setupWithNavController(navController)
-        bottom_navigation.setupWithNavController(navController)
+
+
+    /*    bottom_navigation.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
 
@@ -46,21 +49,13 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_second_fragment, R.id.nav_third_fragment, R.id.search_city -> View.GONE
                 else -> View.VISIBLE
             }
-        }
+        }*/
+
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        this.menuInflater.inflate(R.menu.menu_toolbar, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(
-            item, navController
-        ) || super.onOptionsItemSelected(item)
-    }
 }

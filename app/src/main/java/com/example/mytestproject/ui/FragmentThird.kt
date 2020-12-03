@@ -18,14 +18,5 @@ class FragmentThird : Fragment() {
         return inflater.inflate(R.layout.fragment_third, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        val menuItem = menu.findItem(R.id.search_city)
-        if(menuItem != null) menuItem.isVisible = false
-    }
 
 }

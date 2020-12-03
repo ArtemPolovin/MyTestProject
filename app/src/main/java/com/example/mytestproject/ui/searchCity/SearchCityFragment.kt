@@ -43,10 +43,6 @@ class SearchCityFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_search_city, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -96,7 +92,7 @@ class SearchCityFragment : Fragment() {
         searchViewModel.navigateToCurrentWeather.observe(
             viewLifecycleOwner, Observer {
                 it.getContentIfNotHandled()?.let {
-                    findNavController().navigate(R.id.action_searchCityFragment_to_nav_today_weather)
+                    findNavController().navigate(R.id.action_search_city_to_weather_fragment)
                 }
             })
     }
@@ -146,12 +142,12 @@ class SearchCityFragment : Fragment() {
     }
 
     private fun setTitle() {
-        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
-    }
+        val activity = (activity as? AppCompatActivity)
+        activity?.let {
+           // it.supportActionBar?.show()
+            it.supportActionBar?.subtitle = null
+        }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        val menuItem = menu.findItem(R.id.search_city)
-        if(menuItem != null) menuItem.isVisible = false
     }
 
     override fun onDestroy() {
