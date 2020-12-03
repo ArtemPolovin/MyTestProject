@@ -8,6 +8,7 @@ import com.example.data.modelsApi.multiDaysWeather.DailyData
 import com.example.data.modelsApi.multiDaysWeather.DailyWeatherApi
 import com.example.data.utils.CityConverter
 import com.example.data.utils.ICON_URL
+import com.example.data.utils.getCurrentDateByTimezone
 import com.example.domain.models.CityModel
 import com.example.domain.models.WeatherData
 import org.junit.Assert.assertEquals
@@ -31,11 +32,12 @@ internal class WeatherDataEntityMapperTest {
         val data = Data("New York City", 52.3, weather, "2020-09-23", "America/New_York")
         val dataList = listOf(data)
         val apiModel = CurrentWeatherApiModel(dataList)
+        val currentDate = getCurrentDateByTimezone(timezone = "America/New_York")
 
         `when`(cityConverter.getCityModelByCityId(cityId)).thenReturn(cityModel)
 
         val weatherDataEntity =
-            WeatherDataEntity(cityModel, "2020-11-25", "52", "${ICON_URL}c01d.png", "Clear sky") // The current date must be specified in the method parameters,
+            WeatherDataEntity(cityModel, currentDate, "52", "${ICON_URL}c01d.png", "Clear sky") // The current date must be specified in the method parameters,
                                                                                                                                  // otherwise there will be an error
 
         // When
