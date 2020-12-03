@@ -59,7 +59,7 @@ internal class WeatherViewModelTest {
             WeatherData("Moscow", "85", "iconURL", "2020-10-22", "Clear sky")
         )
 
-        `when`(fetchDailyWeatherUseCase.invoke(cityId, numberOfDays, "I")).thenReturn(
+        `when`(fetchDailyWeatherUseCase.invoke(cityId, numberOfDays)).thenReturn(
             Single.just(listOfApeWeatherData)
         )
 
@@ -93,8 +93,7 @@ internal class WeatherViewModelTest {
         `when`(
             fetchDailyWeatherUseCase.invoke(
                 cityId,
-                numberOfDays,
-                "I"
+                numberOfDays
             )
         ).thenReturn(Single.error(Throwable("Api error")))
 

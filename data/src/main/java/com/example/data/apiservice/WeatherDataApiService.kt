@@ -2,6 +2,7 @@ package com.example.data.apiservice
 
 import com.example.data.modelsApi.currentWeather.CurrentWeatherApiModel
 import com.example.data.modelsApi.multiDaysWeather.DailyWeatherApi
+import com.example.data.utils.METRIC
 import io.reactivex.Single
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -17,14 +18,14 @@ interface WeatherDataApiService {
     @GET("/v2.0/current")
     fun getCurrentWeatherData(
         @Query("city_id") cityId: Int,
-        @Query("units") degreeType: String
+        @Query("units") degreeType: String = METRIC
     ): Single<CurrentWeatherApiModel>
 
     @GET("/v2.0/forecast/daily")
     fun getDailyWeatherData(
         @Query("city_id") cityId: Int,
         @Query("days") days: Int,
-        @Query("units") degreeType: String
+        @Query("units") degreeType: String = METRIC
     ):Single<DailyWeatherApi>
 
     companion object {
