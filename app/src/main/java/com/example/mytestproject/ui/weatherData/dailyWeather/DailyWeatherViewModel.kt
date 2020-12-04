@@ -6,14 +6,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domain.useCase.weatherData.FetchDailyWeatherUseCase
 import com.example.data.utils.CityDataCache
+import com.example.data.utils.SettingsCache
 import com.example.mytestproject.viewState.WeatherViewState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 
 class DailyWeatherViewModel(
     private val dailyWeatherUseCase: FetchDailyWeatherUseCase,
-    cityDataCache: CityDataCache
+    cityDataCache: CityDataCache,
+    settingsCache: SettingsCache
 ) : ViewModel() {
+
+
+    private val unitSystem = settingsCache.getUnitSystem()
 
     private var numberOfWeatherForecastDays = 0
 
@@ -31,7 +36,7 @@ class DailyWeatherViewModel(
     private fun fetchDailyWeather() { // the method gets list of days with weather data from Api
         _weatherDataViewState.value = WeatherViewState.Loading
 
-        disposable = dailyWeatherUseCase(cityId, numberOfWeatherForecastDays, "I")
+        disposable = dailyWeatherUseCase(cityId, numberOfWeatherForecastDays, unitSystem)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {

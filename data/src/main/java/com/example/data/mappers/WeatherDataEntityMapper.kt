@@ -7,7 +7,10 @@ import com.example.data.utils.*
 import com.example.domain.models.WeatherData
 import kotlin.math.roundToInt
 
-class WeatherDataEntityMapper(private val cityConverter: CityConverter) {
+class WeatherDataEntityMapper(
+    private val cityConverter: CityConverter,
+    private val settingsCache: SettingsCache
+) {
 
     fun fromApiToEntity(currentWeatherApi: CurrentWeatherApiModel, cityId: Int): WeatherDataEntity { // The method takes data from api and saves the data to SQLite WeatherDataTable
 
@@ -46,7 +49,8 @@ class WeatherDataEntityMapper(private val cityConverter: CityConverter) {
             temp = weatherDataEntity.temperature,
             icon = weatherDataEntity.icon,
             date = parsingDate(weatherDataEntity.date),
-            description = weatherDataEntity.description
+            description = weatherDataEntity.description,
+            temperatureType = getUnitType()
         )
     }
 
@@ -58,10 +62,17 @@ class WeatherDataEntityMapper(private val cityConverter: CityConverter) {
                 temp = it.temperature,
                 icon = it.icon,
                 date = parsingDate(it.date),
-                description = it.description
+                description = it.description,
+                temperatureType = getUnitType()
             )
         }
     }
 
+    private fun getUnitType(): String {
+        return when (settingsCache.getUnitSystem()) {
+            METRIC -> CELSIUS_TYPE
+            else -> FAHRENHEIT_TYPE
+        }
+    }
 
 }

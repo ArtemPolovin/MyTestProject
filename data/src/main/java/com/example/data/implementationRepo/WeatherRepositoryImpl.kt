@@ -1,5 +1,6 @@
 package com.example.data.implementationRepo
 
+import android.util.Log
 import com.example.data.apiservice.WeatherDataApiService
 import com.example.data.db.dao.TimezoneDao
 import com.example.data.db.dao.WeatherDataDao

@@ -3,6 +3,9 @@ package com.example.mytestproject.ui.weatherData.todayWeather
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.data.utils.CityDataCache
+import com.example.data.utils.FAHRENHEIT_TYPE
+import com.example.data.utils.IMPERIAL
+import com.example.data.utils.SettingsCache
 import com.example.domain.models.WeatherData
 import com.example.domain.useCase.weatherData.FetchCurrentWeatherUseCase
 import com.example.mytestproject.viewState.WeatherViewState
@@ -33,9 +36,13 @@ internal class CurrentWeatherViewModelTest {
     @Mock
     private lateinit var cityDataCache: CityDataCache
 
+    @Mock
+    private lateinit var settingsCache: SettingsCache
+
     private lateinit var currentWeatherViewModel: CurrentWeatherViewModel
 
     private val cityId = 555
+    private val unitSystem = IMPERIAL
 
     @Before
     fun setUp() {
@@ -47,6 +54,7 @@ internal class CurrentWeatherViewModelTest {
         MockitoAnnotations.initMocks(this)
 
         `when`(cityDataCache.loadCityId()).thenReturn(cityId)
+        `when`(settingsCache.getUnitSystem()).thenReturn(unitSystem)
     }
 
     @Test
@@ -55,17 +63,18 @@ internal class CurrentWeatherViewModelTest {
         // Given
         val currentWeather = WeatherData(
             "Italy", "55", "iconURL",
-            "2020-10-19", "Clear sky"
+            "2020-10-19", "Clear sky",
+            FAHRENHEIT_TYPE
         )
 
-        `when`(fetchCurrentWeatherUseCase.invoke(cityId, "I")).thenReturn(
+        `when`(fetchCurrentWeatherUseCase.invoke(cityId, unitSystem)).thenReturn(
             Single.just(
                 currentWeather
             )
         )
 
         currentWeatherViewModel =
-            CurrentWeatherViewModel(fetchCurrentWeatherUseCase, cityDataCache)
+            CurrentWeatherViewModel(fetchCurrentWeatherUseCase, cityDataCache,settingsCache)
 
         val list = mutableListOf<WeatherViewState>()
         val observer = Observer<WeatherViewState> {
@@ -93,14 +102,14 @@ internal class CurrentWeatherViewModelTest {
     fun `test api fetch current weather data error`() {
 
         // Given
-        `when`(fetchCurrentWeatherUseCase.invoke(cityId, "I")).thenReturn(
+        `when`(fetchCurrentWeatherUseCase.invoke(cityId, unitSystem)).thenReturn(
             Single.error(
                 Throwable("Api error")
             )
         )
 
         currentWeatherViewModel =
-            CurrentWeatherViewModel(fetchCurrentWeatherUseCase, cityDataCache)
+            CurrentWeatherViewModel(fetchCurrentWeatherUseCase, cityDataCache,settingsCache)
 
         val list = mutableListOf<WeatherViewState>()
         val observer = Observer<WeatherViewState>{

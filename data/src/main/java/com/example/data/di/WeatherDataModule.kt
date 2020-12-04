@@ -3,6 +3,7 @@ package com.example.data.di
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.example.data.apiservice.WeatherDataApiService
 import com.example.data.db.Database
@@ -18,6 +19,7 @@ import com.example.data.mappers.WeatherDataMapper
 import com.example.data.utils.CityConverter
 import com.example.data.utils.CityDataCache
 import com.example.data.utils.SHARED_PREFS
+import com.example.data.utils.SettingsCache
 import com.example.domain.repositories.IWeatherRepository
 import com.example.domain.repositories.LastChosenCitiesRepo
 import com.example.domain.useCase.cities.GetLastChosenCitiesUseCase
@@ -102,9 +104,6 @@ class WeatherDataModule(private val context: Context) {
     fun providerApiService() = WeatherDataApiService()
 
     @Provides
-    fun providerMapper() = WeatherDataMapper()
-
-    @Provides
     @Singleton
     fun provideDatabase(): Database {
         return Room.databaseBuilder(context.applicationContext, Database::class.java, "WeatherDB")
@@ -131,8 +130,14 @@ class WeatherDataModule(private val context: Context) {
     }
 
     @Provides
-    fun provideWeatherDataEntityMapper(cityConverter: CityConverter) =
-        WeatherDataEntityMapper(cityConverter)
+    fun provideWeatherDataMapper(settingsCache: SettingsCache) = WeatherDataMapper(settingsCache)
+
+    @Provides
+    fun provideWeatherDataEntityMapper(
+        cityConverter: CityConverter,
+        settingsCache: SettingsCache
+    ) =
+        WeatherDataEntityMapper(cityConverter,settingsCache)
 
     @Provides
     fun provideTimezoneEntityMapper(cityConverter: CityConverter) =
@@ -163,7 +168,21 @@ class WeatherDataModule(private val context: Context) {
 
     @Provides
     @Singleton
+    fun provideSettingsCache(
+        @Named("PreferenceManager")
+        preferenceManager: SharedPreferences
+    ) = SettingsCache(preferenceManager)
+
+    @Provides
+    @Singleton
     fun provideSharedPreferences(): SharedPreferences =
         context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
+
+    @Provides
+    @Singleton
+    @Named("PreferenceManager")
+    fun providePreferenceManager(): SharedPreferences  =
+        PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
+
 
 }

@@ -6,22 +6,40 @@ import com.example.data.modelsApi.currentWeather.Data
 import com.example.data.modelsApi.currentWeather.Weather
 import com.example.data.modelsApi.multiDaysWeather.DailyData
 import com.example.data.modelsApi.multiDaysWeather.DailyWeatherApi
-import com.example.data.utils.CityConverter
-import com.example.data.utils.ICON_URL
-import com.example.data.utils.getCurrentDateByTimezone
+import com.example.data.utils.*
 import com.example.domain.models.CityModel
 import com.example.domain.models.WeatherData
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.TestInstance
+import org.mockito.Mock
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.mock
+import org.mockito.MockitoAnnotations
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class WeatherDataEntityMapperTest {
 
-    private val cityConverter = mock(CityConverter::class.java)
-    private val weatherDataEntityMapper = WeatherDataEntityMapper(cityConverter)
+    @Mock
+    private lateinit var cityConverter: CityConverter
+
+    @Mock
+    private lateinit var settingsCache: SettingsCache
+
+    private lateinit var weatherDataEntityMapper: WeatherDataEntityMapper
+
+    private val unitSystem = IMPERIAL
+
+    @Before
+    fun setUp() {
+
+        MockitoAnnotations.initMocks(this)
+
+        `when`(settingsCache.getUnitSystem()).thenReturn(unitSystem)
+
+        weatherDataEntityMapper = WeatherDataEntityMapper(cityConverter, settingsCache)
+    }
+
 
     @Test
     fun returnWeatherDataEntity() {
@@ -37,14 +55,20 @@ internal class WeatherDataEntityMapperTest {
         `when`(cityConverter.getCityModelByCityId(cityId)).thenReturn(cityModel)
 
         val weatherDataEntity =
-            WeatherDataEntity(cityModel, currentDate, "52", "${ICON_URL}c01d.png", "Clear sky") // The current date must be specified in the method parameters,
-                                                                                                                          // otherwise there will be an error
+            WeatherDataEntity(
+                cityModel,
+                currentDate,
+                "52",
+                "${ICON_URL}c01d.png",
+                "Clear sky"
+            ) // The current date must be specified in the method parameters,
+        // otherwise there will be an error
 
         // When
         val result = weatherDataEntityMapper.fromApiToEntity(apiModel, cityId)
 
         // Then
-        assertEquals(weatherDataEntity,result )
+        assertEquals(weatherDataEntity, result)
     }
 
     @Test
@@ -52,8 +76,10 @@ internal class WeatherDataEntityMapperTest {
         // Given
         val skippedCurrentWeather =
             com.example.data.modelsApi.multiDaysWeather.Weather(801, "Few clouds", "c02d")
-        val weather1 = com.example.data.modelsApi.multiDaysWeather.Weather(801, "Few clouds", "c02d")
-        val weather2 = com.example.data.modelsApi.multiDaysWeather.Weather(804, "Overcast clouds", "c04d")
+        val weather1 =
+            com.example.data.modelsApi.multiDaysWeather.Weather(801, "Few clouds", "c02d")
+        val weather2 =
+            com.example.data.modelsApi.multiDaysWeather.Weather(804, "Overcast clouds", "c04d")
 
         val skippedCurrentData = DailyData("2020-09-22", 92.8, skippedCurrentWeather)
         val data1 = DailyData("2020-09-23", 63.2, weather1)
@@ -79,7 +105,7 @@ internal class WeatherDataEntityMapperTest {
         )
 
         // When
-        val result =  weatherDataEntityMapper.fromApiToEntityList(dailyWeatherApi, cityId)
+        val result = weatherDataEntityMapper.fromApiToEntityList(dailyWeatherApi, cityId)
 
         // Then
         assertEquals(weatherDataEntityList, result)
@@ -92,13 +118,16 @@ internal class WeatherDataEntityMapperTest {
         val weatherDataEntity =
             WeatherDataEntity(cityModel, "2020-09-23", "82", "iconUrl", "Few clouds")
 
-        val weatherData = WeatherData("Milan", "82", "iconUrl", "Wednesday, 23", "Few clouds")
+        val weatherData = WeatherData(
+            "Milan", "82", "iconUrl", "Wednesday, 23", "Few clouds",
+            FAHRENHEIT_TYPE
+        )
 
         // When
         val result = weatherDataEntityMapper.fromEntityToWeatherData(weatherDataEntity)
 
         // Then
-        assertEquals(weatherData,result)
+        assertEquals(weatherData, result)
     }
 
     @Test
@@ -113,15 +142,19 @@ internal class WeatherDataEntityMapperTest {
         )
 
         val weatherDataList = listOf(
-            WeatherData("Moscow", "82", "iconUrl1", "Wednesday, 23", "Few clouds"),
-            WeatherData("Kiev", "74", "iconUrl2", "Wednesday, 23", "Overcast clouds")
+            WeatherData("Moscow", "82", "iconUrl1", "Wednesday, 23", "Few clouds", FAHRENHEIT_TYPE),
+            WeatherData(
+                "Kiev", "74", "iconUrl2", "Wednesday, 23", "Overcast clouds",
+                FAHRENHEIT_TYPE
+            )
         )
 
         // When
-        val result =  weatherDataEntityMapper.fromEntityListToWeatherDataList(weatherDataEntityList)
+        val result = weatherDataEntityMapper.fromEntityListToWeatherDataList(weatherDataEntityList)
 
         // Then
-        assertEquals(weatherDataList,result)
+        assertEquals(weatherDataList, result)
     }
 
 }
+

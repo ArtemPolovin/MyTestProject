@@ -6,14 +6,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.domain.useCase.weatherData.FetchCurrentWeatherUseCase
 import com.example.data.utils.CityDataCache
+import com.example.data.utils.SettingsCache
 import com.example.mytestproject.viewState.WeatherViewState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 
 class CurrentWeatherViewModel(
     private val fetchCurrentWeatherUseCase: FetchCurrentWeatherUseCase,
-    cityDataCache: CityDataCache
+    cityDataCache: CityDataCache,
+    settingsCache: SettingsCache
 ) : ViewModel(){
+
+    private val unitSystem = settingsCache.getUnitSystem()
 
     private var cityId = cityDataCache.loadCityId()// loading city id from SharedPreferences
 
@@ -29,7 +33,7 @@ class CurrentWeatherViewModel(
     private fun getWeather(cityId: Int) { // the method gets current weather data from Api
         _weatherViewState.value = WeatherViewState.Loading
 
-        disposable = fetchCurrentWeatherUseCase(cityId,  "I")
+        disposable = fetchCurrentWeatherUseCase(cityId,  unitSystem)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
