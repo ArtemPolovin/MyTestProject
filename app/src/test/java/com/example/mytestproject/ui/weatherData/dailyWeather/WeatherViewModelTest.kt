@@ -3,6 +3,8 @@ package com.example.mytestproject.ui.weatherData.dailyWeather
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.data.utils.CityDataCache
+import com.example.data.utils.IMPERIAL
+import com.example.data.utils.SettingsCache
 import com.example.domain.models.WeatherData
 import com.example.domain.useCase.weatherData.FetchDailyWeatherUseCase
 import com.example.mytestproject.viewState.WeatherViewState
@@ -31,6 +33,9 @@ internal class WeatherViewModelTest {
     @Mock
     private lateinit var cityDataCache: CityDataCache
 
+    @Mock
+    private lateinit var settingsCache: SettingsCache
+
     private lateinit var dailyWeatherViewModel: DailyWeatherViewModel
 
    private val numberOfDays = 5
@@ -45,6 +50,7 @@ internal class WeatherViewModelTest {
         MockitoAnnotations.initMocks(this)
 
         `when`(cityDataCache.loadCityId()).thenReturn(cityId)
+        `when`(settingsCache.getUnitSystem()).thenReturn(IMPERIAL)
     }
 
     @Test
@@ -52,18 +58,18 @@ internal class WeatherViewModelTest {
 
         // Given
         val listOfApeWeatherData = listOf(
-            WeatherData("Moscow", "73", "iconURL", "2020-10-18", "Clear sky"),
-            WeatherData("Moscow", "82", "iconURL", "2020-10-19", "Clear sky"),
-            WeatherData("Moscow", "80", "iconURL", "2020-10-20", "Clear sky"),
-            WeatherData("Moscow", "89", "iconURL", "2020-10-21", "Clear sky"),
-            WeatherData("Moscow", "85", "iconURL", "2020-10-22", "Clear sky")
+            WeatherData("Moscow", "73", "iconURL", "2020-10-18", "Clear sky","F"),
+            WeatherData("Moscow", "82", "iconURL", "2020-10-19", "Clear sky","F"),
+            WeatherData("Moscow", "80", "iconURL", "2020-10-20", "Clear sky","F"),
+            WeatherData("Moscow", "89", "iconURL", "2020-10-21", "Clear sky","F"),
+            WeatherData("Moscow", "85", "iconURL", "2020-10-22", "Clear sky","F")
         )
 
-        `when`(fetchDailyWeatherUseCase.invoke(cityId, numberOfDays)).thenReturn(
+        `when`(fetchDailyWeatherUseCase.invoke(cityId, numberOfDays, "I")).thenReturn(
             Single.just(listOfApeWeatherData)
         )
 
-        dailyWeatherViewModel = DailyWeatherViewModel(fetchDailyWeatherUseCase, cityDataCache)
+        dailyWeatherViewModel = DailyWeatherViewModel(fetchDailyWeatherUseCase, cityDataCache,settingsCache)
 
         val list = mutableListOf<WeatherViewState>()
         val observer = Observer<WeatherViewState> {
@@ -93,11 +99,12 @@ internal class WeatherViewModelTest {
         `when`(
             fetchDailyWeatherUseCase.invoke(
                 cityId,
-                numberOfDays
+                numberOfDays,
+                "I"
             )
         ).thenReturn(Single.error(Throwable("Api error")))
 
-        dailyWeatherViewModel = DailyWeatherViewModel(fetchDailyWeatherUseCase, cityDataCache)
+        dailyWeatherViewModel = DailyWeatherViewModel(fetchDailyWeatherUseCase, cityDataCache,settingsCache)
 
         val list = mutableListOf<WeatherViewState>()
         val observer = Observer<WeatherViewState>{

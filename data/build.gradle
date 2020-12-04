@@ -86,4 +86,7 @@ dependencies {
     kapt room.roomCompiler
     implementation room.roomRxjava
 
+    // Preference
+    implementation preference.preferenceKtx
+
 }
