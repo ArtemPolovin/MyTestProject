@@ -53,7 +53,8 @@ ext.versions = [
         workManager     : "2.4.0",
         mockito         : "2.2.0",
         testcoreKtx     : '1.3.0',
-        archCoreTesting : "2.1.0"
+        archCoreTesting : "2.1.0",
+        preferenceKtx      : "1.1.1"
 
 ]
 
@@ -167,4 +168,8 @@ ext.androidXTestCoreKtx = [
 
 ext.androidXArchCoreTesting = [
         archCoreTesting: "androidx.arch.core:core-testing:$versions.archCoreTesting"
+]
+
+ext.preference = [
+        preferenceKtx: "androidx.preference:preference-ktx:$versions.preferenceKtx"
 ]

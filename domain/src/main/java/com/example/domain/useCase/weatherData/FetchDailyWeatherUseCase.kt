@@ -5,7 +5,7 @@ import com.example.domain.repositories.IWeatherRepository
 import io.reactivex.Single
 
 class FetchDailyWeatherUseCase (private val weatherRepository: IWeatherRepository){
-    operator fun invoke(cityId: Int, days: Int): Single<List<WeatherData>> {
-        return weatherRepository.getDailyWeather(cityId,days)
+    operator fun invoke(cityId: Int, days: Int, unitSystem: String): Single<List<WeatherData>> {
+        return weatherRepository.getDailyWeather(cityId,days, unitSystem)
     }
 }

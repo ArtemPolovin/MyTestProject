@@ -5,16 +5,41 @@ import com.example.data.modelsApi.currentWeather.Data
 import com.example.data.modelsApi.currentWeather.Weather
 import com.example.data.modelsApi.multiDaysWeather.DailyData
 import com.example.data.modelsApi.multiDaysWeather.DailyWeatherApi
+import com.example.data.utils.FAHRENHEIT_TYPE
 import com.example.data.utils.ICON_URL
+import com.example.data.utils.IMPERIAL
+import com.example.data.utils.SettingsCache
 import com.example.domain.models.WeatherData
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.TestInstance
+import org.mockito.Mock
+import org.mockito.Mockito.`when`
+import org.mockito.MockitoAnnotations
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 internal class WeatherDailyDataMapperTest {
 
-    private val weatherDataMapper = WeatherDataMapper()
+
+    @Mock
+    private lateinit var settingsCache: SettingsCache
+
+    private lateinit var weatherDataMapper : WeatherDataMapper
+
+    private val unitSystem = IMPERIAL
+
+    @Before
+    fun setUp() {
+
+        MockitoAnnotations.initMocks(this)
+
+      `when`(settingsCache.getUnitSystem()).thenReturn(unitSystem)
+
+        weatherDataMapper = WeatherDataMapper(settingsCache)
+    }
+
+
 
     @Test
     fun returnWeatherDataObject() {
@@ -25,10 +50,11 @@ internal class WeatherDailyDataMapperTest {
         val apiModel = CurrentWeatherApiModel(dataList)
 
         val weatherData =
-            WeatherData("New York City", "52", "${ICON_URL}c01d.png", "2020-09-22", "Clear sky")
+            WeatherData("New York City", "52", "${ICON_URL}c01d.png", "2020-09-22", "Clear sky",
+                FAHRENHEIT_TYPE)
 
         // When
-        val result = weatherDataMapper.mapWeather(apiModel)
+        val result = weatherDataMapper.mapApiToWeatherDataModel(apiModel)
 
         // Then
         assertEquals(weatherData,result )
@@ -50,12 +76,14 @@ internal class WeatherDailyDataMapperTest {
         val dailyWeatherApi = DailyWeatherApi("Moscow", dailyWeatherDataList)
 
         val weatherDataList = listOf(
-            WeatherData("Moscow", "63", "${ICON_URL}c02d.png", "Wednesday, 23", "Few clouds"),
-            WeatherData("Moscow", "74", "${ICON_URL}c04d.png", "Thursday, 24", "Overcast clouds")
+            WeatherData("Moscow", "63", "${ICON_URL}c02d.png", "Wednesday, 23", "Few clouds",
+                FAHRENHEIT_TYPE),
+            WeatherData("Moscow", "74", "${ICON_URL}c04d.png", "Thursday, 24", "Overcast clouds",
+                FAHRENHEIT_TYPE)
         )
 
         // When
-        val result = weatherDataMapper.mapToListOfWeather(dailyWeatherApi)
+        val result = weatherDataMapper.mapToListOfDailyWeatherData(dailyWeatherApi)
 
         // Then
         assertEquals(weatherDataList, result)

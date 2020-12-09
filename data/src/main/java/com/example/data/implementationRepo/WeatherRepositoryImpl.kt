@@ -26,15 +26,15 @@ class WeatherRepositoryImpl(
     private val cityDataCache: CityDataCache
 ): IWeatherRepository {
 
-    override fun getWeatherData(cityId: Int): Single<WeatherData> { // The method takes current weather data from api, then saves the data to SQLite table.
+    override fun getWeatherData(cityId: Int, unitSystem: String): Single<WeatherData> { // The method takes current weather data from api, then saves the data to SQLite table.
                                                                                         // If there is an error in the request, the method takes data from SQLite table and return it
-        return weatherDataApiService.getCurrentWeatherData(cityId)
+        return weatherDataApiService.getCurrentWeatherData(cityId, unitSystem)
             .subscribeOn(schedulersIO)
             .doOnSuccess {
                 weatherDataDao.insertWeatherData(weatherDataEntityMapper.fromApiToEntity(it,cityId))
                 timezoneDao.insertTimezone(timezoneEntityMapper.fromApiToEntity(it,cityId))
             }
-            .map { mapper.mapWeather(it) }
+            .map { mapper.mapApiToWeatherDataModel(it) }
             .onErrorResumeNext {
                 weatherDataDao.getWeatherDataFromDb(
                     cityId,
@@ -47,12 +47,13 @@ class WeatherRepositoryImpl(
     override fun getDailyWeather( // The method takes list of days with  weather data from api, then saves the data to SQLite table.
         // If there is an error in the request, the method takes data from SQLite table and return it
         cityId: Int,
-        days: Int
+        days: Int,
+        unitSystem: String
     ): Single<List<WeatherData>> {
-        return apiService.getDailyWeatherData(cityId, days)
+        return apiService.getDailyWeatherData(cityId, days, unitSystem)
             .subscribeOn(schedulersIO)
             .doOnSuccess { weatherDataDao.insertListOfWeatherData(weatherDataEntityMapper.fromApiToEntityList(it,cityId)) }
-            .map { mapper.mapToListOfWeather(it) }
+            .map { mapper.mapToListOfDailyWeatherData(it) }
             .onErrorResumeNext {
                 weatherDataDao.getListOfWeatherData(cityId,  getDateList(days,timezoneDao.getTimezoneByCityId(cityId)))
                     .map { weatherDataEntityMapper.fromEntityListToWeatherDataList(it) }

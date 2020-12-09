@@ -21,6 +21,12 @@
             android:menuCategory="secondary"
             android:title="Third" />
 
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
+            android:menuCategory="secondary"
+            android:title="Settings" />
+
 
     </group>
 

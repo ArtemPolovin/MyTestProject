@@ -118,4 +118,7 @@ dependencies {
     // Mockito
     testImplementation mockitoKotlin.mockitoKotlin
 
+    // Preference
+    implementation preference.preferenceKtx
+
 }
