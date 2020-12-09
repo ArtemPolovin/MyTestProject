@@ -1,6 +1,5 @@
 package com.example.data.implementationRepo
 
-import android.util.Log
 import com.example.data.apiservice.WeatherDataApiService
 import com.example.data.db.dao.TimezoneDao
 import com.example.data.db.dao.WeatherDataDao
@@ -35,7 +34,7 @@ class WeatherRepositoryImpl(
                 weatherDataDao.insertWeatherData(weatherDataEntityMapper.fromApiToEntity(it,cityId))
                 timezoneDao.insertTimezone(timezoneEntityMapper.fromApiToEntity(it,cityId))
             }
-            .map { mapper.mapWeather(it) }
+            .map { mapper.mapApiToWeatherDataModel(it) }
             .onErrorResumeNext {
                 weatherDataDao.getWeatherDataFromDb(
                     cityId,
@@ -54,7 +53,7 @@ class WeatherRepositoryImpl(
         return apiService.getDailyWeatherData(cityId, days, unitSystem)
             .subscribeOn(schedulersIO)
             .doOnSuccess { weatherDataDao.insertListOfWeatherData(weatherDataEntityMapper.fromApiToEntityList(it,cityId)) }
-            .map { mapper.mapToListOfWeather(it) }
+            .map { mapper.mapToListOfDailyWeatherData(it) }
             .onErrorResumeNext {
                 weatherDataDao.getListOfWeatherData(cityId,  getDateList(days,timezoneDao.getTimezoneByCityId(cityId)))
                     .map { weatherDataEntityMapper.fromEntityListToWeatherDataList(it) }

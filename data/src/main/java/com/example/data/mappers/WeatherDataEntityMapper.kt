@@ -57,14 +57,7 @@ class WeatherDataEntityMapper(
     fun fromEntityListToWeatherDataList(entityList: List<WeatherDataEntity>): List<WeatherData> { // The method takes list of days with weather data from SQLite table and save the data to list of WeatherData objects
 
         return entityList.map {
-            WeatherData(
-                city_name = it.cityModel.city_name,
-                temp = it.temperature,
-                icon = it.icon,
-                date = parsingDate(it.date),
-                description = it.description,
-                temperatureType = getUnitType()
-            )
+            fromEntityToWeatherData(it)
         }
     }
 

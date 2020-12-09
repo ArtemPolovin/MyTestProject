@@ -10,14 +10,11 @@ import com.example.data.utils.ICON_URL
 import com.example.data.utils.IMPERIAL
 import com.example.data.utils.SettingsCache
 import com.example.domain.models.WeatherData
-import io.reactivex.android.plugins.RxAndroidPlugins
-import io.reactivex.schedulers.Schedulers
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.jupiter.api.TestInstance
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
@@ -57,7 +54,7 @@ internal class WeatherDailyDataMapperTest {
                 FAHRENHEIT_TYPE)
 
         // When
-        val result = weatherDataMapper.mapWeather(apiModel)
+        val result = weatherDataMapper.mapApiToWeatherDataModel(apiModel)
 
         // Then
         assertEquals(weatherData,result )
@@ -86,7 +83,7 @@ internal class WeatherDailyDataMapperTest {
         )
 
         // When
-        val result = weatherDataMapper.mapToListOfWeather(dailyWeatherApi)
+        val result = weatherDataMapper.mapToListOfDailyWeatherData(dailyWeatherApi)
 
         // Then
         assertEquals(weatherDataList, result)
