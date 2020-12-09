@@ -23,17 +23,21 @@ class WeatherDataMapper (private val settingsCache: SettingsCache){
     }
 
     fun mapToListOfDailyWeatherData(dailyWeatherApi: DailyWeatherApi): List<WeatherData> { // The method takes list of days with weather data from api and save it to list of WeatherData objects
+        val list = mutableListOf<WeatherData>()
 
-        return dailyWeatherApi.data.map {
-            WeatherData(
-                city_name = dailyWeatherApi.city_name,
-                temp = it.max_temp.roundToInt().toString(),
-                icon = "$ICON_URL${it.weather.icon}.png",
-                date = parsingDate(it.datetime),
-                description = it.weather.description,
-                temperatureType = getUnitType()
+        for (i in 1 until  dailyWeatherApi.data.size) {  // The loop starts from the second element of the list because the first element (current day) is not included
+            list.add(
+                WeatherData(
+                    city_name = dailyWeatherApi.city_name,
+                    temp = dailyWeatherApi.data[i].max_temp.roundToInt().toString(),
+                    icon = "$ICON_URL${dailyWeatherApi.data[i].weather.icon}.png",
+                    date = parsingDate(dailyWeatherApi.data[i].datetime),
+                    description = dailyWeatherApi.data[i].weather.description,
+                    temperatureType = getUnitType()
+                )
             )
         }
+        return list
     }
 
     private fun getUnitType(): String {
