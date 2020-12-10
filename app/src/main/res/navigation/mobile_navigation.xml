@@ -42,7 +42,7 @@
         tools:layout="@layout/fragment_three_days_weather" />
     <fragment
         android:id="@+id/weather_fragment"
-        android:name="com.example.mytestproject.ui.weatherData.WeatherFragment"
+        android:name="com.example.mytestproject.ui.weatherData.weathercontainer.WeatherFragment"
         android:label="fragment_weather"
         tools:layout="@layout/fragment_weather" />
     <fragment

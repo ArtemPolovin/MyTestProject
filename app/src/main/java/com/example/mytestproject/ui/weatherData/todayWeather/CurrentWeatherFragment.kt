@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.mytestproject.App
 import com.example.mytestproject.R
 import com.example.mytestproject.databinding.CurrentWeatherDataFragmentBinding
-import com.example.mytestproject.ui.weatherData.WeatherFragment
 import com.example.mytestproject.viewState.WeatherViewState
 import kotlinx.android.synthetic.main.current_weather_data_fragment.*
 import javax.inject.Inject

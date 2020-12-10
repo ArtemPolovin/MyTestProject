@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -92,7 +91,7 @@ class SearchCityFragment : Fragment() {
         searchViewModel.navigateToCurrentWeather.observe(
             viewLifecycleOwner, Observer {
                 it.getContentIfNotHandled()?.let {
-                    findNavController().navigate(R.id.action_search_city_to_weather_fragment)
+                    requireActivity().onBackPressed()
                 }
             })
     }
@@ -144,7 +143,6 @@ class SearchCityFragment : Fragment() {
     private fun setTitle() {
         val activity = (activity as? AppCompatActivity)
         activity?.let {
-           // it.supportActionBar?.show()
             it.supportActionBar?.subtitle = null
         }
 

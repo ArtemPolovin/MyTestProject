@@ -11,11 +11,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mytestproject.App
 import com.example.mytestproject.R
-import com.example.mytestproject.ui.weatherData.WeatherFragment
 import com.example.mytestproject.util.ELEVEN_DAYS
 import com.example.mytestproject.util.showDailyWeatherRequestResult
 import kotlinx.android.synthetic.main.fragment_ten_days_weather.*
-import kotlinx.android.synthetic.main.fragment_weather.*
 import javax.inject.Inject
 
 class TenDaysWeatherFragment : Fragment() {

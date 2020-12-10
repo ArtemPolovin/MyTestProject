@@ -1,9 +1,12 @@
-package com.example.mytestproject.ui.weatherData
+package com.example.mytestproject.ui.weatherData.weathercontainer
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
@@ -16,12 +19,13 @@ import kotlinx.android.synthetic.main.fragment_weather.*
 class WeatherFragment : Fragment() {
 
     private lateinit var navController: NavController
+    private val weatherContainerViewModel: WeatherContainerViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-         setHasOptionsMenu(true)
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_weather, container, false)
     }
 
@@ -30,13 +34,13 @@ class WeatherFragment : Fragment() {
 
         navController = Navigation.findNavController(view)
 
-        switchFragmentIfFragmentContainerIsEmpty(savedInstanceState)
-
         bottom_nav.setOnNavigationItemSelectedListener {
-            switchFragment(getClickedFragment(it.itemId))
+            weatherContainerViewModel.receivePreviousFragmentId(it.itemId)
             true
         }
 
+        switchFragmentIfFragmentContainerIsEmpty(savedInstanceState)
+        returnToPreviousWeatherScreen()
 
     }
 
@@ -56,7 +60,16 @@ class WeatherFragment : Fragment() {
     }
 
     private fun switchFragmentIfFragmentContainerIsEmpty(savedInstanceState: Bundle?) {
-        if(savedInstanceState == null) switchFragment(CurrentWeatherFragment())
+
+        if (savedInstanceState == null && weatherContainerViewModel.previousFragmentId.value == null) {
+            switchFragment(CurrentWeatherFragment())
+        }
+    }
+
+    private fun returnToPreviousWeatherScreen() {
+        weatherContainerViewModel.previousFragmentId.observe(viewLifecycleOwner, Observer {
+            if (it != null) switchFragment(getClickedFragment(it))
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -69,6 +82,6 @@ class WeatherFragment : Fragment() {
             item, navController
         ) || super.onOptionsItemSelected(item)
     }
-    
+
 
 }
