@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/weahter_fragment_graph"
+    app:startDestination="@id/weather_fragment">
+
+    <fragment
+        android:id="@+id/weather_fragment"
+        android:name="com.example.mytestproject.ui.weatherData.weathercontainer.WeatherFragment"
+        android:label="fragment_weather"
+        tools:layout="@layout/fragment_weather">
+    </fragment>
+    <fragment
+        android:id="@+id/nav_today_weather"
+        android:name="com.example.mytestproject.ui.weatherData.todayWeather.CurrentWeatherFragment"
+        android:label="CurrentWeatherFragment" />
+    <fragment
+        android:id="@+id/nav_search_city"
+        android:name="com.example.mytestproject.ui.searchCity.SearchCityFragment"
+        android:label="fragment_search_city"
+        tools:layout="@layout/fragment_search_city" />
+    <fragment
+        android:id="@+id/nav_ten_days_fragment"
+        android:name="com.example.mytestproject.ui.weatherData.dailyWeather.TenDaysWeatherFragment"
+        android:label="fragment_ten_days_weather"
+        tools:layout="@layout/fragment_ten_days_weather" />
+    <fragment
+        android:id="@+id/nav_three_days_weather"
+        android:name="com.example.mytestproject.ui.weatherData.dailyWeather.ThreeDaysWeatherFragment"
+        android:label="fragment_three_days_weather"
+        tools:layout="@layout/fragment_three_days_weather" />
+</navigation>

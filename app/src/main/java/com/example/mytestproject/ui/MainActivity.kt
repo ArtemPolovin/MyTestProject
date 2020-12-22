@@ -2,6 +2,7 @@ package com.example.mytestproject.ui
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.example.mytestproject.R
 import kotlinx.android.synthetic.main.activity_main.*
+import androidx.navigation.Navigation.findNavController
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_today_weather,
                 R.id.nav_three_days_weather,
                 R.id.nav_ten_days_fragment,
-                R.id.search_city,
+                R.id.nav_search_city,
                 R.id.weather_fragment
             ), drawer_layout
         )

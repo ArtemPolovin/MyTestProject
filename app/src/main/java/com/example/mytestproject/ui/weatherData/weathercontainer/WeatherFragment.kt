@@ -9,7 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.example.mytestproject.R
 import com.example.mytestproject.ui.weatherData.dailyWeather.TenDaysWeatherFragment
 import com.example.mytestproject.ui.weatherData.dailyWeather.ThreeDaysWeatherFragment
@@ -32,24 +36,38 @@ class WeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        navController = Navigation.findNavController(view)
+       // navController = Navigation.findNavController(view)
 
-        bottom_nav.setOnNavigationItemSelectedListener {
+        val nestedNavHostFragment = childFragmentManager.findFragmentById(R.id.local_nav_host_fragment) as NavHostFragment
+        navController = nestedNavHostFragment.navController
+
+        navController.navigate(R.id.nav_today_weather)
+        bottom_nav.setupWithNavController(navController)
+
+
+       // navController.popBackStack(R.id.nav_today_weather,true)
+
+
+
+
+     /*   bottom_nav.setOnNavigationItemSelectedListener {
             weatherContainerViewModel.receivePreviousFragmentId(it.itemId)
+            switchFragment(getClickedFragment(it.itemId))
             true
-        }
+        }*/
 
-        switchFragmentIfFragmentContainerIsEmpty(savedInstanceState)
-        returnToPreviousWeatherScreen()
+            //switchFragmentIfFragmentContainerIsEmpty(savedInstanceState)
+        //returnToPreviousWeatherScreen()
 
     }
 
-    private fun switchFragment(fragment: Fragment) {
+ /*   private fun switchFragment(fragment: Fragment) {
         childFragmentManager.beginTransaction()
             .replace(R.id.weather_fragment_container, fragment)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .addToBackStack(null)
             .commit()
-    }
+    }*/
 
     private fun getClickedFragment(id: Int): Fragment {
         return when (id) {
@@ -59,18 +77,17 @@ class WeatherFragment : Fragment() {
         }
     }
 
-    private fun switchFragmentIfFragmentContainerIsEmpty(savedInstanceState: Bundle?) {
-
-        if (savedInstanceState == null && weatherContainerViewModel.previousFragmentId.value == null) {
+ /*   private fun switchFragmentIfFragmentContainerIsEmpty(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null ) {
             switchFragment(CurrentWeatherFragment())
         }
-    }
+    }*/
 
-    private fun returnToPreviousWeatherScreen() {
+   /* private fun returnToPreviousWeatherScreen() {
         weatherContainerViewModel.previousFragmentId.observe(viewLifecycleOwner, Observer {
             if (it != null) switchFragment(getClickedFragment(it))
         })
-    }
+    }*/
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_toolbar, menu)

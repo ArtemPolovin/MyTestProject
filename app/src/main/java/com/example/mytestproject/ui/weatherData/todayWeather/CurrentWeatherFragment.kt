@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.mytestproject.App
 import com.example.mytestproject.R
 import com.example.mytestproject.databinding.CurrentWeatherDataFragmentBinding
