@@ -95,8 +95,6 @@ class SearchCityFragment : Fragment() {
         searchViewModel.navigateToCurrentWeather.observe(
             viewLifecycleOwner, Observer {
                 it.getContentIfNotHandled()?.let {
-                   // requireActivity().onBackPressed()
-                  // findNavController().navigate(R.id.nav_three_days_weather)
                    findNavController().popBackStack()
                 }
             })
@@ -149,6 +147,7 @@ class SearchCityFragment : Fragment() {
     private fun setTitle() {
         val activity = (activity as? AppCompatActivity)
         activity?.let {
+            it.supportActionBar?.title = getString(R.string.search_city_title)
             it.supportActionBar?.subtitle = null
         }
 

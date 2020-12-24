@@ -12,4 +12,5 @@
     <string name="search_city_hint">Enter city name</string>
     <string name="search_city_icon_title">Search city</string>
     <string name="current_weather_title">Today</string>
+    <string name="search_city_title">Search city</string>
 </resources>

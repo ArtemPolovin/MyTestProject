@@ -53,12 +53,13 @@ class CurrentWeatherFragment : Fragment() {
         currentWeatherViewModel =
             ViewModelProvider(this, currentWeatherFactory).get(CurrentWeatherViewModel::class.java)
 
-        setupWeatherData()
-
         btn_retry.setOnClickListener {
             currentWeatherViewModel.onRetry()
         }
 
+        currentWeatherViewModel.updateCityData()
+
+        setupWeatherData()
         refreshingWeather()
     }
 

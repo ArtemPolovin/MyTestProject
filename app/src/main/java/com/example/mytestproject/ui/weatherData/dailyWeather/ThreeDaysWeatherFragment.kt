@@ -44,6 +44,8 @@ class ThreeDaysWeatherFragment : Fragment() {
         rv_three_days_weather.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
+        dailyWeatherViewModel.updateCityData()
+
         setupDailyWeatherData()
         refreshingWeather()
 

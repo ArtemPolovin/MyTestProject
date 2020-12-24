@@ -6,6 +6,7 @@
         android:icon="@drawable/ic_search_city"
         android:title="@string/search_city_icon_title"
         android:visible="true"
+        android:menuCategory="secondary"
         app:showAsAction="always|withText"/>
 
 </menu>

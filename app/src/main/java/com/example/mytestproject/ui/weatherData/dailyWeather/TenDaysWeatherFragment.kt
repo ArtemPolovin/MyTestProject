@@ -1,6 +1,7 @@
 package com.example.mytestproject.ui.weatherData.dailyWeather
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,8 @@ class TenDaysWeatherFragment : Fragment() {
 
         rv_ten_days_weather.layoutManager = LinearLayoutManager(requireContext(),
             LinearLayoutManager.VERTICAL, false)
+
+        dailyWeatherViewModel.updateCityData()
 
         setupDailyWeatherData()
         refreshingWeather()
