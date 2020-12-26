@@ -6,11 +6,15 @@ class CityDataCache(
     private val sharedPref: SharedPreferences
 ){
 
+    var isCityChanged = false
+
     fun loadCityId(): Int {
+        isCityChanged = false
         return sharedPref.getInt(CITY_ID, DEFAULT_VALUE_NEW_YORK_ID)
     }
 
     fun saveCityId(cityId: Int) {
+        isCityChanged = true
         sharedPref.edit().putInt(CITY_ID,cityId).apply()
     }
 

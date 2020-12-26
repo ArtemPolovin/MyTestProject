@@ -2,10 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/search_city"
+    <item android:id="@+id/nav_search_city"
         android:icon="@drawable/ic_search_city"
         android:title="@string/search_city_icon_title"
         android:visible="true"
+        android:menuCategory="secondary"
         app:showAsAction="always|withText"/>
 
 </menu>

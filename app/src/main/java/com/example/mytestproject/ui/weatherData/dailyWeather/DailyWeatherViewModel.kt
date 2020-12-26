@@ -13,7 +13,7 @@ import io.reactivex.disposables.Disposable
 
 class DailyWeatherViewModel(
     private val dailyWeatherUseCase: FetchDailyWeatherUseCase,
-    cityDataCache: CityDataCache,
+    private val cityDataCache: CityDataCache,
     settingsCache: SettingsCache
 ) : ViewModel() {
 
@@ -55,6 +55,13 @@ class DailyWeatherViewModel(
 
     fun refreshWeatherDataList() {
         fetchDailyWeather()
+    }
+
+    fun updateCityData() {
+        if (cityDataCache.isCityChanged) {
+            cityId = cityDataCache.loadCityId()
+            _cityName.value = cityDataCache.loadCityName()
+        }
     }
 
 

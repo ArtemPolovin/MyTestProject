@@ -6,6 +6,13 @@
     app:startDestination="@id/weather_fragment">
 
     <fragment
+        android:id="@+id/weather_fragment"
+        android:name="com.example.mytestproject.ui.weatherData.weathercontainer.WeatherFragment"
+        android:label="fragment_weather"
+        tools:layout="@layout/fragment_weather">
+
+    </fragment>
+    <fragment
         android:id="@+id/nav_second_fragment"
         android:name="com.example.mytestproject.ui.FragmentSecond"
         android:label="Second"
@@ -20,37 +27,11 @@
     </fragment>
 
     <fragment
-        android:id="@+id/search_city"
-        android:name="com.example.mytestproject.ui.searchCity.SearchCityFragment"
-        android:label="Search city"
-        tools:layout="@layout/fragment_search_city">
-        <action
-            android:id="@+id/action_search_city_to_weather_fragment"
-            app:destination="@id/weather_fragment"
-            app:popUpTo="@id/weather_fragment"
-            app:popUpToInclusive="true"/>
-    </fragment>
-    <fragment
-        android:id="@+id/nav_ten_days_fragment"
-        android:name="com.example.mytestproject.ui.weatherData.dailyWeather.TenDaysWeatherFragment"
-        android:label="fragment_ten_days_weather"
-        tools:layout="@layout/fragment_ten_days_weather" />
-    <fragment
-        android:id="@+id/nav_three_days_weather"
-        android:name="com.example.mytestproject.ui.weatherData.dailyWeather.ThreeDaysWeatherFragment"
-        android:label="fragment_three_days_weather"
-        tools:layout="@layout/fragment_three_days_weather" />
-    <fragment
-        android:id="@+id/weather_fragment"
-        android:name="com.example.mytestproject.ui.weatherData.WeatherFragment"
-        android:label="fragment_weather"
-        tools:layout="@layout/fragment_weather" />
-    <fragment
-        android:id="@+id/nav_today_weather"
-        android:name="com.example.mytestproject.ui.weatherData.todayWeather.CurrentWeatherFragment"
-        android:label="CurrentWeatherFragment" />
-    <fragment
         android:id="@+id/nav_settings"
         android:name="com.example.mytestproject.ui.settings.SettingsFragment"
-        android:label="Settings" />
+        android:label="Settings" >
+    </fragment>
+
+    <include app:graph="@navigation/weahter_fragment_graph" />
+
 </navigation>

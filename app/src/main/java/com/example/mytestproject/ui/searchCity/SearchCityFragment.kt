@@ -4,15 +4,18 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.SearchView
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mytestproject.App
@@ -92,7 +95,7 @@ class SearchCityFragment : Fragment() {
         searchViewModel.navigateToCurrentWeather.observe(
             viewLifecycleOwner, Observer {
                 it.getContentIfNotHandled()?.let {
-                    findNavController().navigate(R.id.action_search_city_to_weather_fragment)
+                   findNavController().popBackStack()
                 }
             })
     }
@@ -144,7 +147,7 @@ class SearchCityFragment : Fragment() {
     private fun setTitle() {
         val activity = (activity as? AppCompatActivity)
         activity?.let {
-           // it.supportActionBar?.show()
+            it.supportActionBar?.title = getString(R.string.search_city_title)
             it.supportActionBar?.subtitle = null
         }
 

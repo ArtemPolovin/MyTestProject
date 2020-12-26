@@ -4,18 +4,18 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.domain.useCase.weatherData.FetchCurrentWeatherUseCase
 import com.example.data.utils.CityDataCache
 import com.example.data.utils.SettingsCache
+import com.example.domain.useCase.weatherData.FetchCurrentWeatherUseCase
 import com.example.mytestproject.viewState.WeatherViewState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 
 class CurrentWeatherViewModel(
     private val fetchCurrentWeatherUseCase: FetchCurrentWeatherUseCase,
-    cityDataCache: CityDataCache,
+    private val cityDataCache: CityDataCache,
     settingsCache: SettingsCache
-) : ViewModel(){
+) : ViewModel() {
 
     private val unitSystem = settingsCache.getUnitSystem()
 
@@ -52,6 +52,13 @@ class CurrentWeatherViewModel(
 
     fun refreshWeatherDataList() {
         getWeather(cityId)
+    }
+
+    fun updateCityData() {
+        if (cityDataCache.isCityChanged) {
+            cityId = cityDataCache.loadCityId()
+            getWeather(cityId)
+        }
     }
 
     override fun onCleared() {

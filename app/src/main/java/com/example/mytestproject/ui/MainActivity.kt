@@ -1,9 +1,6 @@
 package com.example.mytestproject.ui
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -32,7 +29,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_today_weather,
                 R.id.nav_three_days_weather,
                 R.id.nav_ten_days_fragment,
-                R.id.search_city,
+                R.id.nav_search_city,
                 R.id.weather_fragment
             ), drawer_layout
         )

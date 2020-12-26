@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mytestproject.App
 import com.example.mytestproject.R
-import com.example.mytestproject.ui.weatherData.WeatherFragment
 import com.example.mytestproject.util.FOUR_DAYS
 import com.example.mytestproject.util.showDailyWeatherRequestResult
 import kotlinx.android.synthetic.main.fragment_three_days_weather.*
@@ -44,6 +43,8 @@ class ThreeDaysWeatherFragment : Fragment() {
 
         rv_three_days_weather.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+        dailyWeatherViewModel.updateCityData()
 
         setupDailyWeatherData()
         refreshingWeather()
